@@ -73,10 +73,13 @@ def external_merge_sort():
 
             # 이번에 읽어야하는 disk_files
             active_disk_files = disk_files
+
+            # 다 읽은 file 저장
             completed_disk_files = []
 
+            # 새로운 run file 작성 시작
             with open(f"./disk/pass{pass_cnt+1}_R{run+1}.txt", 'w') as newDiskFile:
-                # 만들어야 하는 run file 수 만큼 iterate
+
                 while True:
 
                     # 읽어야하는 diskfile 마다 buffer size만큼의 line을 읽어서 buffer에 저장
@@ -96,7 +99,6 @@ def external_merge_sort():
                                 # 만약 다 run file을 읽었다면 완료 목록에 추가
                                 if not lines:
                                     completed_disk_files.append(disk_file)
-                                    # disk_buffer_info[disk_file] = ["DONE"]
                                     continue
 
                                 disk_buffer_info[disk_file] += lines
@@ -117,10 +119,7 @@ def external_merge_sort():
                                 min_value = min(min_value, buffer[0])
                                 if min_value == buffer[0]:
                                     min_buffer = file
-                            # else:
-                            #     min_value = min(min_value, buffer[0])
-                            #     if min_value == buffer[0]:
-                            #         a = 1
+
 
                         newDiskFile.write(min_value)
                         io += 1
