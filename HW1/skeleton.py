@@ -63,13 +63,18 @@ def external_merge_sort():
             
             # 이번 run에서 읽어야할 diskfile
             disk_files = total_disk_files[start:start+BUFFER_NUM]
-            disk_files_cursor = [0 for _ in range(len(disk_files))]
             
             # disk file과 cursor 정보를 모두 담고 있는 dictionary
+            disk_files_cursor = [0 for _ in range(len(disk_files))]
             disk_cursor_info = dict(zip(disk_files, disk_files_cursor))
             
+            # disk file에 buffer를 대응시킴
             buffers = [[] for _ in range(BUFFER_NUM)]
             disk_buffer_info = dict(zip(disk_files, buffers))
+
+            # 읽어야하는 run file들을 미리 열어 놓음 -> 읽을 때마다 여는게 아니라서 더 빨라야하는데...
+            disk_file_open = [open(f"./disk/{disk_file}", 'r') for disk_file in disk_files]
+            disk_open_info = dict(zip(disk_files, disk_file_open))
 
             # 이번에 읽어야하는 disk_files
             active_disk_files = disk_files
@@ -84,27 +89,25 @@ def external_merge_sort():
 
                     # 읽어야하는 diskfile 마다 buffer size만큼의 line을 읽어서 buffer에 저장
                     for disk_file in active_disk_files:
-                        if disk_file not in completed_disk_files:
-                            cursor = disk_cursor_info[disk_file]
 
-                            # run에서 buffer_size만큼 line을 읽어서 buffers에 저장
-                            with open(f"./disk/{disk_file}", 'r') as file:
-                            
-                                # 이전까지 읽었던 위치 찾기 : 몇번째 읽는 건지 * 한줄의 길이(101)* 한번에 읽는 line 수(buffer_size*10)
-                                file.seek(cursor*101*BUFFER_SIZE*10, 0)
-                                
-                                # BUFFER_SIZE에 해당하는 line만큼 읽기
-                                lines = file.readlines(BUFFER_SIZE*10*101-1)
+                        cursor = disk_cursor_info[disk_file]
+                        file = disk_open_info[disk_file]
+                        
+                        # 이전까지 읽었던 위치 찾기 : 몇번째 읽는 건지 * 한줄의 길이(101)* 한번에 읽는 line 수(buffer_size*10)
+                        file.seek(cursor*101*BUFFER_SIZE*10, 0)
+                        
+                        # BUFFER_SIZE에 해당하는 line만큼 읽기
+                        lines = file.readlines(BUFFER_SIZE*10*101-1)
 
-                                # 만약 다 run file을 읽었다면 완료 목록에 추가
-                                if not lines:
-                                    completed_disk_files.append(disk_file)
-                                    continue
+                        # 만약 다 run file을 읽었다면 완료 목록에 추가
+                        if not lines:
+                            completed_disk_files.append(disk_file)
+                            continue
 
-                                disk_buffer_info[disk_file] += lines
-                                io += len(lines)
+                        disk_buffer_info[disk_file] += lines
+                        io += len(lines)
 
-                                disk_cursor_info[disk_file] += 1
+                        disk_cursor_info[disk_file] += 1
                     
                     # 모든 run file을 다 읽었으면 종료
                     if len(completed_disk_files) == len(disk_files):
@@ -133,6 +136,10 @@ def external_merge_sort():
 
             start += BUFFER_NUM
             
+            # 열어놓은 run file들 모두 닫기
+            for disk_file in disk_open_info.values():
+                disk_file.close()
+
         # PASS 종료
         pass_cnt += 1
         print_pass_statistics(pass_cnt, run_num, io)
@@ -160,11 +167,11 @@ if __name__ == '__main__':
     for file in os.listdir("./disk"):
         os.remove(f"./disk/{file}")
 
-    # measure start time
-    start_time = time.time()
-    
     # 1. split phase
     split_file("./input_file.txt")
+    
+    # measure start time
+    start_time = time.time()
     
     # 2. Merge phase
     external_merge_sort()
