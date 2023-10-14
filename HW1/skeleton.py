@@ -10,7 +10,7 @@ RAM_SIZE = 10000 # number of lines : 100Byte * 10000 = 1MB
 def split_file(input_file_name):
 
     # run file 개수, io 횟수
-    run, io = 0, 0
+    run, io, seek = 0, 0, 0
 
     # input file을 열어서 읽음
     with open(input_file_name, 'r') as input_file:
@@ -21,7 +21,7 @@ def split_file(input_file_name):
 
             lines.sort()                                    # 정렬
             io += len(lines)                                # disk io 횟수 +
-
+            seek += 1
             # disk 폴더에 "pass0_R1.txt"와 같이 기록
             with open(f"./disk/pass0_R{run+1}.txt", 'w') as diskFile:
                 diskFile.writelines(lines)
@@ -30,7 +30,7 @@ def split_file(input_file_name):
             run += 1                                        # run file 개수 +1
 
     # 통계량 출력            
-    print_pass_statistics(0, run, io)
+    print_pass_statistics(0, run, io, seek)
     
     
 def external_merge_sort(): 
@@ -56,7 +56,7 @@ def external_merge_sort():
         run_num = math.ceil(len(total_disk_files) / BUFFER_NUM)
 
         # 3. 각 pass마다 initializing해야하는 것들
-        io, start = 0, 0
+        io, seek, start = 0, 0, 0
 
         # PASS 시작
         for run in range(run_num):
@@ -72,7 +72,7 @@ def external_merge_sort():
             buffers = [[] for _ in range(BUFFER_NUM)]
             disk_buffer_info = dict(zip(disk_files, buffers))
 
-            # 읽어야하는 run file들을 미리 열어 놓음 -> 읽을 때마다 여는게 아니라서 더 빨라야하는데...
+            # 읽어야하는 run file들을 미리 열어 놓음
             disk_file_open = [open(f"./disk/{disk_file}", 'r') for disk_file in disk_files]
             disk_open_info = dict(zip(disk_files, disk_file_open))
 
@@ -106,6 +106,7 @@ def external_merge_sort():
 
                         disk_buffer_info[disk_file] += lines
                         io += len(lines)
+                        seek += 1
 
                         disk_cursor_info[disk_file] += 1
                     
@@ -142,13 +143,14 @@ def external_merge_sort():
 
         # PASS 종료
         pass_cnt += 1
-        print_pass_statistics(pass_cnt, run_num, io)
+        print_pass_statistics(pass_cnt, run_num, io, seek)
 
 
-def print_pass_statistics(n, run, io):
+def print_pass_statistics(n, run, io, seek):
     print('[PASS {0}]'.format(n))
     print('  > # of Generated Runs: {0}'.format(run) )
-    print('  > # of IOs: {0}'.format(io) , end="\n\n" )
+    print('  > # of IOs: {0}'.format(io) )
+    print('  > # of Seeks: {0}'.format(seek) , end="\n\n" )
 
 
 def print_time_statistics(start_time, end_time):
@@ -167,17 +169,26 @@ if __name__ == '__main__':
     for file in os.listdir("./disk"):
         os.remove(f"./disk/{file}")
 
-    # 1. split phase
-    split_file("./input_file.txt")
-    
-    # measure start time
-    start_time = time.time()
-    
-    # 2. Merge phase
-    external_merge_sort()
+    execution_time = []
 
-    # measure end time 
-    end_time = time.time()
+    for _ in range(10):
+        # measure start time
+        start_time = time.time()
+        
+        # 1. split phase
+        split_file("./input_file.txt")
+        
+        # 2. Merge phase
+        external_merge_sort()
+
+        # measure end time 
+        end_time = time.time()
+        
+        # print statistics
+        print_time_statistics(start_time, end_time)
+
+        execution_time.append(end_time-start_time)
+        print("\n")
     
-    # print statistics
-    print_time_statistics(start_time, end_time)
+    print("============================")
+    print(f"Execution Time : {sum(execution_time)/len(execution_time):.5f} sec")
