@@ -1,4 +1,5 @@
 .venv/
 .python-version
 2023-28661.py
-temp/
+NL2SQL/info.json
+NL2SQL/__pycache__

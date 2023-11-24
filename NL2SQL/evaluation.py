@@ -1,5 +1,6 @@
 import pandas as pd
-from .DB import MyPostgreSQL
+import json
+from DB import MyPostgreSQL
 
 class NO2SQL():
 
@@ -50,7 +51,7 @@ class NO2SQL():
 
         pass
 
-    def send_qNL_to_GPT(self, qNL: str, schema=None: str, prompt=None: str) -> None:
+    def send_qNL_to_GPT(self, qNL: str, schema: str = None, prompt: str = None) -> None:
         self.connect_GPT_API()
         pass
 
@@ -60,7 +61,7 @@ class NO2SQL():
 
 
     # 한 question에 대한 NO2SQL 결과
-    def execute_NL2SQL(self, qNL: str, schema=None: str, prompt=None: str) -> tuple:
+    def execute_NL2SQL(self, qNL: str, schema: str = None, prompt: str  =None) -> tuple:
         
         true_qSQL = self.get_answer_qSQL(qNL)
         true_qSQL_result = self.db.execute(true_qSQL)
@@ -70,7 +71,7 @@ class NO2SQL():
         qSQL = self.receive_qSQL_from_GPT()
         qSQL_result = self.db.execute(qSQL)
 
-        result = (true_qSQL, true_result, qSQL, qSQL_result)
+        result = (true_qSQL, true_qSQL_result, qSQL, qSQL_result)
 
         return result
 
@@ -78,15 +79,13 @@ class NO2SQL():
     def run_NO2SQLs(self) -> pd.DataFrame:
 
         ## 전체 데이터에 대해서 execute_NL2SQL 반복해서 결과를 dataframe으로 저장
-
-    
-
+        pass
 
 
+if __name__ == "__main__":
 
-    
-
-
-
-    
+    task = NO2SQL()
+    task.connect_DB()
+    qry = "SELECT datname FROM pg_database;"
+    print(task.db.excute_query(qry))
 
