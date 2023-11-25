@@ -1,0 +1,17 @@
+{   
+    "explanation":  {
+                        "comment" : " 각자 세팅에 맞게 localhost, dbname, user, port, password, API_key 입력하고 파일 이름을 info.json으로 변경 "
+                    },
+    
+    "db_info": {
+                    "localhost": "",
+                    "dbname": "",
+                    "user": "",
+                    "port": 0,
+                    "password": ""
+               },
+    
+    "gpt_info": {
+                    "API_key": ""
+                }
+}
