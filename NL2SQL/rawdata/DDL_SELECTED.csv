@@ -3627,235 +3627,79 @@ INSERT INTO Documents_Mailed (document_id, mailed_to_address_id, mailing_date) V
 INSERT INTO Documents_Mailed (document_id, mailed_to_address_id, mailing_date) VALUES (20, 7, '1982-01-14 05:50:54');
 INSERT INTO Documents_Mailed (document_id, mailed_to_address_id, mailing_date) VALUES (23, 8, '1971-11-03 12:32:14');
 INSERT INTO Documents_Mailed (document_id, mailed_to_address_id, mailing_date) VALUES (24, 0, '2013-01-27 03:29:31');"
-local_govt_in_alabama,customer,"CREATE TABLE Customers (
-  customer_id INTEGER NOT NULL,
-  customer_details VARCHAR(255),
-  PRIMARY KEY (customer_id)
-);","INSERT INTO Customers (customer_id, customer_details) VALUES (4, 'Mr. Raul Prosacco');
-INSERT INTO Customers (customer_id, customer_details) VALUES (5, 'Esteban Senger');
-INSERT INTO Customers (customer_id, customer_details) VALUES (16, 'Tyrique Durgan II');
-INSERT INTO Customers (customer_id, customer_details) VALUES (17, 'Malcolm Farrell');
-INSERT INTO Customers (customer_id, customer_details) VALUES (19, 'Sabryna Moore PhD');
-INSERT INTO Customers (customer_id, customer_details) VALUES (21, 'Dr. Haylie Hilll III');
-INSERT INTO Customers (customer_id, customer_details) VALUES (31, 'Monty Sauer III');
-INSERT INTO Customers (customer_id, customer_details) VALUES (41, 'Jayme Marquardt');
-INSERT INTO Customers (customer_id, customer_details) VALUES (63, 'Vincenza Price');
-INSERT INTO Customers (customer_id, customer_details) VALUES (69, 'Elva Boehm');
-INSERT INTO Customers (customer_id, customer_details) VALUES (76, 'Kyleigh Schuster');
-INSERT INTO Customers (customer_id, customer_details) VALUES (79, 'Oma Smith');
-INSERT INTO Customers (customer_id, customer_details) VALUES (82, 'Bridgette Nitzsche PhD');
-INSERT INTO Customers (customer_id, customer_details) VALUES (87, 'Jeff McCullough MD');
-INSERT INTO Customers (customer_id, customer_details) VALUES (91, 'Mackenzie Hettinger V');"
-local_govt_in_alabama,properties,"CREATE TABLE Properties (
-  property_id INTEGER NOT NULL,
-  property_type_code CHAR(15) NOT NULL,
-  property_address VARCHAR(255),
-  other_details VARCHAR(255),
-  PRIMARY KEY (property_id)
-);","INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (24, 'apartment', '85456 Annie Lodge Suite 449', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (107, 'house', '2580 Yundt Plains', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (108, 'house', '5983 Fleta Throughway', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (120, 'apartment', '322 Johnston Parkway Suite 422', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (373, 'apartment', '5384 Sipes Land Apt. 344', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (445, 'flat', '04164 Raul Stream', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (586, 'apartment', '54591 Bernard Ridges Suite 864', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (605, 'house', '7713 Bode Burgs Apt. 113', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (629, 'house', '830 Jayne Points Suite 290', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (669, 'house', '824 Kiehn Vista', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (748, 'apartment', '3927 Spinka Loaf Suite 347', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (791, 'house', '72659 Frank Locks', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (849, 'house', '76714 Verla Radial Apt. 306', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (879, 'flat', '129 Chasity Brook', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (954, 'flat', '91002 Melvina Haven', 'USA');"
-local_govt_in_alabama,residents,"CREATE TABLE Residents (
-  resident_id INTEGER NOT NULL,
-  property_id INTEGER NOT NULL,
-  date_moved_in TIMESTAMP NOT NULL,
-  date_moved_out TIMESTAMP NOT NULL,
-  other_details VARCHAR(255),
-  PRIMARY KEY (resident_id, property_id, date_moved_in),
-  FOREIGN KEY (property_id) REFERENCES Properties (property_id)
-);","INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (6, 954, '2017-06-17 15:43:33', '2017-12-18 03:46:04', 'Anderson Batz');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (10, 605, '2015-03-27 12:00:00', '2018-03-17 07:48:09', 'Miss Naomie Osinski');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (23, 879, '2015-03-27 12:00:00', '2017-11-14 06:28:48', 'Jess Wyman');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (28, 629, '2015-03-27 12:00:00', '2017-10-05 02:47:31', 'Miss Alanis Lockman');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (37, 669, '2015-03-27 12:00:00', '2018-01-30 10:20:59', 'Prof. Arvel Kozey');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (38, 748, '2015-03-27 12:00:00', '2017-12-30 23:55:10', 'Chaim Swaniawski');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (43, 108, '2015-03-27 12:00:00', '2018-02-22 06:24:15', 'Elroy Schuster');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (45, 954, '2015-03-27 12:00:00', '2017-10-14 10:23:42', 'Prof. Nasir Hoppe');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (47, 669, '2015-03-27 12:00:00', '2017-10-10 02:25:53', 'Tiffany Jaskolski');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (58, 107, '2015-03-27 12:00:00', '2017-11-29 21:24:08', 'Tomasa Hoeger');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (67, 120, '2016-09-27 12:00:00', '2017-10-23 16:40:19', 'Terrill Bernhard');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (83, 445, '2016-09-27 12:00:00', '2018-01-19 01:35:51', 'Loy Walter');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (87, 748, '2016-09-27 12:00:00', '2018-01-28 13:19:54', 'Mrs. Raphaelle Fisher');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (88, 107, '2016-09-27 12:00:00', '2018-02-03 11:30:20', 'Jacques Glover II');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (90, 373, '2016-09-27 12:00:00', '2017-11-19 03:11:44', 'Cassie Johnson');"
-local_govt_in_alabama,organizations,"CREATE TABLE Organizations (
-  organization_id INTEGER NOT NULL,
-  parent_organization_id INTEGER,
-  organization_details VARCHAR(255),
-  PRIMARY KEY (organization_id)
-);","INSERT INTO Organizations (organization_id, parent_organization_id, organization_details) VALUES (7, 7, 'Reinger, Hudson and Nolan Group');
-INSERT INTO Organizations (organization_id, parent_organization_id, organization_details) VALUES (8, 7, 'Denesik and Sons Party');
-INSERT INTO Organizations (organization_id, parent_organization_id, organization_details) VALUES (10, 8, 'Robel-Schulist Group');"
 local_govt_in_alabama,services,"CREATE TABLE Services (
-  service_id INTEGER NOT NULL,
-  organization_id INTEGER NOT NULL,
-  service_type_code CHAR(15) NOT NULL,
-  service_details VARCHAR(255),
-  PRIMARY KEY (service_id),
-  FOREIGN KEY (organization_id) REFERENCES Organizations (organization_id)
-);","INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (10, 10, 'Cleanning', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (11, 7, 'Check', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (13, 8, 'Moving Out', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (22, 10, 'Pay bills', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (29, 8, 'Moving Out', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (31, 7, 'Pay bills', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (36, 8, 'Check', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (41, 10, 'Check', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (47, 8, 'Pay bills', 'Unsatisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (49, 8, 'Moving Out', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (52, 8, 'Pay bills', 'Unsatisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (65, 8, 'Cleanning', 'Unsatisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (66, 8, 'Pay bills', 'Unsatisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (77, 7, 'Pay bills', 'Unsatisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (87, 8, 'Pay bills', 'Unsatisfied');"
-local_govt_in_alabama,residents_services,"CREATE TABLE Residents_Services (
-  resident_id INTEGER NOT NULL,
-  service_id INTEGER NOT NULL,
-  date_moved_in TIMESTAMP NOT NULL,
-  property_id INTEGER,
-  date_requested TIMESTAMP,
-  date_provided TIMESTAMP,
-  other_details VARCHAR(255),
-  PRIMARY KEY (resident_id, service_id),
-  FOREIGN KEY (service_id) REFERENCES Services (service_id),
-  FOREIGN KEY (resident_id, property_id, date_moved_in) REFERENCES Residents (resident_id, property_id, date_moved_in)
-);","INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (6, 49, '2017-06-17 15:43:33', 954, '2016-07-25 01:32:23', '2018-02-26 00:27:11', 'Satisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (23, 41, '2015-03-27 12:00:00', 879, '2016-10-10 21:42:21', '2017-08-21 06:23:06', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (28, 11, '2015-03-27 12:00:00', 629, '2017-07-14 19:03:47', '2017-08-28 03:43:56', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (43, 10, '2015-03-27 12:00:00', 108, '2016-09-20 22:50:26', '2017-10-17 03:30:08', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (45, 49, '2015-03-27 12:00:00', 954, '2017-06-14 14:04:50', '2017-08-14 08:06:43', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (47, 65, '2015-03-27 12:00:00', 669, '2016-12-16 06:08:10', '2018-01-30 09:58:57', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (67, 87, '2016-09-27 12:00:00', 120, '2016-04-27 14:51:07', '2017-11-13 10:28:34', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (83, 65, '2016-09-27 12:00:00', 445, '2016-11-27 15:37:02', '2017-09-10 00:48:58', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (87, 29, '2016-09-27 12:00:00', 748, '2016-10-13 04:15:54', '2017-10-29 13:12:29', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (90, 36, '2016-09-27 12:00:00', 373, '2016-04-13 05:09:24', '2017-10-28 12:36:43', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (88, 11, '2016-09-27 12:00:00', 107, '2016-06-18 20:09:24', '2017-08-08 11:24:50', 'Unsatisfied');"
-local_govt_in_alabama,things,"CREATE TABLE Things (
-  thing_id INTEGER NOT NULL,
-  organization_id INTEGER NOT NULL,
-  type_of_thing_code CHAR(15) NOT NULL,
-  service_type_code CHAR(10) NOT NULL,
-  service_details VARCHAR(255),
-  PRIMARY KEY (thing_id),
-  FOREIGN KEY (organization_id) REFERENCES Organizations (organization_id)
-);","INSERT INTO Things (thing_id, organization_id, type_of_thing_code, service_type_code, service_details) VALUES (1, 8, 'Electronics', 'Check', 'Unsatisfied');
-INSERT INTO Things (thing_id, organization_id, type_of_thing_code, service_type_code, service_details) VALUES (2, 8, 'Electronics', 'Cleaning', 'Satisfied');
-INSERT INTO Things (thing_id, organization_id, type_of_thing_code, service_type_code, service_details) VALUES (10, 8, 'Common', 'Check', 'Satisfied');
-INSERT INTO Things (thing_id, organization_id, type_of_thing_code, service_type_code, service_details) VALUES (14, 10, 'Furniture', 'Cleaning', 'Satisfied');
-INSERT INTO Things (thing_id, organization_id, type_of_thing_code, service_type_code, service_details) VALUES (26, 8, 'Electronics', 'Cleaning', 'Unsatisfied');
-INSERT INTO Things (thing_id, organization_id, type_of_thing_code, service_type_code, service_details) VALUES (35, 7, 'Electronics', 'Cleaning', 'Satisfied');
-INSERT INTO Things (thing_id, organization_id, type_of_thing_code, service_type_code, service_details) VALUES (45, 8, 'Common', 'Check', 'Satisfied');
-INSERT INTO Things (thing_id, organization_id, type_of_thing_code, service_type_code, service_details) VALUES (46, 8, 'Common', 'Check', 'Satisfied');
-INSERT INTO Things (thing_id, organization_id, type_of_thing_code, service_type_code, service_details) VALUES (47, 10, 'Common', 'Cleaning', 'Satisfied');
-INSERT INTO Things (thing_id, organization_id, type_of_thing_code, service_type_code, service_details) VALUES (58, 8, 'Electronics', 'Check', 'Satisfied');
-INSERT INTO Things (thing_id, organization_id, type_of_thing_code, service_type_code, service_details) VALUES (68, 10, 'Common', 'Cleaning', 'Unsatisfied');
-INSERT INTO Things (thing_id, organization_id, type_of_thing_code, service_type_code, service_details) VALUES (80, 8, 'Furniture', 'Check', 'Unsatisfied');
-INSERT INTO Things (thing_id, organization_id, type_of_thing_code, service_type_code, service_details) VALUES (84, 8, 'Common', 'Check', 'Unsatisfied');
-INSERT INTO Things (thing_id, organization_id, type_of_thing_code, service_type_code, service_details) VALUES (85, 8, 'Common', 'Cleaning', 'Unsatisfied');
-INSERT INTO Things (thing_id, organization_id, type_of_thing_code, service_type_code, service_details) VALUES (92, 7, 'Common', 'Check', 'Unsatisfied');"
-local_govt_in_alabama,customer_events,"CREATE TABLE Customer_Events (
-  customer_event_id INTEGER NOT NULL,
-  customer_id INTEGER,
-  date_moved_in TIMESTAMP NOT NULL,
-  property_id INTEGER,
-  resident_id INTEGER,
-  thing_id INTEGER NOT NULL,
-  PRIMARY KEY (customer_event_id),
-  FOREIGN KEY (thing_id) REFERENCES Things (thing_id),
-  FOREIGN KEY (customer_id) REFERENCES Customers (customer_id),
-  FOREIGN KEY (resident_id, property_id, date_moved_in) REFERENCES Residents (resident_id, property_id, date_moved_in)
-);","INSERT INTO Customer_Events (customer_event_id, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (70, 19, '2015-03-27 12:00:00', 605, 10, 1);
-INSERT INTO Customer_Events (customer_event_id, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (160, 5, '2015-03-27 12:00:00', 879, 23, 80);
-INSERT INTO Customer_Events (customer_event_id, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (166, 16, '2015-03-27 12:00:00', 629, 28, 14);
-INSERT INTO Customer_Events (customer_event_id, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (216, 79, '2015-03-27 12:00:00', 669, 37, 46);
-INSERT INTO Customer_Events (customer_event_id, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (226, 19, '2015-03-27 12:00:00', 748, 38, 80);
-INSERT INTO Customer_Events (customer_event_id, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (256, 79, '2015-03-27 12:00:00', 108, 43, 2);
-INSERT INTO Customer_Events (customer_event_id, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (428, 63, '2015-03-27 12:00:00', 954, 45, 68);
-INSERT INTO Customer_Events (customer_event_id, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (530, 4, '2015-03-27 12:00:00', 669, 47, 10);
-INSERT INTO Customer_Events (customer_event_id, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (559, 19, '2015-03-27 12:00:00', 107, 58, 1);
-INSERT INTO Customer_Events (customer_event_id, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (591, 91, '2016-09-27 12:00:00', 120, 67, 10);
-INSERT INTO Customer_Events (customer_event_id, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (606, 31, '2016-09-27 12:00:00', 445, 83, 85);
-INSERT INTO Customer_Events (customer_event_id, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (627, 91, '2016-09-27 12:00:00', 748, 87, 92);
-INSERT INTO Customer_Events (customer_event_id, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (817, 19, '2016-09-27 12:00:00', 107, 88, 10);"
-local_govt_in_alabama,customer_event_notes,"CREATE TABLE Customer_Event_Notes (
-  customer_event_note_id INTEGER NOT NULL,
-  customer_event_id INTEGER NOT NULL,
-  service_type_code CHAR(15) NOT NULL,
-  resident_id INTEGER NOT NULL,
-  property_id INTEGER NOT NULL,
-  date_moved_in TIMESTAMP NOT NULL,
-  PRIMARY KEY (customer_event_note_id),
-  FOREIGN KEY (customer_event_id) REFERENCES Customer_Events (customer_event_id)
-);","INSERT INTO Customer_Event_Notes (customer_event_note_id, customer_event_id, service_type_code, resident_id, property_id, date_moved_in) VALUES (18, 70, 'Cleanning', 58, 107, '2016-08-04 01:06:05');
-INSERT INTO Customer_Event_Notes (customer_event_note_id, customer_event_id, service_type_code, resident_id, property_id, date_moved_in) VALUES (21, 428, 'Check', 87, 445, '2016-12-11 01:05:14');
-INSERT INTO Customer_Event_Notes (customer_event_note_id, customer_event_id, service_type_code, resident_id, property_id, date_moved_in) VALUES (32, 70, 'Check', 37, 669, '2016-07-10 04:09:56');
-INSERT INTO Customer_Event_Notes (customer_event_note_id, customer_event_id, service_type_code, resident_id, property_id, date_moved_in) VALUES (46, 627, 'Cleanning', 87, 373, '2016-05-24 02:56:54');
-INSERT INTO Customer_Event_Notes (customer_event_note_id, customer_event_id, service_type_code, resident_id, property_id, date_moved_in) VALUES (49, 559, 'Check', 45, 849, '2016-08-08 07:58:26');
-INSERT INTO Customer_Event_Notes (customer_event_note_id, customer_event_id, service_type_code, resident_id, property_id, date_moved_in) VALUES (50, 606, 'Check', 45, 849, '2017-04-25 09:08:14');
-INSERT INTO Customer_Event_Notes (customer_event_note_id, customer_event_id, service_type_code, resident_id, property_id, date_moved_in) VALUES (55, 817, 'Cleanning', 43, 120, '2017-06-26 13:24:36');
-INSERT INTO Customer_Event_Notes (customer_event_note_id, customer_event_id, service_type_code, resident_id, property_id, date_moved_in) VALUES (56, 216, 'Check', 88, 748, '2016-11-04 12:46:21');
-INSERT INTO Customer_Event_Notes (customer_event_note_id, customer_event_id, service_type_code, resident_id, property_id, date_moved_in) VALUES (59, 591, 'Cleanning', 28, 605, '2016-05-14 15:58:33');
-INSERT INTO Customer_Event_Notes (customer_event_note_id, customer_event_id, service_type_code, resident_id, property_id, date_moved_in) VALUES (65, 591, 'Cleanning', 28, 879, '2017-04-12 19:47:08');
-INSERT INTO Customer_Event_Notes (customer_event_note_id, customer_event_id, service_type_code, resident_id, property_id, date_moved_in) VALUES (75, 70, 'Check', 43, 120, '2016-10-28 01:43:42');
-INSERT INTO Customer_Event_Notes (customer_event_note_id, customer_event_id, service_type_code, resident_id, property_id, date_moved_in) VALUES (88, 606, 'Cleanning', 67, 791, '2016-11-23 05:53:40');
-INSERT INTO Customer_Event_Notes (customer_event_note_id, customer_event_id, service_type_code, resident_id, property_id, date_moved_in) VALUES (91, 817, 'Cleanning', 43, 120, '2017-04-28 10:17:13');"
-local_govt_in_alabama,timed_status_of_things,"CREATE TABLE Timed_Status_of_Things (
-  thing_id INTEGER NOT NULL,
-  date_and_date TIMESTAMP NOT NULL,
-  status_of_thing_code CHAR(15) NOT NULL,
-  PRIMARY KEY (thing_id, date_and_date, status_of_thing_code),
-  FOREIGN KEY (thing_id) REFERENCES Things (thing_id)
-);","INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (2, '2016-05-27 23:33:34', 'Open');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (2, '2016-07-17 08:35:27', 'Close');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (2, '2017-06-19 02:59:21', 'In Progress');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (10, '2016-09-06 16:31:13', 'Close');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (10, '2016-11-14 17:30:51', 'Open');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (14, '2017-07-03 02:22:12', 'In Progress');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (26, '2016-04-10 06:32:15', 'Close');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (26, '2017-08-05 02:10:02', 'In Progress');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (26, '2018-02-04 02:44:39', 'Close');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (35, '2017-11-27 06:32:46', 'In Progress');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (47, '2016-04-02 00:57:17', 'In Progress');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (47, '2016-12-02 11:08:16', 'Close');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (58, '2017-05-31 00:52:33', 'In Progress');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (80, '2016-10-08 08:02:57', 'Open');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (84, '2017-12-28 16:05:08', 'Open');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (85, '2017-03-24 12:12:46', 'Close');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (92, '2016-11-24 12:44:00', 'In Progress');
-INSERT INTO Timed_Status_of_Things (thing_id, date_and_date, status_of_thing_code) VALUES (92, '2017-09-27 01:35:51', 'Close');"
-local_govt_in_alabama,timed_locations_of_things,"CREATE TABLE Timed_Locations_of_Things (
-  thing_id INTEGER NOT NULL,
-  date_and_time TIMESTAMP NOT NULL,
-  location_code CHAR(15) NOT NULL,
-  PRIMARY KEY (thing_id, date_and_time, location_code),
-  FOREIGN KEY (thing_id) REFERENCES Things (thing_id)
-);","INSERT INTO Timed_Locations_of_Things (thing_id, date_and_time, location_code) VALUES (2, '2016-10-12 12:03:07', '064 Charles Mou');
-INSERT INTO Timed_Locations_of_Things (thing_id, date_and_time, location_code) VALUES (10, '2016-12-29 00:39:19', '288 Lang Ferry');
-INSERT INTO Timed_Locations_of_Things (thing_id, date_and_time, location_code) VALUES (10, '2017-10-21 04:21:54', '854 Keeling Sho');
-INSERT INTO Timed_Locations_of_Things (thing_id, date_and_time, location_code) VALUES (14, '2017-03-19 19:28:13', '1316 Morgan Spr');
-INSERT INTO Timed_Locations_of_Things (thing_id, date_and_time, location_code) VALUES (26, '2016-04-26 16:34:09', '192 Kub Rapids');
-INSERT INTO Timed_Locations_of_Things (thing_id, date_and_time, location_code) VALUES (45, '2017-04-19 16:41:03', '4667 Kellen Fie');
-INSERT INTO Timed_Locations_of_Things (thing_id, date_and_time, location_code) VALUES (45, '2017-04-22 00:37:48', '1313 Sawayn Riv');
-INSERT INTO Timed_Locations_of_Things (thing_id, date_and_time, location_code) VALUES (58, '2016-08-04 00:25:55', '94425 Nellie Kn');
-INSERT INTO Timed_Locations_of_Things (thing_id, date_and_time, location_code) VALUES (68, '2017-03-06 01:56:27', '4223 Rae Fork S');
-INSERT INTO Timed_Locations_of_Things (thing_id, date_and_time, location_code) VALUES (68, '2017-08-31 13:54:13', '9628 Bins Islan');
-INSERT INTO Timed_Locations_of_Things (thing_id, date_and_time, location_code) VALUES (85, '2016-11-07 09:43:05', '2677 Runolfsson');
-INSERT INTO Timed_Locations_of_Things (thing_id, date_and_time, location_code) VALUES (85, '2017-01-02 23:26:47', '26281 Holden Pa');
-INSERT INTO Timed_Locations_of_Things (thing_id, date_and_time, location_code) VALUES (85, '2017-11-26 00:13:44', '1537 Schmeler G');
-INSERT INTO Timed_Locations_of_Things (thing_id, date_and_time, location_code) VALUES (92, '2017-03-19 13:57:49', '113 Geo Glens A');
-INSERT INTO Timed_Locations_of_Things (thing_id, date_and_time, location_code) VALUES (92, '2017-10-21 21:35:37', '9569 Tanner Inl');"
+    Service_ID INTEGER NOT NULL,
+    Service_Type_Code CHAR(15) NOT NULL,
+    PRIMARY KEY (Service_ID)
+);","INSERT INTO Services (Service_ID, Service_Type_Code) VALUES (2, 'Marriage');
+INSERT INTO Services (Service_ID, Service_Type_Code) VALUES (5, 'Death Proof');
+INSERT INTO Services (Service_ID, Service_Type_Code) VALUES (6, 'Birth Proof');
+INSERT INTO Services (Service_ID, Service_Type_Code) VALUES (8, 'Property Change');"
+local_govt_in_alabama,participants,"CREATE TABLE Participants (
+    Participant_ID INTEGER NOT NULL,
+    Participant_Type_Code CHAR(15) NOT NULL,
+    Participant_Details VARCHAR(255),
+    PRIMARY KEY (Participant_ID)
+);","INSERT INTO Participants (Participant_ID, Participant_Type_Code, Participant_Details) VALUES (9, 'Organizer', 'Karlee Batz');
+INSERT INTO Participants (Participant_ID, Participant_Type_Code, Participant_Details) VALUES (26, 'Organizer', 'Vilma Schinner');
+INSERT INTO Participants (Participant_ID, Participant_Type_Code, Participant_Details) VALUES (28, 'Organizer', 'Lupe Deckow');
+INSERT INTO Participants (Participant_ID, Participant_Type_Code, Participant_Details) VALUES (36, 'Organizer', 'Kenyatta Kuhn');
+INSERT INTO Participants (Participant_ID, Participant_Type_Code, Participant_Details) VALUES (37, 'Participant', 'Miss Kaci Lebsack');
+INSERT INTO Participants (Participant_ID, Participant_Type_Code, Participant_Details) VALUES (38, 'Organizer', 'Macy Mayer DDS');
+INSERT INTO Participants (Participant_ID, Participant_Type_Code, Participant_Details) VALUES (60, 'Participant', 'Dewitt Walter');
+INSERT INTO Participants (Participant_ID, Participant_Type_Code, Participant_Details) VALUES (63, 'Participant', 'Prof. Michelle Maggio Jr.');
+INSERT INTO Participants (Participant_ID, Participant_Type_Code, Participant_Details) VALUES (64, 'Participant', 'Dr. Jaydon Renner');
+INSERT INTO Participants (Participant_ID, Participant_Type_Code, Participant_Details) VALUES (66, 'Participant', 'Justyn Lebsack');
+INSERT INTO Participants (Participant_ID, Participant_Type_Code, Participant_Details) VALUES (75, 'Participant', 'Berniece Weimann');
+INSERT INTO Participants (Participant_ID, Participant_Type_Code, Participant_Details) VALUES (86, 'Organizer', 'Neil Blick');
+INSERT INTO Participants (Participant_ID, Participant_Type_Code, Participant_Details) VALUES (90, 'Participant', 'Dedrick Ebert');
+INSERT INTO Participants (Participant_ID, Participant_Type_Code, Participant_Details) VALUES (96, 'Organizer', 'Miss Joyce Cremin');
+INSERT INTO Participants (Participant_ID, Participant_Type_Code, Participant_Details) VALUES (98, 'Participant', 'Dr. Kris Deckow');"
+local_govt_in_alabama,events,"CREATE TABLE Events (
+    Event_ID INTEGER NOT NULL,
+    Service_ID INTEGER NOT NULL,
+    Event_Details VARCHAR(255),
+    PRIMARY KEY (Event_ID),
+    FOREIGN KEY (Service_ID) REFERENCES Services (Service_ID)
+);","INSERT INTO Events (Event_ID, Service_ID, Event_Details) VALUES (3, 5, 'Success');
+INSERT INTO Events (Event_ID, Service_ID, Event_Details) VALUES (8, 8, 'Success');
+INSERT INTO Events (Event_ID, Service_ID, Event_Details) VALUES (13, 8, 'Fail');
+INSERT INTO Events (Event_ID, Service_ID, Event_Details) VALUES (16, 2, 'Fail');
+INSERT INTO Events (Event_ID, Service_ID, Event_Details) VALUES (17, 5, 'Fail');
+INSERT INTO Events (Event_ID, Service_ID, Event_Details) VALUES (38, 6, 'Fail');
+INSERT INTO Events (Event_ID, Service_ID, Event_Details) VALUES (40, 6, 'Fail');
+INSERT INTO Events (Event_ID, Service_ID, Event_Details) VALUES (43, 8, 'Fail');
+INSERT INTO Events (Event_ID, Service_ID, Event_Details) VALUES (48, 8, 'Fail');
+INSERT INTO Events (Event_ID, Service_ID, Event_Details) VALUES (57, 5, 'Success');
+INSERT INTO Events (Event_ID, Service_ID, Event_Details) VALUES (60, 2, 'Fail');
+INSERT INTO Events (Event_ID, Service_ID, Event_Details) VALUES (74, 2, 'Success');
+INSERT INTO Events (Event_ID, Service_ID, Event_Details) VALUES (80, 5, 'Success');
+INSERT INTO Events (Event_ID, Service_ID, Event_Details) VALUES (95, 2, 'Fail');
+INSERT INTO Events (Event_ID, Service_ID, Event_Details) VALUES (96, 2, 'Success');"
+local_govt_in_alabama,participants_in_events,"CREATE TABLE Participants_in_Events (
+    Event_ID INTEGER NOT NULL,
+    Participant_ID INTEGER NOT NULL,
+    PRIMARY KEY (Event_ID, Participant_ID),
+    FOREIGN KEY (Participant_ID) REFERENCES Participants (Participant_ID),
+    FOREIGN KEY (Event_ID) REFERENCES Events (Event_ID)
+);","INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (3, 26);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (3, 66);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (8, 86);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (13, 64);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (13, 90);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (16, 60);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (17, 37);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (17, 66);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (38, 66);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (40, 37);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (40, 86);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (57, 90);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (60, 26);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (80, 36);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (80, 66);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (80, 96);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (95, 63);
+INSERT INTO Participants_in_Events (Event_ID, Participant_ID) VALUES (96, 90);"
 csu_1,campuses,"CREATE TABLE Campuses (
     Id INTEGER PRIMARY KEY,
     Campus TEXT,
@@ -4104,235 +3948,101 @@ INSERT INTO city VALUES (14, 5, 'Camuy', 87.9, 4.1, 0.3, 0.1, 7.6, 99.4);
 INSERT INTO city VALUES (15, 5, 'Canóvanas', 61.2, 21.6, 0.9, 0.2, 16.1, 99.2);
 INSERT INTO city VALUES (16, 6, 'Carolina', 64.3, 22.8, 0.9, 0.4, 11.7, 98.6);
 INSERT INTO city VALUES (17, 6, 'Cataño', 70.7, 14.4, 1.0, 0.3, 13.7, 99.0);"
-local_govt_mdm,customers,"CREATE TABLE Customers (
-    customer_id INTEGER NOT NULL,
-    customer_details VARCHAR(255),
-    PRIMARY KEY (customer_id)
-);","INSERT INTO Customers (customer_id, customer_details) VALUES (4, 'Mr. Raul Prosacco');
-INSERT INTO Customers (customer_id, customer_details) VALUES (5, 'Esteban Senger');
-INSERT INTO Customers (customer_id, customer_details) VALUES (16, 'Tyrique Durgan II');
-INSERT INTO Customers (customer_id, customer_details) VALUES (17, 'Malcolm Farrell');
-INSERT INTO Customers (customer_id, customer_details) VALUES (19, 'Sabryna Moore PhD');
-INSERT INTO Customers (customer_id, customer_details) VALUES (21, 'Dr. Haylie Hilll III');
-INSERT INTO Customers (customer_id, customer_details) VALUES (31, 'Monty Sauer III');
-INSERT INTO Customers (customer_id, customer_details) VALUES (41, 'Jayme Marquardt');
-INSERT INTO Customers (customer_id, customer_details) VALUES (63, 'Vincenza Price');
-INSERT INTO Customers (customer_id, customer_details) VALUES (69, 'Elva Boehm');
-INSERT INTO Customers (customer_id, customer_details) VALUES (76, 'Kyleigh Schuster');
-INSERT INTO Customers (customer_id, customer_details) VALUES (79, 'Oma Smith');
-INSERT INTO Customers (customer_id, customer_details) VALUES (82, 'Bridgette Nitzsche PhD');
-INSERT INTO Customers (customer_id, customer_details) VALUES (87, 'Jeff McCullough MD');
-INSERT INTO Customers (customer_id, customer_details) VALUES (91, 'Mackenzie Hettinger V');"
-local_govt_mdm,properties,"CREATE TABLE Properties (
-    property_id INTEGER NOT NULL,
-    property_type_code CHAR(15) NOT NULL,
-    property_address VARCHAR(255),
-    other_details VARCHAR(255),
-    PRIMARY KEY (property_id)
-);","INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (24, 'apartment', '85456 Annie Lodge Suite 449', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (107, 'house', '2580 Yundt Plains', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (108, 'house', '5983 Fleta Throughway', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (120, 'apartment', '322 Johnston Parkway Suite 422', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (373, 'apartment', '5384 Sipes Land Apt. 344', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (445, 'flat', '04164 Raul Stream', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (586, 'apartment', '54591 Bernard Ridges Suite 864', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (605, 'house', '7713 Bode Burgs Apt. 113', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (629, 'house', '830 Jayne Points Suite 290', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (669, 'house', '824 Kiehn Vista', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (748, 'apartment', '3927 Spinka Loaf Suite 347', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (791, 'house', '72659 Frank Locks', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (849, 'house', '76714 Verla Radial Apt. 306', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (879, 'flat', '129 Chasity Brook', 'USA');
-INSERT INTO Properties (property_id, property_type_code, property_address, other_details) VALUES (954, 'flat', '91002 Melvina Haven', 'USA');"
-local_govt_mdm,residents,"CREATE TABLE Residents (
-    resident_id INTEGER NOT NULL,
-    property_id INTEGER NOT NULL,
-    date_moved_in TIMESTAMP NOT NULL,
-    date_moved_out TIMESTAMP NOT NULL,
-    other_details VARCHAR(255),
-    PRIMARY KEY (resident_id, property_id, date_moved_in),
-    FOREIGN KEY (property_id) REFERENCES Properties (property_id)
-);","INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (6, 954, '2017-06-17 15:43:33', '2017-12-18 03:46:04', 'Anderson Batz');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (10, 605, '2015-03-27 12:00:00', '2018-03-17 07:48:09', 'Miss Naomie Osinski');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (23, 879, '2015-03-27 12:00:00', '2017-11-14 06:28:48', 'Jess Wyman');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (28, 629, '2015-03-27 12:00:00', '2017-10-05 02:47:31', 'Miss Alanis Lockman');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (37, 669, '2015-03-27 12:00:00', '2018-01-30 10:20:59', 'Prof. Arvel Kozey');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (38, 748, '2015-03-27 12:00:00', '2017-12-30 23:55:10', 'Chaim Swaniawski');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (43, 108, '2015-03-27 12:00:00', '2018-02-22 06:24:15', 'Elroy Schuster');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (45, 954, '2015-03-27 12:00:00', '2017-10-14 10:23:42', 'Prof. Nasir Hoppe');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (47, 669, '2015-03-27 12:00:00', '2017-10-10 02:25:53', 'Tiffany Jaskolski');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (58, 107, '2015-03-27 12:00:00', '2017-11-29 21:24:08', 'Tomasa Hoeger');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (67, 120, '2016-09-27 12:00:00', '2017-10-23 16:40:19', 'Terrill Bernhard');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (83, 445, '2016-09-27 12:00:00', '2018-01-19 01:35:51', 'Loy Walter');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (87, 748, '2016-09-27 12:00:00', '2018-01-28 13:19:54', 'Mrs. Raphaelle Fisher');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (88, 107, '2016-09-27 12:00:00', '2018-02-03 11:30:20', 'Jacques Glover II');
-INSERT INTO Residents (resident_id, property_id, date_moved_in, date_moved_out, other_details) VALUES (90, 373, '2016-09-27 12:00:00', '2017-11-19 03:11:44', 'Cassie Johnson');"
-local_govt_mdm,organizations,"CREATE TABLE Organizations (
-    organization_id INTEGER NOT NULL,
-    parent_organization_id INTEGER,
-    organization_details VARCHAR(255),
-    PRIMARY KEY (organization_id)
-);","INSERT INTO Organizations (organization_id, parent_organization_id, organization_details) VALUES (7, 7, 'Reinger, Hudson and Nolan Group');
-INSERT INTO Organizations (organization_id, parent_organization_id, organization_details) VALUES (8, 7, 'Denesik and Sons Party');
-INSERT INTO Organizations (organization_id, parent_organization_id, organization_details) VALUES (10, 8, 'Robel-Schulist Group');"
-local_govt_mdm,services,"CREATE TABLE Services (
-    service_id INTEGER NOT NULL,
-    organization_id INTEGER NOT NULL,
-    service_type_code CHAR(15) NOT NULL,
-    service_details VARCHAR(255),
-    PRIMARY KEY (service_id),
-    FOREIGN KEY (organization_id) REFERENCES Organizations (organization_id)
-);","INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (10, 10, 'Cleaning', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (11, 7, 'Check', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (13, 8, 'Moving Out', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (22, 10, 'Pay bills', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (29, 8, 'Moving Out', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (31, 7, 'Pay bills', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (36, 8, 'Check', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (41, 10, 'Check', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (47, 8, 'Pay bills', 'Unsatisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (49, 8, 'Moving Out', 'Satisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (52, 8, 'Pay bills', 'Unsatisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (65, 8, 'Cleaning', 'Unsatisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (66, 8, 'Pay bills', 'Unsatisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (77, 7, 'Pay bills', 'Unsatisfied');
-INSERT INTO Services (service_id, organization_id, service_type_code, service_details) VALUES (87, 8, 'Pay bills', 'Unsatisfied');"
-local_govt_mdm,residents_services,"CREATE TABLE Residents_Services (
-    resident_id INTEGER NOT NULL,
-    service_id INTEGER NOT NULL,
-    date_moved_in TIMESTAMP NOT NULL,
-    property_id INTEGER,
-    date_requested TIMESTAMP,
-    date_provided TIMESTAMP,
-    other_details VARCHAR(255),
-    PRIMARY KEY (resident_id, service_id),
-    FOREIGN KEY (service_id) REFERENCES Services (service_id),
-    FOREIGN KEY (resident_id, property_id, date_moved_in) REFERENCES Residents (resident_id, property_id, date_moved_in)
-);","INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (6, 49, '2017-06-17 15:43:33', 954, '2016-07-25 01:32:23', '2018-02-26 00:27:11', 'Satisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (23, 41, '2015-03-27 12:00:00', 879, '2016-10-10 21:42:21', '2017-08-21 06:23:06', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (28, 11, '2015-03-27 12:00:00', 629, '2017-07-14 19:03:47', '2017-08-28 03:43:56', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (43, 10, '2015-03-27 12:00:00', 108, '2016-09-20 22:50:26', '2017-10-17 03:30:08', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (45, 49, '2015-03-27 12:00:00', 954, '2017-06-14 14:04:50', '2017-08-14 08:06:43', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (47, 65, '2015-03-27 12:00:00', 669, '2016-12-16 06:08:10', '2018-01-30 09:58:57', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (67, 87, '2016-09-27 12:00:00', 120, '2016-04-27 14:51:07', '2017-11-13 10:28:34', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (83, 65, '2016-09-27 12:00:00', 445, '2016-11-27 15:37:02', '2017-09-10 00:48:58', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (87, 29, '2016-09-27 12:00:00', 748, '2016-10-13 04:15:54', '2017-10-29 13:12:29', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (90, 36, '2016-09-27 12:00:00', 373, '2016-04-13 05:09:24', '2017-10-28 12:36:43', 'Unsatisfied');
-INSERT INTO Residents_Services (resident_id, service_id, date_moved_in, property_id, date_requested, date_provided, other_details) VALUES (88, 11, '2016-09-27 12:00:00', 107, '2016-06-18 20:09:24', '2017-08-08 11:24:50', 'Unsatisfied');"
-local_govt_mdm,things,"CREATE TABLE Things (
-    thing_id INTEGER NOT NULL,
-    organization_id INTEGER NOT NULL,
-    Type_of_Thing_Code CHAR(15) NOT NULL,
-    service_type_code CHAR(10) NOT NULL,
-    service_details VARCHAR(255),
-    PRIMARY KEY (thing_id),
-    FOREIGN KEY (organization_id) REFERENCES Organizations (organization_id)
-);","INSERT INTO Things (thing_id, organization_id, Type_of_Thing_Code, service_type_code, service_details) VALUES (1, 8, 'Electronics', 'Check', 'Unsatisfied');
-INSERT INTO Things (thing_id, organization_id, Type_of_Thing_Code, service_type_code, service_details) VALUES (2, 8, 'Electronics', 'Cleaning', 'Satisfied');
-INSERT INTO Things (thing_id, organization_id, Type_of_Thing_Code, service_type_code, service_details) VALUES (10, 8, 'Common', 'Check', 'Satisfied');
-INSERT INTO Things (thing_id, organization_id, Type_of_Thing_Code, service_type_code, service_details) VALUES (14, 10, 'Furniture', 'Cleaning', 'Satisfied');
-INSERT INTO Things (thing_id, organization_id, Type_of_Thing_Code, service_type_code, service_details) VALUES (26, 8, 'Electronics', 'Cleaning', 'Unsatisfied');
-INSERT INTO Things (thing_id, organization_id, Type_of_Thing_Code, service_type_code, service_details) VALUES (35, 7, 'Electronics', 'Cleaning', 'Satisfied');
-INSERT INTO Things (thing_id, organization_id, Type_of_Thing_Code, service_type_code, service_details) VALUES (45, 8, 'Common', 'Check', 'Satisfied');
-INSERT INTO Things (thing_id, organization_id, Type_of_Thing_Code, service_type_code, service_details) VALUES (46, 8, 'Common', 'Check', 'Satisfied');
-INSERT INTO Things (thing_id, organization_id, Type_of_Thing_Code, service_type_code, service_details) VALUES (47, 10, 'Common', 'Cleaning', 'Satisfied');
-INSERT INTO Things (thing_id, organization_id, Type_of_Thing_Code, service_type_code, service_details) VALUES (58, 8, 'Electronics', 'Check', 'Satisfied');
-INSERT INTO Things (thing_id, organization_id, Type_of_Thing_Code, service_type_code, service_details) VALUES (68, 10, 'Common', 'Cleaning', 'Unsatisfied');
-INSERT INTO Things (thing_id, organization_id, Type_of_Thing_Code, service_type_code, service_details) VALUES (80, 8, 'Furniture', 'Check', 'Unsatisfied');
-INSERT INTO Things (thing_id, organization_id, Type_of_Thing_Code, service_type_code, service_details) VALUES (84, 8, 'Common', 'Check', 'Unsatisfied');
-INSERT INTO Things (thing_id, organization_id, Type_of_Thing_Code, service_type_code, service_details) VALUES (85, 8, 'Common', 'Cleaning', 'Unsatisfied');
-INSERT INTO Things (thing_id, organization_id, Type_of_Thing_Code, service_type_code, service_details) VALUES (92, 7, 'Common', 'Check', 'Unsatisfied');"
-local_govt_mdm,customer_events,"CREATE TABLE Customer_Events (
-  Customer_Event_ID INTEGER NOT NULL,
-  customer_id INTEGER,
-  date_moved_in TIMESTAMP,
-  property_id INTEGER,
-  resident_id INTEGER,
-  thing_id INTEGER NOT NULL,
-  PRIMARY KEY (Customer_Event_ID),
-  FOREIGN KEY (thing_id) REFERENCES Things (thing_id),
-  FOREIGN KEY (customer_id) REFERENCES Customers (customer_id),
-  FOREIGN KEY (resident_id, property_id, date_moved_in) REFERENCES Residents (resident_id, property_id, date_moved_in)
-);","INSERT INTO Customer_Events (Customer_Event_ID, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (70, 19, '2015-03-27 12:00:00', 605, 10, 1);
-INSERT INTO Customer_Events (Customer_Event_ID, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (160, 5, '2015-03-27 12:00:00', 879, 23, 80);
-INSERT INTO Customer_Events (Customer_Event_ID, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (166, 16, '2015-03-27 12:00:00', 629, 28, 14);
-INSERT INTO Customer_Events (Customer_Event_ID, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (216, 79, '2015-03-27 12:00:00', 669, 37, 46);
-INSERT INTO Customer_Events (Customer_Event_ID, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (226, 19, '2015-03-27 12:00:00', 748, 38, 80);
-INSERT INTO Customer_Events (Customer_Event_ID, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (256, 79, '2015-03-27 12:00:00', 108, 43, 2);
-INSERT INTO Customer_Events (Customer_Event_ID, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (428, 63, '2015-03-27 12:00:00', 954, 45, 68);
-INSERT INTO Customer_Events (Customer_Event_ID, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (530, 4, '2015-03-27 12:00:00', 669, 47, 10);
-INSERT INTO Customer_Events (Customer_Event_ID, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (559, 19, '2015-03-27 12:00:00', 107, 58, 1);
-INSERT INTO Customer_Events (Customer_Event_ID, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (591, 91, '2016-09-27 12:00:00', 120, 67, 10);
-INSERT INTO Customer_Events (Customer_Event_ID, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (606, 31, '2016-09-27 12:00:00', 445, 83, 85);
-INSERT INTO Customer_Events (Customer_Event_ID, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (627, 91, '2016-09-27 12:00:00', 748, 87, 92);
-INSERT INTO Customer_Events (Customer_Event_ID, customer_id, date_moved_in, property_id, resident_id, thing_id) VALUES (817, 19, '2016-09-27 12:00:00', 107, 88, 10);"
-local_govt_mdm,customer_event_notes,"CREATE TABLE Customer_Event_Notes (
-  Customer_Event_Note_ID INTEGER NOT NULL,
-  Customer_Event_ID INTEGER NOT NULL,
-  service_type_code CHAR(15) NOT NULL,
-  resident_id INTEGER NOT NULL,
-  property_id INTEGER NOT NULL,
-  date_moved_in TIMESTAMP NOT NULL,
-  PRIMARY KEY (Customer_Event_Note_ID),
-  FOREIGN KEY (Customer_Event_ID) REFERENCES Customer_Events (Customer_Event_ID)
-);","INSERT INTO Customer_Event_Notes (Customer_Event_Note_ID, Customer_Event_ID, service_type_code, resident_id, property_id, date_moved_in) VALUES (18, 70, 'Cleanning', 58, 107, '2016-08-04 01:06:05');
-INSERT INTO Customer_Event_Notes (Customer_Event_Note_ID, Customer_Event_ID, service_type_code, resident_id, property_id, date_moved_in) VALUES (21, 428, 'Check', 87, 445, '2016-12-11 01:05:14');
-INSERT INTO Customer_Event_Notes (Customer_Event_Note_ID, Customer_Event_ID, service_type_code, resident_id, property_id, date_moved_in) VALUES (32, 70, 'Check', 37, 669, '2016-07-10 04:09:56');
-INSERT INTO Customer_Event_Notes (Customer_Event_Note_ID, Customer_Event_ID, service_type_code, resident_id, property_id, date_moved_in) VALUES (46, 627, 'Cleanning', 87, 373, '2016-05-24 02:56:54');
-INSERT INTO Customer_Event_Notes (Customer_Event_Note_ID, Customer_Event_ID, service_type_code, resident_id, property_id, date_moved_in) VALUES (49, 559, 'Check', 45, 849, '2016-08-08 07:58:26');
-INSERT INTO Customer_Event_Notes (Customer_Event_Note_ID, Customer_Event_ID, service_type_code, resident_id, property_id, date_moved_in) VALUES (50, 606, 'Check', 45, 849, '2017-04-25 09:08:14');
-INSERT INTO Customer_Event_Notes (Customer_Event_Note_ID, Customer_Event_ID, service_type_code, resident_id, property_id, date_moved_in) VALUES (55, 817, 'Cleanning', 43, 120, '2017-06-26 13:24:36');
-INSERT INTO Customer_Event_Notes (Customer_Event_Note_ID, Customer_Event_ID, service_type_code, resident_id, property_id, date_moved_in) VALUES (56, 216, 'Check', 88, 748, '2016-11-04 12:46:21');
-INSERT INTO Customer_Event_Notes (Customer_Event_Note_ID, Customer_Event_ID, service_type_code, resident_id, property_id, date_moved_in) VALUES (59, 591, 'Cleanning', 28, 605, '2016-05-14 15:58:33');
-INSERT INTO Customer_Event_Notes (Customer_Event_Note_ID, Customer_Event_ID, service_type_code, resident_id, property_id, date_moved_in) VALUES (65, 591, 'Cleanning', 28, 879, '2017-04-12 19:47:08');
-INSERT INTO Customer_Event_Notes (Customer_Event_Note_ID, Customer_Event_ID, service_type_code, resident_id, property_id, date_moved_in) VALUES (75, 70, 'Check', 43, 120, '2016-10-28 01:43:42');
-INSERT INTO Customer_Event_Notes (Customer_Event_Note_ID, Customer_Event_ID, service_type_code, resident_id, property_id, date_moved_in) VALUES (88, 606, 'Cleanning', 67, 791, '2016-11-23 05:53:40');
-INSERT INTO Customer_Event_Notes (Customer_Event_Note_ID, Customer_Event_ID, service_type_code, resident_id, property_id, date_moved_in) VALUES (91, 817, 'Cleanning', 43, 120, '2017-04-28 10:17:13');"
-local_govt_mdm,timed_status_of_things,"CREATE TABLE Timed_Status_of_Things (
-  thing_id INTEGER NOT NULL,
-  Date_and_Date TIMESTAMP NOT NULL,
-  Status_of_Thing_Code CHAR(15) NOT NULL,
-  PRIMARY KEY (thing_id, Date_and_Date, Status_of_Thing_Code),
-  FOREIGN KEY (thing_id) REFERENCES Things (thing_id)
-);","INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (2, '2016-05-27 23:33:34', 'Open');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (2, '2016-07-17 08:35:27', 'Close');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (2, '2017-06-19 02:59:21', 'In Progress');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (10, '2016-09-06 16:31:13', 'Close');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (10, '2016-11-14 17:30:51', 'Open');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (14, '2017-07-03 02:22:12', 'In Progress');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (26, '2016-04-10 06:32:15', 'Close');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (26, '2017-08-05 02:10:02', 'In Progress');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (26, '2018-02-04 02:44:39', 'Close');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (35, '2017-11-27 06:32:46', 'In Progress');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (47, '2016-04-02 00:57:17', 'In Progress');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (47, '2016-12-02 11:08:16', 'Close');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (58, '2017-05-31 00:52:33', 'In Progress');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (80, '2016-10-08 08:02:57', 'Open');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (84, '2017-12-28 16:05:08', 'Open');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (85, '2017-03-24 12:12:46', 'Close');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (92, '2016-11-24 12:44:00', 'In Progress');
-INSERT INTO Timed_Status_of_Things (thing_id, Date_and_Date, Status_of_Thing_Code) VALUES (92, '2017-09-27 01:35:51', 'Close');"
-local_govt_mdm,timed_locations_of_things,"CREATE TABLE Timed_Locations_of_Things (
-  thing_id INTEGER NOT NULL,
-  Date_and_Time TIMESTAMP NOT NULL,
-  Location_Code CHAR(15) NOT NULL,
-  PRIMARY KEY (thing_id, Date_and_Time, Location_Code),
-  FOREIGN KEY (thing_id) REFERENCES Things (thing_id)
-);","INSERT INTO Timed_Locations_of_Things (thing_id, Date_and_Time, Location_Code) VALUES (2, '2016-10-12 12:03:07', '064 Charles Mou');
-INSERT INTO Timed_Locations_of_Things (thing_id, Date_and_Time, Location_Code) VALUES (10, '2016-12-29 00:39:19', '288 Lang Ferry');
-INSERT INTO Timed_Locations_of_Things (thing_id, Date_and_Time, Location_Code) VALUES (10, '2017-10-21 04:21:54', '854 Keeling Sho');
-INSERT INTO Timed_Locations_of_Things (thing_id, Date_and_Time, Location_Code) VALUES (14, '2017-03-19 19:28:13', '1316 Morgan Spr');
-INSERT INTO Timed_Locations_of_Things (thing_id, Date_and_Time, Location_Code) VALUES (26, '2016-04-26 16:34:09', '192 Kub Rapids');
-INSERT INTO Timed_Locations_of_Things (thing_id, Date_and_Time, Location_Code) VALUES (45, '2017-04-19 16:41:03', '4667 Kellen Fie');
-INSERT INTO Timed_Locations_of_Things (thing_id, Date_and_Time, Location_Code) VALUES (45, '2017-04-22 00:37:48', '1313 Sawayn Riv');
-INSERT INTO Timed_Locations_of_Things (thing_id, Date_and_Time, Location_Code) VALUES (58, '2016-08-04 00:25:55', '94425 Nellie Kn');
-INSERT INTO Timed_Locations_of_Things (thing_id, Date_and_Time, Location_Code) VALUES (68, '2017-03-06 01:56:27', '4223 Rae Fork S');
-INSERT INTO Timed_Locations_of_Things (thing_id, Date_and_Time, Location_Code) VALUES (68, '2017-08-31 13:54:13', '9628 Bins Islan');
-INSERT INTO Timed_Locations_of_Things (thing_id, Date_and_Time, Location_Code) VALUES (85, '2016-11-07 09:43:05', '2677 Runolfsson');
-INSERT INTO Timed_Locations_of_Things (thing_id, Date_and_Time, Location_Code) VALUES (85, '2017-01-02 23:26:47', '26281 Holden Pa');
-INSERT INTO Timed_Locations_of_Things (thing_id, Date_and_Time, Location_Code) VALUES (85, '2017-11-26 00:13:44', '1537 Schmeler G');
-INSERT INTO Timed_Locations_of_Things (thing_id, Date_and_Time, Location_Code) VALUES (92, '2017-03-19 13:57:49', '113 Geo Glens A');
-INSERT INTO Timed_Locations_of_Things (thing_id, Date_and_Time, Location_Code) VALUES (92, '2017-10-21 21:35:37', '9569 Tanner Inl');"
+local_govt_mdm,customer_master_index,"CREATE TABLE Customer_Master_Index (
+    master_customer_id INTEGER NOT NULL,
+    cmi_details VARCHAR(255),
+    PRIMARY KEY (master_customer_id)
+);","INSERT INTO Customer_Master_Index (master_customer_id, cmi_details) VALUES (1, 'Schmitt-Lang');
+INSERT INTO Customer_Master_Index (master_customer_id, cmi_details) VALUES (2, 'Volkman, Mills and Ferry');
+INSERT INTO Customer_Master_Index (master_customer_id, cmi_details) VALUES (3, 'Gusikowski PLC');
+INSERT INTO Customer_Master_Index (master_customer_id, cmi_details) VALUES (4, 'Schmidt, Kertzmann and Lubowitz');
+INSERT INTO Customer_Master_Index (master_customer_id, cmi_details) VALUES (5, 'Gottlieb, Becker and Wyman');
+INSERT INTO Customer_Master_Index (master_customer_id, cmi_details) VALUES (6, 'Mayer-Hagenes');
+INSERT INTO Customer_Master_Index (master_customer_id, cmi_details) VALUES (7, 'Streich-Morissette');
+INSERT INTO Customer_Master_Index (master_customer_id, cmi_details) VALUES (8, 'Quigley-Paucek');
+INSERT INTO Customer_Master_Index (master_customer_id, cmi_details) VALUES (9, 'Reynolds-McClure');"
+local_govt_mdm,CMI_cross_reference,"CREATE TABLE CMI_Cross_References (
+    cmi_cross_ref_id INTEGER NOT NULL,
+    master_customer_id INTEGER NOT NULL,
+    source_system_code CHAR(15) NOT NULL,
+    PRIMARY KEY (cmi_cross_ref_id),
+    FOREIGN KEY (master_customer_id) REFERENCES Customer_Master_Index (master_customer_id)
+);","INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (2, 4, 'Rent');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (4, 5, 'Parking');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (8, 1, 'Rent');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (41, 5, 'Benefits');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (48, 5, 'Benefits');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (49, 1, 'Business');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (59, 1, 'Rent');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (65, 9, 'Benefits');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (75, 5, 'Electoral');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (77, 4, 'Electoral');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (81, 9, 'Parking');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (83, 3, 'Benefits');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (95, 2, 'Business');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (99, 9, 'Business');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (100, 4, 'Rent');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (101, 2, 'Tax');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (102, 4, 'Tax');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (103, 9, 'Tax');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (104, 2, 'Tax');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (105, 2, 'Tax');
+INSERT INTO CMI_Cross_References (cmi_cross_ref_id, master_customer_id, source_system_code) VALUES (106, 1, 'Tax');"
+local_govt_mdm,council_tax,"CREATE TABLE Council_Tax (
+    council_tax_id INTEGER NOT NULL,
+    cmi_cross_ref_id INTEGER NOT NULL,
+    PRIMARY KEY (council_tax_id),
+    FOREIGN KEY (cmi_cross_ref_id) REFERENCES CMI_Cross_References (cmi_cross_ref_id)
+);","INSERT INTO Council_Tax (council_tax_id, cmi_cross_ref_id) VALUES (1, 101);
+INSERT INTO Council_Tax (council_tax_id, cmi_cross_ref_id) VALUES (7, 102);
+INSERT INTO Council_Tax (council_tax_id, cmi_cross_ref_id) VALUES (2, 103);
+INSERT INTO Council_Tax (council_tax_id, cmi_cross_ref_id) VALUES (3, 104);
+INSERT INTO Council_Tax (council_tax_id, cmi_cross_ref_id) VALUES (9, 105);
+INSERT INTO Council_Tax (council_tax_id, cmi_cross_ref_id) VALUES (8, 106);"
+local_govt_mdm,business_rates,"CREATE TABLE Business_Rates (
+    business_rates_id INTEGER NOT NULL,
+    cmi_cross_ref_id INTEGER NOT NULL,
+    PRIMARY KEY (business_rates_id),
+    FOREIGN KEY (cmi_cross_ref_id) REFERENCES CMI_Cross_References (cmi_cross_ref_id)
+);","INSERT INTO Business_Rates (business_rates_id, cmi_cross_ref_id) VALUES (5, 49);
+INSERT INTO Business_Rates (business_rates_id, cmi_cross_ref_id) VALUES (2, 99);
+INSERT INTO Business_Rates (business_rates_id, cmi_cross_ref_id) VALUES (8, 95);"
+local_govt_mdm,benefits_overpayments,"CREATE TABLE Benefits_Overpayments (
+    council_tax_id INTEGER NOT NULL,
+    cmi_cross_ref_id INTEGER NOT NULL,
+    PRIMARY KEY (council_tax_id),
+    FOREIGN KEY (cmi_cross_ref_id) REFERENCES CMI_Cross_References (cmi_cross_ref_id)
+);","INSERT INTO Benefits_Overpayments (council_tax_id, cmi_cross_ref_id) VALUES (3, 65);
+INSERT INTO Benefits_Overpayments (council_tax_id, cmi_cross_ref_id) VALUES (7, 83);
+INSERT INTO Benefits_Overpayments (council_tax_id, cmi_cross_ref_id) VALUES (6, 41);
+INSERT INTO Benefits_Overpayments (council_tax_id, cmi_cross_ref_id) VALUES (8, 48);"
+local_govt_mdm,parking_fines,"CREATE TABLE Parking_Fines (
+    council_tax_id INTEGER NOT NULL,
+    cmi_cross_ref_id INTEGER NOT NULL,
+    PRIMARY KEY (council_tax_id),
+    FOREIGN KEY (cmi_cross_ref_id) REFERENCES CMI_Cross_References (cmi_cross_ref_id)
+);","INSERT INTO Parking_Fines (council_tax_id, cmi_cross_ref_id) VALUES (9, 4);
+INSERT INTO Parking_Fines (council_tax_id, cmi_cross_ref_id) VALUES (10, 81);"
+local_govt_mdm,rent_arrears,"CREATE TABLE Rent_Arrears (
+    council_tax_id INTEGER NOT NULL,
+    cmi_cross_ref_id INTEGER NOT NULL,
+    PRIMARY KEY (council_tax_id),
+    FOREIGN KEY (cmi_cross_ref_id) REFERENCES CMI_Cross_References (cmi_cross_ref_id)
+);","INSERT INTO Rent_Arrears (council_tax_id, cmi_cross_ref_id) VALUES (7, 2);
+INSERT INTO Rent_Arrears (council_tax_id, cmi_cross_ref_id) VALUES (2, 8);
+INSERT INTO Rent_Arrears (council_tax_id, cmi_cross_ref_id) VALUES (6, 59);
+INSERT INTO Rent_Arrears (council_tax_id, cmi_cross_ref_id) VALUES (1, 100);"
+local_govt_mdm,electoral_register,"CREATE TABLE Electoral_Register (
+    electoral_register_id INTEGER NOT NULL,
+    cmi_cross_ref_id INTEGER NOT NULL,
+    PRIMARY KEY (electoral_register_id),
+    FOREIGN KEY (cmi_cross_ref_id) REFERENCES CMI_Cross_References (cmi_cross_ref_id)
+);","INSERT INTO Electoral_Register (electoral_register_id, cmi_cross_ref_id) VALUES (3, 65);
+INSERT INTO Electoral_Register (electoral_register_id, cmi_cross_ref_id) VALUES (7, 65);
+INSERT INTO Electoral_Register (electoral_register_id, cmi_cross_ref_id) VALUES (8, 75);
+INSERT INTO Electoral_Register (electoral_register_id, cmi_cross_ref_id) VALUES (2, 83);
+INSERT INTO Electoral_Register (electoral_register_id, cmi_cross_ref_id) VALUES (6, 95);
+INSERT INTO Electoral_Register (electoral_register_id, cmi_cross_ref_id) VALUES (4, 100);"
 storm_record,storm,"CREATE TABLE storm (
   Storm_ID int,
   Name text,
@@ -7327,7 +7037,7 @@ FOREIGN KEY (order_id ) REFERENCES Customer_Orders(order_id )
 );","INSERT INTO Order_Items (order_item_id, order_id, product_id, order_quantity) VALUES (1, 9, 15, '3');
 INSERT INTO Order_Items (order_item_id, order_id, product_id, order_quantity) VALUES (2, 8, 12, '7');
 INSERT INTO Order_Items (order_item_id, order_id, product_id, order_quantity) VALUES (3, 11, 9, '9');
-INSERT INTO Order_Items (order_item_id, order_id, product_id, order_quantity) VALUES (4, 15, 2, 'male');
+INSERT INTO Order_Items (order_item_id, order_id, product_id, order_quantity) VALUES (4, 15, 2, '15');
 INSERT INTO Order_Items (order_item_id, order_id, product_id, order_quantity) VALUES (5, 13, 3, '3');
 INSERT INTO Order_Items (order_item_id, order_id, product_id, order_quantity) VALUES (6, 3, 6, '4');
 INSERT INTO Order_Items (order_item_id, order_id, product_id, order_quantity) VALUES (7, 7, 4, '8');
