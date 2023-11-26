@@ -1,4 +1,3 @@
-import os
 import json
 import pandas as pd
 
@@ -127,34 +126,39 @@ class NO2SQL():
 
     def run_NO2SQLs(self, schema: bool = False, prompt: bool = False, token: bool = False) -> pd.DataFrame:
 
-        ## 전체 데이터에 대해서 execute_NL2SQL 반복해서 결과를 dataframe으로 저장
+        # 전체 데이터에 대해서 execute_NL2SQL 반복해서 결과를 dataframe으로 저장
 
-        # total_result = []
-        # for row in self.spider.iterrows():
-        #     db_id, qNL = row[1]['db_id'], row[1]['question']
-        #     print(f"qNL : {qNL}")
+        total_result = []
+        for row in self.spider.iterrows():
+            db_id, qNL = row[1]['db_id'], row[1]['question']
+            print(f"qNL : {qNL}")
             
-        #     result = self.execute_NL2SQL(db_id, qNL, schema, prompt, token)
-        #     total_result.append(result)
+            result = self.execute_NL2SQL(db_id, qNL, schema, prompt, token)
+            total_result.append(result)
 
-        # total_result = pd.DataFrame(total_result, columns=['true_SQL', 'qSQL', 'true_SQL_result', 'qSQL_result'])
+        total_result = pd.DataFrame(total_result, columns=['true_SQL', 'qSQL', 'true_SQL_result', 'qSQL_result'])
         
-        # return total_result
+        return total_result
 
+    def run_NL2SQLs_test(self):
         for row in self.spider.iterrows():
             db_id, qNL = row[1]['db_id'], row[1]['question']
             print(db_id, qNL)
             self.working_test(db_id, qNL)
 
+
 if __name__ == "__main__":
 
     # 10개만 실행
     # i = 10
-    spider = pd.read_csv("rawdata/SPIDER_SELECTED.csv", index_col=0).iloc[0:10, :]
+    # spider = pd.read_csv("rawdata/SPIDER_SELECTED.csv", index_col=0).iloc[0:10, :]
+    
+    # 전체 실행
+    spider = pd.read_csv("rawdata/SPIDER_SELECTED.csv", index_col=0)
     ddl = pd.read_csv("rawdata/DDL_SELECTED.csv")
 
     task = NO2SQL(spider, ddl)
-    result = task.run_NO2SQLs(token=True)
+    result = task.run_NL2SQLs_test()
 
     print(result)
 
