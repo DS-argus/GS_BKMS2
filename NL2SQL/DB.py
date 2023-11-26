@@ -88,7 +88,7 @@ class MyPostgreSQL:
     def select_query(self, qry: str, verbose=False) -> pd.DataFrame:
         if verbose:
             print(f"Print query : \t {qry}")
-
+        
         c = self.conn.cursor()
         try:
             c.execute(qry)
@@ -98,12 +98,12 @@ class MyPostgreSQL:
 
         except Exception as e:
             print(f"Error: {str(e)}")
-
+            c.execute("ROLLBACK;")
         finally:
             c.close()
 
     ## return이 없는 create, insert
-    def excute_query(self, qry: str, verbose=False) -> None:
+    def execute_query(self, qry: str, verbose=False) -> None:
         if verbose:
             print(f"Print query : \t {qry}")
 
@@ -114,6 +114,7 @@ class MyPostgreSQL:
 
         except Exception as e:
             print(f"Error: {str(e)}")
+            c.execute("ROLLBACK;")
 
         finally:
             c.close()
@@ -130,16 +131,20 @@ class MyPostgreSQL:
                 FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = 'public') 
                 LOOP
                     EXECUTE 'DROP TABLE IF EXISTS ' || quote_ident(r.tablename) || ' CASCADE';
+                    -- Print or log the SQL statement being executed for debugging
+                    RAISE NOTICE 'Dropping table: %', r.tablename;
                 END LOOP;
             END $$;
             """
-        
         try:
             c.execute(qry)
             self.conn.commit()
             print("All tables dropped successfully.")
         except Exception as e:
-            print(f"Error: {str(e)}")
+            # Print error details for debugging
+            print(f"Error code: {e.pgcode}")
+            print(f"Error message: {e.pgerror}")
+            c.execute("ROLLBACK;")
         finally:
             c.close()
 
@@ -151,23 +156,28 @@ if __name__=="__main__":
     # print(db.show_databases())
     # print(db.show_schemas())
 
-    dataset = pd.read_csv("rawdata/DDL_TABLE.csv")
+    qry = "SELECT count(*) FROM department WHERE department_id NOT IN (SELECT department_id FROM management);"
 
-    db_id = ""
-    for row in dataset.iterrows():
-        current_db_id = row[1]['db_id']
-        if current_db_id in ['store_1', 'college_2']:
-            continue
-        
-        if db_id != current_db_id:
-            print(db.show_tables())
-            db.drop_all_tables()
+    print(db.select_query(qry))
+    # dataset = pd.read_csv("rawdata/DDL_TABLE.csv")
 
-        create_qry = row[1]['CREATE']
-        insert_qry = row[1]['INSERT']
+    # ## test
+    # db_id = ""
+    # i = 1
+    # for row in dataset.iterrows():
+    #     current_db_id = row[1]['db_id']
+    #     if db_id != current_db_id:
+    #         print(i)
+    #         i +=1 
+    #         print(db.show_tables())
+            
+    #         db.drop_all_tables()
 
-        db.excute_query(create_qry)
-        db.excute_query(insert_qry)
+    #     create_qry = row[1]['CREATE']
+    #     insert_qry = row[1]['INSERT']
 
-        db_id = current_db_id
+    #     db.excute_query(create_qry)
+    #     db.excute_query(insert_qry)
+
+    #     db_id = current_db_id
         
