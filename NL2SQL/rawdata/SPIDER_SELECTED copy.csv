@@ -28,22 +28,14 @@
  '.' 'department_id' '=' 't2' '.' 'department_id' 'group' 'by' 't1' '.'
  'department_id' 'having' 'count' '(' '*' ')' '>' 'value']","['Which' 'department' 'has' 'more' 'than' '1' 'head' 'at' 'a' 'time' '?'
  'List' 'the' 'id' ',' 'name' 'and' 'the' 'number' 'of' 'heads' '.']",1,0,1,1,1
-3,36,farm,"SELECT T1.Official_Name
-FROM city AS T1
-JOIN farm_competition AS T2 ON T1.City_ID = T2.Host_city_ID
-GROUP BY T1.Official_Name, T2.Host_city_ID
-HAVING COUNT(*) > 1;",Show the official names of the cities that have hosted more than one competition.,"['SELECT' 'T1.Official_Name' 'FROM' 'city' 'AS' 'T1' 'JOIN'
+3,36,farm,SELECT T1.Official_Name FROM city AS T1 JOIN farm_competition AS T2 ON T1.City_ID  =  T2.Host_city_ID GROUP BY T2.Host_city_ID HAVING COUNT(*)  >  1,Show the official names of the cities that have hosted more than one competition.,"['SELECT' 'T1.Official_Name' 'FROM' 'city' 'AS' 'T1' 'JOIN'
  'farm_competition' 'AS' 'T2' 'ON' 'T1.City_ID' '=' 'T2.Host_city_ID'
  'GROUP' 'BY' 'T2.Host_city_ID' 'HAVING' 'COUNT' '(' '*' ')' '>' '1']","['select' 't1' '.' 'official_name' 'from' 'city' 'as' 't1' 'join'
  'farm_competition' 'as' 't2' 'on' 't1' '.' 'city_id' '=' 't2' '.'
  'host_city_id' 'group' 'by' 't2' '.' 'host_city_id' 'having' 'count' '('
  '*' ')' '>' 'value']","['Show' 'the' 'official' 'names' 'of' 'the' 'cities' 'that' 'have'
  'hosted' 'more' 'than' 'one' 'competition' '.']",1,0,1,1,1
-4,37,farm,"SELECT T1.Official_Name
-FROM city AS T1
-JOIN farm_competition AS T2 ON T1.City_ID = T2.Host_city_ID
-GROUP BY T1.Official_Name, T2.Host_city_ID
-HAVING COUNT(*) > 1;",What are the official names of cities that have hosted more than one competition?,"['SELECT' 'T1.Official_Name' 'FROM' 'city' 'AS' 'T1' 'JOIN'
+4,37,farm,SELECT T1.Official_Name FROM city AS T1 JOIN farm_competition AS T2 ON T1.City_ID  =  T2.Host_city_ID GROUP BY T2.Host_city_ID HAVING COUNT(*)  >  1,What are the official names of cities that have hosted more than one competition?,"['SELECT' 'T1.Official_Name' 'FROM' 'city' 'AS' 'T1' 'JOIN'
  'farm_competition' 'AS' 'T2' 'ON' 'T1.City_ID' '=' 'T2.Host_city_ID'
  'GROUP' 'BY' 'T2.Host_city_ID' 'HAVING' 'COUNT' '(' '*' ')' '>' '1']","['select' 't1' '.' 'official_name' 'from' 'city' 'as' 't1' 'join'
  'farm_competition' 'as' 't2' 'on' 't1' '.' 'city_id' '=' 't2' '.'
@@ -77,7 +69,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  't2' '.' 'course_id' '=' 't3' '.' 'course_id' 'group' 'by' 't2' '.'
  'course_id']","['For' 'each' 'course' 'id' ',' 'how' 'many' 'students' 'are' 'registered'
  'and' 'what' 'are' 'the' 'course' 'names' '?']",0,0,1,2,1
-9,143,bike_1,"SELECT T1.name ,  T1.id FROM station AS T1 JOIN status AS T2 ON T1.id  =  T2.station_id GROUP BY T2.station_id HAVING avg(T2.bikes_available)  >  14 UNION SELECT name ,  id FROM station WHERE installation_date LIKE '12/%'",What are the names and ids of stations that had more than 14 bikes available on average or were installed in December?,"['SELECT' 'T1.name' ',' 'T1.id' 'FROM' 'station' 'AS' 'T1' 'JOIN' 'status'
+9,143,bike_1,"SELECT T1.name ,  T1.id FROM station AS T1 JOIN status AS T2 ON T1.id  =  T2.station_id GROUP BY T2.station_id HAVING avg(T2.bikes_available)  >  14 UNION SELECT name ,  id FROM station WHERE installation_date LIKE ""12/%""",What are the names and ids of stations that had more than 14 bikes available on average or were installed in December?,"['SELECT' 'T1.name' ',' 'T1.id' 'FROM' 'station' 'AS' 'T1' 'JOIN' 'status'
  'AS' 'T2' 'ON' 'T1.id' '=' 'T2.station_id' 'GROUP' 'BY' 'T2.station_id'
  'HAVING' 'avg' '(' 'T2.bikes_available' ')' '>' '14' 'UNION' 'SELECT'
  'name' ',' 'id' 'FROM' 'station' 'WHERE' 'installation_date' 'LIKE' '``'
@@ -88,7 +80,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'station' 'where' 'installation_date' 'like' 'value']","['What' 'are' 'the' 'names' 'and' 'ids' 'of' 'stations' 'that' 'had'
  'more' 'than' '14' 'bikes' 'available' 'on' 'average' 'or' 'were'
  'installed' 'in' 'December' '?']",1,0,1,1,2
-10,144,bike_1,"SELECT T1.name ,  T1.id FROM station AS T1 JOIN status AS T2 ON T1.id  =  T2.station_id GROUP BY T2.station_id HAVING avg(T2.bikes_available)  >  14 UNION SELECT name ,  id FROM station WHERE installation_date LIKE '12/%'",What are the names and ids of all stations that have more than 14 bikes available on average or had bikes installed in December?,"['SELECT' 'T1.name' ',' 'T1.id' 'FROM' 'station' 'AS' 'T1' 'JOIN' 'status'
+10,144,bike_1,"SELECT T1.name ,  T1.id FROM station AS T1 JOIN status AS T2 ON T1.id  =  T2.station_id GROUP BY T2.station_id HAVING avg(T2.bikes_available)  >  14 UNION SELECT name ,  id FROM station WHERE installation_date LIKE ""12/%""",What are the names and ids of all stations that have more than 14 bikes available on average or had bikes installed in December?,"['SELECT' 'T1.name' ',' 'T1.id' 'FROM' 'station' 'AS' 'T1' 'JOIN' 'status'
  'AS' 'T2' 'ON' 'T1.id' '=' 'T2.station_id' 'GROUP' 'BY' 'T2.station_id'
  'HAVING' 'avg' '(' 'T2.bikes_available' ')' '>' '14' 'UNION' 'SELECT'
  'name' ',' 'id' 'FROM' 'station' 'WHERE' 'installation_date' 'LIKE' '``'
@@ -99,7 +91,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'station' 'where' 'installation_date' 'like' 'value']","['What' 'are' 'the' 'names' 'and' 'ids' 'of' 'all' 'stations' 'that'
  'have' 'more' 'than' '14' 'bikes' 'available' 'on' 'average' 'or' 'had'
  'bikes' 'installed' 'in' 'December' '?']",1,0,1,1,2
-11,171,bike_1,SELECT T1.name FROM station AS T1 JOIN status AS T2 ON T1.id  =  T2.station_id GROUP BY T2.station_id HAVING avg(bikes_available)  >  10 EXCEPT SELECT name FROM station WHERE city  =  'San Jose',What are names of stations that have average bike availability above 10 and are not located in San Jose city?,"['SELECT' 'T1.name' 'FROM' 'station' 'AS' 'T1' 'JOIN' 'status' 'AS' 'T2'
+11,171,bike_1,"SELECT T1.name FROM station AS T1 JOIN status AS T2 ON T1.id  =  T2.station_id GROUP BY T2.station_id HAVING avg(bikes_available)  >  10 EXCEPT SELECT name FROM station WHERE city  =  ""San Jose""",What are names of stations that have average bike availability above 10 and are not located in San Jose city?,"['SELECT' 'T1.name' 'FROM' 'station' 'AS' 'T1' 'JOIN' 'status' 'AS' 'T2'
  'ON' 'T1.id' '=' 'T2.station_id' 'GROUP' 'BY' 'T2.station_id' 'HAVING'
  'avg' '(' 'bikes_available' ')' '>' '10' 'EXCEPT' 'SELECT' 'name' 'FROM'
  'station' 'WHERE' 'city' '=' '``' 'San' 'Jose' ""''""]","['select' 't1' '.' 'name' 'from' 'station' 'as' 't1' 'join' 'status' 'as'
@@ -108,7 +100,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'except' 'select' 'name' 'from' 'station' 'where' 'city' '=' 'value']","['What' 'are' 'names' 'of' 'stations' 'that' 'have' 'average' 'bike'
  'availability' 'above' '10' 'and' 'are' 'not' 'located' 'in' 'San' 'Jose'
  'city' '?']",1,0,1,1,2
-12,172,bike_1,SELECT T1.name FROM station AS T1 JOIN status AS T2 ON T1.id  =  T2.station_id GROUP BY T2.station_id HAVING avg(bikes_available)  >  10 EXCEPT SELECT name FROM station WHERE city  =  'San Jose',What are the names of all stations that have more than 10 bikes available and are not located in San Jose?,"['SELECT' 'T1.name' 'FROM' 'station' 'AS' 'T1' 'JOIN' 'status' 'AS' 'T2'
+12,172,bike_1,"SELECT T1.name FROM station AS T1 JOIN status AS T2 ON T1.id  =  T2.station_id GROUP BY T2.station_id HAVING avg(bikes_available)  >  10 EXCEPT SELECT name FROM station WHERE city  =  ""San Jose""",What are the names of all stations that have more than 10 bikes available and are not located in San Jose?,"['SELECT' 'T1.name' 'FROM' 'station' 'AS' 'T1' 'JOIN' 'status' 'AS' 'T2'
  'ON' 'T1.id' '=' 'T2.station_id' 'GROUP' 'BY' 'T2.station_id' 'HAVING'
  'avg' '(' 'bikes_available' ')' '>' '10' 'EXCEPT' 'SELECT' 'name' 'FROM'
  'station' 'WHERE' 'city' '=' '``' 'San' 'Jose' ""''""]","['select' 't1' '.' 'name' 'from' 'station' 'as' 't1' 'join' 'status' 'as'
@@ -145,7 +137,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  't1' '.' 'uid' '=' 't2' '.' 'f1' 'where' 't1' '.' 'name' '=' 'value' ')']","['Find' 'the' 'names' 'of' 'the' 'users' 'whose' 'number' 'of' 'followers'
  'is' 'greater' 'than' 'that' 'of' 'the' 'user' 'named' '``' 'Tyler'
  'Swift' ""''"" '.']",1,0,1,2,2
-16,288,twitter_1,SELECT T2.f1 FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid  =  T2.f2 WHERE T1.name  =  'Mary' INTERSECT SELECT T2.f1 FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid  =  T2.f2 WHERE T1.name  =  'Susan',Find the id of users who are followed by Mary and Susan.,"['SELECT' 'T2.f1' 'FROM' 'user_profiles' 'AS' 'T1' 'JOIN' 'follows' 'AS'
+16,288,twitter_1,"SELECT T2.f1 FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid  =  T2.f2 WHERE T1.name  =  ""Mary"" INTERSECT SELECT T2.f1 FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid  =  T2.f2 WHERE T1.name  =  ""Susan""",Find the id of users who are followed by Mary and Susan.,"['SELECT' 'T2.f1' 'FROM' 'user_profiles' 'AS' 'T1' 'JOIN' 'follows' 'AS'
  'T2' 'ON' 'T1.uid' '=' 'T2.f2' 'WHERE' 'T1.name' '=' '``' 'Mary' ""''""
  'INTERSECT' 'SELECT' 'T2.f1' 'FROM' 'user_profiles' 'AS' 'T1' 'JOIN'
  'follows' 'AS' 'T2' 'ON' 'T1.uid' '=' 'T2.f2' 'WHERE' 'T1.name' '=' '``'
@@ -155,7 +147,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'as' 't1' 'join' 'follows' 'as' 't2' 'on' 't1' '.' 'uid' '=' 't2' '.'
  'f2' 'where' 't1' '.' 'name' '=' 'value']","['Find' 'the' 'id' 'of' 'users' 'who' 'are' 'followed' 'by' 'Mary' 'and'
  'Susan' '.']",0,0,0,2,2
-17,429,flight_1,SELECT name FROM Employee EXCEPT SELECT T1.name FROM Employee AS T1 JOIN Certificate AS T2 ON T1.eid  =  T2.eid JOIN Aircraft AS T3 ON T3.aid  =  T2.aid WHERE T3.name  =  'Boeing 737-800',Show names for all employees who do not have certificate of Boeing 737-800.,"['SELECT' 'name' 'FROM' 'Employee' 'EXCEPT' 'SELECT' 'T1.name' 'FROM'
+17,429,flight_1,"SELECT name FROM Employee EXCEPT SELECT T1.name FROM Employee AS T1 JOIN Certificate AS T2 ON T1.eid  =  T2.eid JOIN Aircraft AS T3 ON T3.aid  =  T2.aid WHERE T3.name  =  ""Boeing 737-800""",Show names for all employees who do not have certificate of Boeing 737-800.,"['SELECT' 'name' 'FROM' 'Employee' 'EXCEPT' 'SELECT' 'T1.name' 'FROM'
  'Employee' 'AS' 'T1' 'JOIN' 'Certificate' 'AS' 'T2' 'ON' 'T1.eid' '='
  'T2.eid' 'JOIN' 'Aircraft' 'AS' 'T3' 'ON' 'T3.aid' '=' 'T2.aid' 'WHERE'
  'T3.name' '=' '``' 'Boeing' '737-800' ""''""]","['select' 'name' 'from' 'employee' 'except' 'select' 't1' '.' 'name'
@@ -163,7 +155,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'eid' '=' 't2' '.' 'eid' 'join' 'aircraft' 'as' 't3' 'on' 't3' '.' 'aid'
  '=' 't2' '.' 'aid' 'where' 't3' '.' 'name' '=' 'value']","['Show' 'names' 'for' 'all' 'employees' 'who' 'do' 'not' 'have'
  'certificate' 'of' 'Boeing' '737-800' '.']",0,0,0,2,2
-18,430,flight_1,SELECT name FROM Employee EXCEPT SELECT T1.name FROM Employee AS T1 JOIN Certificate AS T2 ON T1.eid  =  T2.eid JOIN Aircraft AS T3 ON T3.aid  =  T2.aid WHERE T3.name  =  'Boeing 737-800',What are the names of all employees who are not certified to fly Boeing 737-800s?,"['SELECT' 'name' 'FROM' 'Employee' 'EXCEPT' 'SELECT' 'T1.name' 'FROM'
+18,430,flight_1,"SELECT name FROM Employee EXCEPT SELECT T1.name FROM Employee AS T1 JOIN Certificate AS T2 ON T1.eid  =  T2.eid JOIN Aircraft AS T3 ON T3.aid  =  T2.aid WHERE T3.name  =  ""Boeing 737-800""",What are the names of all employees who are not certified to fly Boeing 737-800s?,"['SELECT' 'name' 'FROM' 'Employee' 'EXCEPT' 'SELECT' 'T1.name' 'FROM'
  'Employee' 'AS' 'T1' 'JOIN' 'Certificate' 'AS' 'T2' 'ON' 'T1.eid' '='
  'T2.eid' 'JOIN' 'Aircraft' 'AS' 'T3' 'ON' 'T3.aid' '=' 'T2.aid' 'WHERE'
  'T3.name' '=' '``' 'Boeing' '737-800' ""''""]","['select' 'name' 'from' 'employee' 'except' 'select' 't1' '.' 'name'
@@ -190,7 +182,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  '>' 'value' 'group' 'by' 't1' '.' 'eid' 'order' 'by' 'count' '(' '*' ')'
  'desc' 'limit' 'value']","['What' 'is' 'the' 'salaray' 'and' 'name' 'of' 'the' 'employee' 'with'
  'the' 'most' 'certificates' 'to' 'fly' 'planes' 'more' 'than' '5000' '?']",0,1,1,2,1
-21,519,allergy_1,"SELECT lname ,  age FROM Student WHERE StuID IN (SELECT StuID FROM Has_allergy WHERE Allergy  =  'Milk' INTERSECT SELECT StuID FROM Has_allergy WHERE Allergy  =  'Cat')",Find the last name and age of the student who has allergy to both milk and cat.,"['SELECT' 'lname' ',' 'age' 'FROM' 'Student' 'WHERE' 'StuID' 'IN' '('
+21,519,allergy_1,"SELECT lname ,  age FROM Student WHERE StuID IN (SELECT StuID FROM Has_allergy WHERE Allergy  =  ""Milk"" INTERSECT SELECT StuID FROM Has_allergy WHERE Allergy  =  ""Cat"")",Find the last name and age of the student who has allergy to both milk and cat.,"['SELECT' 'lname' ',' 'age' 'FROM' 'Student' 'WHERE' 'StuID' 'IN' '('
  'SELECT' 'StuID' 'FROM' 'Has_allergy' 'WHERE' 'Allergy' '=' '``' 'Milk'
  ""''"" 'INTERSECT' 'SELECT' 'StuID' 'FROM' 'Has_allergy' 'WHERE' 'Allergy'
  '=' '``' 'Cat' ""''"" ')']","['select' 'lname' ',' 'age' 'from' 'student' 'where' 'stuid' 'in' '('
@@ -198,7 +190,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'intersect' 'select' 'stuid' 'from' 'has_allergy' 'where' 'allergy' '='
  'value' ')']","['Find' 'the' 'last' 'name' 'and' 'age' 'of' 'the' 'student' 'who' 'has'
  'allergy' 'to' 'both' 'milk' 'and' 'cat' '.']",0,0,0,0,3
-22,520,allergy_1,"SELECT lname ,  age FROM Student WHERE StuID IN (SELECT StuID FROM Has_allergy WHERE Allergy  =  'Milk' INTERSECT SELECT StuID FROM Has_allergy WHERE Allergy  =  'Cat')",What are the last names and ages of the students who are allergic to milk and cat?,"['SELECT' 'lname' ',' 'age' 'FROM' 'Student' 'WHERE' 'StuID' 'IN' '('
+22,520,allergy_1,"SELECT lname ,  age FROM Student WHERE StuID IN (SELECT StuID FROM Has_allergy WHERE Allergy  =  ""Milk"" INTERSECT SELECT StuID FROM Has_allergy WHERE Allergy  =  ""Cat"")",What are the last names and ages of the students who are allergic to milk and cat?,"['SELECT' 'lname' ',' 'age' 'FROM' 'Student' 'WHERE' 'StuID' 'IN' '('
  'SELECT' 'StuID' 'FROM' 'Has_allergy' 'WHERE' 'Allergy' '=' '``' 'Milk'
  ""''"" 'INTERSECT' 'SELECT' 'StuID' 'FROM' 'Has_allergy' 'WHERE' 'Allergy'
  '=' '``' 'Cat' ""''"" ')']","['select' 'lname' ',' 'age' 'from' 'student' 'where' 'stuid' 'in' '('
@@ -206,7 +198,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'intersect' 'select' 'stuid' 'from' 'has_allergy' 'where' 'allergy' '='
  'value' ')']","['What' 'are' 'the' 'last' 'names' 'and' 'ages' 'of' 'the' 'students'
  'who' 'are' 'allergic' 'to' 'milk' 'and' 'cat' '?']",0,0,0,0,3
-23,523,allergy_1,"SELECT fname ,  sex FROM Student WHERE StuID IN (SELECT StuID FROM Has_allergy WHERE Allergy  =  'Milk' EXCEPT SELECT StuID FROM Has_allergy WHERE Allergy  =  'Cat')",Find the first name and gender of the student who has allergy to milk but not cat.,"['SELECT' 'fname' ',' 'sex' 'FROM' 'Student' 'WHERE' 'StuID' 'IN' '('
+23,523,allergy_1,"SELECT fname ,  sex FROM Student WHERE StuID IN (SELECT StuID FROM Has_allergy WHERE Allergy  =  ""Milk"" EXCEPT SELECT StuID FROM Has_allergy WHERE Allergy  =  ""Cat"")",Find the first name and gender of the student who has allergy to milk but not cat.,"['SELECT' 'fname' ',' 'sex' 'FROM' 'Student' 'WHERE' 'StuID' 'IN' '('
  'SELECT' 'StuID' 'FROM' 'Has_allergy' 'WHERE' 'Allergy' '=' '``' 'Milk'
  ""''"" 'EXCEPT' 'SELECT' 'StuID' 'FROM' 'Has_allergy' 'WHERE' 'Allergy' '='
  '``' 'Cat' ""''"" ')']","['select' 'fname' ',' 'sex' 'from' 'student' 'where' 'stuid' 'in' '('
@@ -214,7 +206,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'except' 'select' 'stuid' 'from' 'has_allergy' 'where' 'allergy' '='
  'value' ')']","['Find' 'the' 'first' 'name' 'and' 'gender' 'of' 'the' 'student' 'who'
  'has' 'allergy' 'to' 'milk' 'but' 'not' 'cat' '.']",0,0,0,0,3
-24,524,allergy_1,"SELECT fname ,  sex FROM Student WHERE StuID IN (SELECT StuID FROM Has_allergy WHERE Allergy  =  'Milk' EXCEPT SELECT StuID FROM Has_allergy WHERE Allergy  =  'Cat')",What are the first name and gender of the students who have allergy to milk but can put up with cats?,"['SELECT' 'fname' ',' 'sex' 'FROM' 'Student' 'WHERE' 'StuID' 'IN' '('
+24,524,allergy_1,"SELECT fname ,  sex FROM Student WHERE StuID IN (SELECT StuID FROM Has_allergy WHERE Allergy  =  ""Milk"" EXCEPT SELECT StuID FROM Has_allergy WHERE Allergy  =  ""Cat"")",What are the first name and gender of the students who have allergy to milk but can put up with cats?,"['SELECT' 'fname' ',' 'sex' 'FROM' 'Student' 'WHERE' 'StuID' 'IN' '('
  'SELECT' 'StuID' 'FROM' 'Has_allergy' 'WHERE' 'Allergy' '=' '``' 'Milk'
  ""''"" 'EXCEPT' 'SELECT' 'StuID' 'FROM' 'Has_allergy' 'WHERE' 'Allergy' '='
  '``' 'Cat' ""''"" ')']","['select' 'fname' ',' 'sex' 'from' 'student' 'where' 'stuid' 'in' '('
@@ -223,7 +215,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'value' ')']","['What' 'are' 'the' 'first' 'name' 'and' 'gender' 'of' 'the' 'students'
  'who' 'have' 'allergy' 'to' 'milk' 'but' 'can' 'put' 'up' 'with' 'cats'
  '?']",0,0,0,0,3
-25,525,allergy_1,SELECT avg(age) FROM Student WHERE StuID IN ( SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy  =  T2.Allergy WHERE T2.allergytype  =  'food' INTERSECT SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy  =  T2.Allergy WHERE T2.allergytype  =  'animal'),Find the average age of the students who have allergies with food and animal types.,"['SELECT' 'avg' '(' 'age' ')' 'FROM' 'Student' 'WHERE' 'StuID' 'IN' '('
+25,525,allergy_1,"SELECT avg(age) FROM Student WHERE StuID IN ( SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy  =  T2.Allergy WHERE T2.allergytype  =  ""food"" INTERSECT SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy  =  T2.Allergy WHERE T2.allergytype  =  ""animal"")",Find the average age of the students who have allergies with food and animal types.,"['SELECT' 'avg' '(' 'age' ')' 'FROM' 'Student' 'WHERE' 'StuID' 'IN' '('
  'SELECT' 'T1.StuID' 'FROM' 'Has_allergy' 'AS' 'T1' 'JOIN' 'Allergy_Type'
  'AS' 'T2' 'ON' 'T1.Allergy' '=' 'T2.Allergy' 'WHERE' 'T2.allergytype' '='
  '``' 'food' ""''"" 'INTERSECT' 'SELECT' 'T1.StuID' 'FROM' 'Has_allergy'
@@ -236,7 +228,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'on' 't1' '.' 'allergy' '=' 't2' '.' 'allergy' 'where' 't2' '.'
  'allergytype' '=' 'value' ')']","['Find' 'the' 'average' 'age' 'of' 'the' 'students' 'who' 'have'
  'allergies' 'with' 'food' 'and' 'animal' 'types' '.']",0,0,0,2,3
-26,526,allergy_1,SELECT avg(age) FROM Student WHERE StuID IN ( SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy  =  T2.Allergy WHERE T2.allergytype  =  'food' INTERSECT SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy  =  T2.Allergy WHERE T2.allergytype  =  'animal'),How old are the students with allergies to food and animal types on average?,"['SELECT' 'avg' '(' 'age' ')' 'FROM' 'Student' 'WHERE' 'StuID' 'IN' '('
+26,526,allergy_1,"SELECT avg(age) FROM Student WHERE StuID IN ( SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy  =  T2.Allergy WHERE T2.allergytype  =  ""food"" INTERSECT SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy  =  T2.Allergy WHERE T2.allergytype  =  ""animal"")",How old are the students with allergies to food and animal types on average?,"['SELECT' 'avg' '(' 'age' ')' 'FROM' 'Student' 'WHERE' 'StuID' 'IN' '('
  'SELECT' 'T1.StuID' 'FROM' 'Has_allergy' 'AS' 'T1' 'JOIN' 'Allergy_Type'
  'AS' 'T2' 'ON' 'T1.Allergy' '=' 'T2.Allergy' 'WHERE' 'T2.allergytype' '='
  '``' 'food' ""''"" 'INTERSECT' 'SELECT' 'T1.StuID' 'FROM' 'Has_allergy'
@@ -326,7 +318,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'customer_name' 'order' 'by' 'count' '(' '*' ')' 'desc' 'limit' 'value'
  ')']","['What' 'are' 'all' 'the' 'policy' 'types' 'of' 'the' 'customer' 'that'
  'has' 'the' 'most' 'policies' 'listed' '?']",0,1,1,3,2
-34,923,insurance_fnol,SELECT t1.customer_name FROM customers AS t1 JOIN first_notification_of_loss AS t2 ON t1.customer_id  =  t2.customer_id JOIN services AS t3 ON t2.service_id  =  t3.service_id WHERE t3.service_name  =  'Close a policy' INTERSECT SELECT t1.customer_name FROM customers AS t1 JOIN first_notification_of_loss AS t2 ON t1.customer_id  =  t2.customer_id JOIN services AS t3 ON t2.service_id  =  t3.service_id WHERE t3.service_name  =  'New policy application',"Find the names of customers who have used both the service ""Close a policy"" and the service ""New policy application"".","['SELECT' 't1.customer_name' 'FROM' 'customers' 'AS' 't1' 'JOIN'
+34,923,insurance_fnol,"SELECT t1.customer_name FROM customers AS t1 JOIN first_notification_of_loss AS t2 ON t1.customer_id  =  t2.customer_id JOIN services AS t3 ON t2.service_id  =  t3.service_id WHERE t3.service_name  =  ""Close a policy"" INTERSECT SELECT t1.customer_name FROM customers AS t1 JOIN first_notification_of_loss AS t2 ON t1.customer_id  =  t2.customer_id JOIN services AS t3 ON t2.service_id  =  t3.service_id WHERE t3.service_name  =  ""New policy application""","Find the names of customers who have used both the service ""Close a policy"" and the service ""New policy application"".","['SELECT' 't1.customer_name' 'FROM' 'customers' 'AS' 't1' 'JOIN'
  'first_notification_of_loss' 'AS' 't2' 'ON' 't1.customer_id' '='
  't2.customer_id' 'JOIN' 'services' 'AS' 't3' 'ON' 't2.service_id' '='
  't3.service_id' 'WHERE' 't3.service_name' '=' '``' 'Close' 'a' 'policy'
@@ -345,7 +337,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  '.' 'service_name' '=' 'value']","['Find' 'the' 'names' 'of' 'customers' 'who' 'have' 'used' 'both' 'the'
  'service' '``' 'Close' 'a' 'policy' ""''"" 'and' 'the' 'service' '``' 'New'
  'policy' 'application' ""''"" '.']",0,0,0,4,2
-35,924,insurance_fnol,SELECT t1.customer_name FROM customers AS t1 JOIN first_notification_of_loss AS t2 ON t1.customer_id  =  t2.customer_id JOIN services AS t3 ON t2.service_id  =  t3.service_id WHERE t3.service_name  =  'Close a policy' INTERSECT SELECT t1.customer_name FROM customers AS t1 JOIN first_notification_of_loss AS t2 ON t1.customer_id  =  t2.customer_id JOIN services AS t3 ON t2.service_id  =  t3.service_id WHERE t3.service_name  =  'New policy application',"Which customers have used both the service named ""Close a policy"" and the service named ""Upgrade a policy""? Give me the customer names.","['SELECT' 't1.customer_name' 'FROM' 'customers' 'AS' 't1' 'JOIN'
+35,924,insurance_fnol,"SELECT t1.customer_name FROM customers AS t1 JOIN first_notification_of_loss AS t2 ON t1.customer_id  =  t2.customer_id JOIN services AS t3 ON t2.service_id  =  t3.service_id WHERE t3.service_name  =  ""Close a policy"" INTERSECT SELECT t1.customer_name FROM customers AS t1 JOIN first_notification_of_loss AS t2 ON t1.customer_id  =  t2.customer_id JOIN services AS t3 ON t2.service_id  =  t3.service_id WHERE t3.service_name  =  ""New policy application""","Which customers have used both the service named ""Close a policy"" and the service named ""Upgrade a policy""? Give me the customer names.","['SELECT' 't1.customer_name' 'FROM' 'customers' 'AS' 't1' 'JOIN'
  'first_notification_of_loss' 'AS' 't2' 'ON' 't1.customer_id' '='
  't2.customer_id' 'JOIN' 'services' 'AS' 't3' 'ON' 't2.service_id' '='
  't3.service_id' 'WHERE' 't3.service_name' '=' '``' 'Close' 'a' 'policy'
@@ -424,7 +416,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'accreditation_type' '=' 'value']","['Find' 'the' 'pixels' 'of' 'the' 'screen' 'modes' 'that' 'are' 'used'
  'by' 'both' 'phones' 'with' 'full' 'accreditation' 'types' 'and' 'phones'
  'with' 'Provisional' 'accreditation' 'types' '.']",0,0,0,2,2
-41,1106,match_season,SELECT T1.Country_name FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country WHERE T2.Position  =  'Forward' INTERSECT SELECT T1.Country_name FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country WHERE T2.Position  =  'Defender',What are the names of countries that have both players with position forward and players with position defender?,"['SELECT' 'T1.Country_name' 'FROM' 'country' 'AS' 'T1' 'JOIN'
+41,1106,match_season,"SELECT T1.Country_name FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country WHERE T2.Position  =  ""Forward"" INTERSECT SELECT T1.Country_name FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country WHERE T2.Position  =  ""Defender""",What are the names of countries that have both players with position forward and players with position defender?,"['SELECT' 'T1.Country_name' 'FROM' 'country' 'AS' 'T1' 'JOIN'
  'match_season' 'AS' 'T2' 'ON' 'T1.Country_id' '=' 'T2.Country' 'WHERE'
  'T2.Position' '=' '``' 'Forward' ""''"" 'INTERSECT' 'SELECT'
  'T1.Country_name' 'FROM' 'country' 'AS' 'T1' 'JOIN' 'match_season' 'AS'
@@ -437,7 +429,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  '.' 'position' '=' 'value']","['What' 'are' 'the' 'names' 'of' 'countries' 'that' 'have' 'both'
  'players' 'with' 'position' 'forward' 'and' 'players' 'with' 'position'
  'defender' '?']",0,0,0,2,2
-42,1107,match_season,SELECT T1.Country_name FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country WHERE T2.Position  =  'Forward' INTERSECT SELECT T1.Country_name FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country WHERE T2.Position  =  'Defender',"Return the names of countries that have players that play the Forward position, as well as players who play the Defender position.","['SELECT' 'T1.Country_name' 'FROM' 'country' 'AS' 'T1' 'JOIN'
+42,1107,match_season,"SELECT T1.Country_name FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country WHERE T2.Position  =  ""Forward"" INTERSECT SELECT T1.Country_name FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country WHERE T2.Position  =  ""Defender""","Return the names of countries that have players that play the Forward position, as well as players who play the Defender position.","['SELECT' 'T1.Country_name' 'FROM' 'country' 'AS' 'T1' 'JOIN'
  'match_season' 'AS' 'T2' 'ON' 'T1.Country_id' '=' 'T2.Country' 'WHERE'
  'T2.Position' '=' '``' 'Forward' ""''"" 'INTERSECT' 'SELECT'
  'T1.Country_name' 'FROM' 'country' 'AS' 'T1' 'JOIN' 'match_season' 'AS'
@@ -450,7 +442,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  '.' 'position' '=' 'value']","['Return' 'the' 'names' 'of' 'countries' 'that' 'have' 'players' 'that'
  'play' 'the' 'Forward' 'position' ',' 'as' 'well' 'as' 'players' 'who'
  'play' 'the' 'Defender' 'position' '.']",0,0,0,2,2
-43,1271,apartment_rentals,SELECT T2.apt_number FROM Apartment_Bookings AS T1 JOIN Apartments AS T2 ON T1.apt_id  =  T2.apt_id WHERE T1.booking_status_code  =  'Confirmed' INTERSECT SELECT T2.apt_number FROM Apartment_Bookings AS T1 JOIN Apartments AS T2 ON T1.apt_id  =  T2.apt_id WHERE T1.booking_status_code  =  'Provisional',"Which apartments have bookings with both status codes ""Provisional"" and ""Confirmed""? Give me the apartment numbers.","['SELECT' 'T2.apt_number' 'FROM' 'Apartment_Bookings' 'AS' 'T1' 'JOIN'
+43,1271,apartment_rentals,"SELECT T2.apt_number FROM Apartment_Bookings AS T1 JOIN Apartments AS T2 ON T1.apt_id  =  T2.apt_id WHERE T1.booking_status_code  =  ""Confirmed"" INTERSECT SELECT T2.apt_number FROM Apartment_Bookings AS T1 JOIN Apartments AS T2 ON T1.apt_id  =  T2.apt_id WHERE T1.booking_status_code  =  ""Provisional""","Which apartments have bookings with both status codes ""Provisional"" and ""Confirmed""? Give me the apartment numbers.","['SELECT' 'T2.apt_number' 'FROM' 'Apartment_Bookings' 'AS' 'T1' 'JOIN'
  'Apartments' 'AS' 'T2' 'ON' 'T1.apt_id' '=' 'T2.apt_id' 'WHERE'
  'T1.booking_status_code' '=' '``' 'Confirmed' ""''"" 'INTERSECT' 'SELECT'
  'T2.apt_number' 'FROM' 'Apartment_Bookings' 'AS' 'T1' 'JOIN' 'Apartments'
@@ -703,14 +695,14 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'group' 'by' 't3' '.' 'service_id' 'order' 'by' 'count' '(' '*' ')' 'asc'
  'limit' 'value']","['Which' 'service' 'id' 'and' 'type' 'has' 'the' 'least' 'number' 'of'
  'participants' '?']",0,1,1,3,1
-35,2334,csu_1,SELECT campus FROM campuses WHERE LOCATION  =  'Northridge' AND county  =  'Los Angeles' UNION SELECT campus FROM campuses WHERE LOCATION  =  'San Francisco' AND county  =  'San Francisco',"Find the name of the campuses that is in Northridge, Los Angeles or in San Francisco, San Francisco.","['SELECT' 'campus' 'FROM' 'campuses' 'WHERE' 'LOCATION' '=' '``'
+35,2334,csu_1,"SELECT campus FROM campuses WHERE LOCATION  =  ""Northridge"" AND county  =  ""Los Angeles"" UNION SELECT campus FROM campuses WHERE LOCATION  =  ""San Francisco"" AND county  =  ""San Francisco""","Find the name of the campuses that is in Northridge, Los Angeles or in San Francisco, San Francisco.","['SELECT' 'campus' 'FROM' 'campuses' 'WHERE' 'LOCATION' '=' '``'
  'Northridge' ""''"" 'AND' 'county' '=' '``' 'Los' 'Angeles' ""''"" 'UNION'
  'SELECT' 'campus' 'FROM' 'campuses' 'WHERE' 'LOCATION' '=' '``' 'San'
  'Francisco' ""''"" 'AND' 'county' '=' '``' 'San' 'Francisco' ""''""]","['select' 'campus' 'from' 'campuses' 'where' 'location' '=' 'value' 'and'
  'county' '=' 'value' 'union' 'select' 'campus' 'from' 'campuses' 'where'
  'location' '=' 'value' 'and' 'county' '=' 'value']","['Find' 'the' 'name' 'of' 'the' 'campuses' 'that' 'is' 'in' 'Northridge'
  ',' 'Los' 'Angeles' 'or' 'in' 'San' 'Francisco' ',' 'San' 'Francisco' '.']",0,0,0,0,2
-9,2360,csu_1,SELECT T1.campus FROM campuses AS T1 JOIN faculty AS T2 ON T1.id  =  T2.campus WHERE T2.year  =  2002 AND faculty  >  (SELECT max(faculty) FROM campuses AS T1 JOIN faculty AS T2 ON T1.id  =  T2.campus WHERE T2.year  =  2002 AND T1.county  =  'Orange'),Find the names of the campus which has more faculties in 2002 than every campus in Orange county.,"['SELECT' 'T1.campus' 'FROM' 'campuses' 'AS' 'T1' 'JOIN' 'faculty' 'AS'
+9,2360,csu_1,"SELECT T1.campus FROM campuses AS T1 JOIN faculty AS T2 ON T1.id  =  T2.campus WHERE T2.year  =  2002 AND faculty  >  (SELECT max(faculty) FROM campuses AS T1 JOIN faculty AS T2 ON T1.id  =  T2.campus WHERE T2.year  =  2002 AND T1.county  =  ""Orange"")",Find the names of the campus which has more faculties in 2002 than every campus in Orange county.,"['SELECT' 'T1.campus' 'FROM' 'campuses' 'AS' 'T1' 'JOIN' 'faculty' 'AS'
  'T2' 'ON' 'T1.id' '=' 'T2.campus' 'WHERE' 'T2.year' '=' '2002' 'AND'
  'faculty' '>' '(' 'SELECT' 'max' '(' 'faculty' ')' 'FROM' 'campuses' 'AS'
  'T1' 'JOIN' 'faculty' 'AS' 'T2' 'ON' 'T1.id' '=' 'T2.campus' 'WHERE'
@@ -737,7 +729,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  ')' 'from' 'people' 'as' 't1' 'join' 'candidate' 'as' 't2' 'on' 't1' '.'
  'people_id' '=' 't2' '.' 'people_id' 'group' 'by' 't1' '.' 'sex']","['Find' 'the' 'name' 'of' 'the' 'candidates' 'whose' 'oppose' 'percentage'
  'is' 'the' 'lowest' 'for' 'each' 'sex' '.']",0,0,1,1,1
-32,2470,movie_1,"SELECT T2.title ,  T2.director FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID  =  T2.mID WHERE T1.stars  >  (SELECT avg(T1.stars) FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID  =  T2.mID WHERE T2.director  =  'James Cameron')",What are the titles and directors of the movies whose star is greater than the average stars of the movies directed by James Cameron?,"['SELECT' 'T2.title' ',' 'T2.director' 'FROM' 'Rating' 'AS' 'T1' 'JOIN'
+32,2470,movie_1,"SELECT T2.title ,  T2.director FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID  =  T2.mID WHERE T1.stars  >  (SELECT avg(T1.stars) FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID  =  T2.mID WHERE T2.director  =  ""James Cameron"")",What are the titles and directors of the movies whose star is greater than the average stars of the movies directed by James Cameron?,"['SELECT' 'T2.title' ',' 'T2.director' 'FROM' 'Rating' 'AS' 'T1' 'JOIN'
  'Movie' 'AS' 'T2' 'ON' 'T1.mID' '=' 'T2.mID' 'WHERE' 'T1.stars' '>' '('
  'SELECT' 'avg' '(' 'T1.stars' ')' 'FROM' 'Rating' 'AS' 'T1' 'JOIN'
  'Movie' 'AS' 'T2' 'ON' 'T1.mID' '=' 'T2.mID' 'WHERE' 'T2.director' '='
@@ -748,7 +740,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  '=' 't2' '.' 'mid' 'where' 't2' '.' 'director' '=' 'value' ')']","['What' 'are' 'the' 'titles' 'and' 'directors' 'of' 'the' 'movies' 'whose'
  'star' 'is' 'greater' 'than' 'the' 'average' 'stars' 'of' 'the' 'movies'
  'directed' 'by' 'James' 'Cameron' '?']",0,0,0,2,2
-12,2514,movie_1,"SELECT mID ,  avg(stars) FROM Rating WHERE mID NOT IN (SELECT T1.mID FROM Rating AS T1 JOIN Reviewer AS T2 ON T1.rID  =  T2.rID WHERE T2.name  =  'Brittany Harris') GROUP BY mID",Find the average rating star for each movie that are not reviewed by Brittany Harris.,"['SELECT' 'mID' ',' 'avg' '(' 'stars' ')' 'FROM' 'Rating' 'WHERE' 'mID'
+12,2514,movie_1,"SELECT mID ,  avg(stars) FROM Rating WHERE mID NOT IN (SELECT T1.mID FROM Rating AS T1 JOIN Reviewer AS T2 ON T1.rID  =  T2.rID WHERE T2.name  =  ""Brittany Harris"") GROUP BY mID",Find the average rating star for each movie that are not reviewed by Brittany Harris.,"['SELECT' 'mID' ',' 'avg' '(' 'stars' ')' 'FROM' 'Rating' 'WHERE' 'mID'
  'NOT' 'IN' '(' 'SELECT' 'T1.mID' 'FROM' 'Rating' 'AS' 'T1' 'JOIN'
  'Reviewer' 'AS' 'T2' 'ON' 'T1.rID' '=' 'T2.rID' 'WHERE' 'T2.name' '='
  '``' 'Brittany' 'Harris' ""''"" ')' 'GROUP' 'BY' 'mID']","['select' 'mid' ',' 'avg' '(' 'stars' ')' 'from' 'rating' 'where' 'mid'
@@ -848,7 +840,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'journalist_id' 'group' 'by' 't3' '.' 'name' 'having' 'count' '(' '*' ')'
  '>' 'value']","['Show' 'the' 'names' 'of' 'journalists' 'that' 'have' 'reported' 'more'
  'than' 'one' 'event' '.']",1,0,1,2,1
-29,2839,restaurant_1,SELECT TIME FROM Student JOIN Visits_Restaurant ON Student.StuID = Visits_Restaurant.StuID JOIN Restaurant ON Visits_Restaurant.ResID = Restaurant.ResID WHERE Student.Fname = 'Linda' AND Student.Lname = 'Smith' AND Restaurant.ResName = 'Subway';,When did Linda Smith visit Subway?,"['SELECT' 'TIME' 'FROM' 'Student' 'JOIN' 'Visits_Restaurant' 'ON'
+29,2839,restaurant_1,"SELECT TIME FROM Student JOIN Visits_Restaurant ON Student.StuID = Visits_Restaurant.StuID JOIN Restaurant ON Visits_Restaurant.ResID = Restaurant.ResID WHERE Student.Fname = ""Linda"" AND Student.Lname = ""Smith"" AND Restaurant.ResName = ""Subway"";",When did Linda Smith visit Subway?,"['SELECT' 'TIME' 'FROM' 'Student' 'JOIN' 'Visits_Restaurant' 'ON'
  'Student.StuID' '=' 'Visits_Restaurant.StuID' 'JOIN' 'Restaurant' 'ON'
  'Visits_Restaurant.ResID' '=' 'Restaurant.ResID' 'WHERE' 'Student.Fname'
  '=' '``' 'Linda' ""''"" 'AND' 'Student.Lname' '=' '``' 'Smith' ""''"" 'AND'
@@ -868,7 +860,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'asc' 'limit' 'value']","['At' 'which' 'restaurant' 'did' 'the' 'students' 'spend' 'the' 'least'
  'amount' 'of' 'time' '?' 'List' 'restaurant' 'and' 'the' 'time'
  'students' 'spent' 'on' 'in' 'total' '.']",0,1,1,1,1
-21,2894,icfp_1,SELECT t3.title FROM authors AS t1 JOIN authorship AS t2 ON t1.authid  =  t2.authid JOIN papers AS t3 ON t2.paperid  =  t3.paperid JOIN inst AS t4 ON t2.instid  =  t4.instid WHERE t4.country  =  'USA' AND t2.authorder  =  2 AND t1.lname  =  'Turon',"Which paper is published in an institution in ""USA"" and have ""Turon"" as its second author?","['SELECT' 't3.title' 'FROM' 'authors' 'AS' 't1' 'JOIN' 'authorship' 'AS'
+21,2894,icfp_1,"SELECT t3.title FROM authors AS t1 JOIN authorship AS t2 ON t1.authid  =  t2.authid JOIN papers AS t3 ON t2.paperid  =  t3.paperid JOIN inst AS t4 ON t2.instid  =  t4.instid WHERE t4.country  =  ""USA"" AND t2.authorder  =  2 AND t1.lname  =  ""Turon""","Which paper is published in an institution in ""USA"" and have ""Turon"" as its second author?","['SELECT' 't3.title' 'FROM' 'authors' 'AS' 't1' 'JOIN' 'authorship' 'AS'
  't2' 'ON' 't1.authid' '=' 't2.authid' 'JOIN' 'papers' 'AS' 't3' 'ON'
  't2.paperid' '=' 't3.paperid' 'JOIN' 'inst' 'AS' 't4' 'ON' 't2.instid'
  '=' 't4.instid' 'WHERE' 't4.country' '=' '``' 'USA' ""''"" 'AND'
@@ -888,7 +880,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  't1' '.' 'fname' ',' 't1' '.' 'lname' 'order' 'by' 'count' '(' '*' ')'
  'desc' 'limit' 'value']","['What' 'is' 'the' 'last' 'name' 'of' 'the' 'author' 'that' 'has'
  'published' 'the' 'most' 'papers' '?']",0,1,1,2,1
-39,2910,icfp_1,SELECT t1.lname FROM authors AS t1 JOIN authorship AS t2 ON t1.authid  =  t2.authid JOIN papers AS t3 ON t2.paperid  =  t3.paperid WHERE t3.title LIKE '%Monadic%',"Find the last names of all the authors that have written a paper with title containing the word ""Monadic"".","['SELECT' 't1.lname' 'FROM' 'authors' 'AS' 't1' 'JOIN' 'authorship' 'AS'
+39,2910,icfp_1,"SELECT t1.lname FROM authors AS t1 JOIN authorship AS t2 ON t1.authid  =  t2.authid JOIN papers AS t3 ON t2.paperid  =  t3.paperid WHERE t3.title LIKE ""%Monadic%""","Find the last names of all the authors that have written a paper with title containing the word ""Monadic"".","['SELECT' 't1.lname' 'FROM' 'authors' 'AS' 't1' 'JOIN' 'authorship' 'AS'
  't2' 'ON' 't1.authid' '=' 't2.authid' 'JOIN' 'papers' 'AS' 't3' 'ON'
  't2.paperid' '=' 't3.paperid' 'WHERE' 't3.title' 'LIKE' '``' '%'
  'Monadic' '%' ""''""]","['select' 't1' '.' 'lname' 'from' 'authors' 'as' 't1' 'join' 'authorship'
@@ -1114,7 +1106,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'more' 'than' 'the' 'average' 'salary' 'and' 'who' 'work' 'in' 'a'
  'department' 'with' 'any' 'employee' 'with' 'a' ""'J"" ""'"" 'in' 'their'
  'first' 'name' '.']",0,0,0,0,3
-15,3620,music_1,SELECT T1.artist_name FROM artist AS T1 JOIN song AS T2 ON T1.artist_name  =  T2.artist_name WHERE T2.languages  =  'bangla' GROUP BY T2.artist_name ORDER BY count(*) DESC LIMIT 3,What are the top 3 artists with the largest number of songs in the language Bangla?,"['SELECT' 'T1.artist_name' 'FROM' 'artist' 'AS' 'T1' 'JOIN' 'song' 'AS'
+15,3620,music_1,"SELECT T1.artist_name FROM artist AS T1 JOIN song AS T2 ON T1.artist_name  =  T2.artist_name WHERE T2.languages  =  ""bangla"" GROUP BY T2.artist_name ORDER BY count(*) DESC LIMIT 3",What are the top 3 artists with the largest number of songs in the language Bangla?,"['SELECT' 'T1.artist_name' 'FROM' 'artist' 'AS' 'T1' 'JOIN' 'song' 'AS'
  'T2' 'ON' 'T1.artist_name' '=' 'T2.artist_name' 'WHERE' 'T2.languages'
  '=' '``' 'bangla' ""''"" 'GROUP' 'BY' 'T2.artist_name' 'ORDER' 'BY' 'count'
  '(' '*' ')' 'DESC' 'LIMIT' '3']","['select' 't1' '.' 'artist_name' 'from' 'artist' 'as' 't1' 'join' 'song'
@@ -1149,7 +1141,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'channel_id' '=' 't2' '.' 'channel_id' 'where' 't2' '.' 'time_of_day' '='
  'value']","['Which' 'channels' 'broadcast' 'both' 'in' 'the' 'morning' 'and' 'at'
  'night' '?' 'Give' 'me' 'the' 'channel' 'names' '.']",0,0,0,2,2
-23,3754,program_share,SELECT t1.owner FROM program AS t1 JOIN broadcast AS t2 ON t1.program_id  =  t2.program_id WHERE t2.Time_of_day  =  'Morning' INTERSECT SELECT t1.owner FROM program AS t1 JOIN broadcast AS t2 ON t1.program_id  =  t2.program_id WHERE t2.Time_of_day  =  'Night',find the program owners that have some programs in both morning and night time.,"['SELECT' 't1.owner' 'FROM' 'program' 'AS' 't1' 'JOIN' 'broadcast' 'AS'
+23,3754,program_share,"SELECT t1.owner FROM program AS t1 JOIN broadcast AS t2 ON t1.program_id  =  t2.program_id WHERE t2.Time_of_day  =  ""Morning"" INTERSECT SELECT t1.owner FROM program AS t1 JOIN broadcast AS t2 ON t1.program_id  =  t2.program_id WHERE t2.Time_of_day  =  ""Night""",find the program owners that have some programs in both morning and night time.,"['SELECT' 't1.owner' 'FROM' 'program' 'AS' 't1' 'JOIN' 'broadcast' 'AS'
  't2' 'ON' 't1.program_id' '=' 't2.program_id' 'WHERE' 't2.Time_of_day'
  '=' '``' 'Morning' ""''"" 'INTERSECT' 'SELECT' 't1.owner' 'FROM' 'program'
  'AS' 't1' 'JOIN' 'broadcast' 'AS' 't2' 'ON' 't1.program_id' '='
@@ -1213,7 +1205,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'from' 'claims' ')']","['Give' 'me' 'the' 'claim' 'date' ',' 'settlement' 'date' 'for' 'all'
  'the' 'claims' 'whose' 'claimed' 'amount' 'is' 'larger' 'than' 'the'
  'average' '.']",0,0,0,0,2
-32,4077,student_1,"SELECT DISTINCT T1.firstname ,  T1.lastname FROM list AS T1 JOIN teachers AS T2 ON T1.classroom  =  T2.classroom WHERE T1.grade  =  1 EXCEPT SELECT T1.firstname ,  T1.lastname FROM list AS T1 JOIN teachers AS T2 ON T1.classroom  =  T2.classroom WHERE T2.firstname  =  'OTHA' AND T2.lastname  =  'MOYER'",What are the first and last names of the first-grade students who are NOT taught by teacher OTHA MOYER?,"['SELECT' 'DISTINCT' 'T1.firstname' ',' 'T1.lastname' 'FROM' 'list' 'AS'
+32,4077,student_1,"SELECT DISTINCT T1.firstname ,  T1.lastname FROM list AS T1 JOIN teachers AS T2 ON T1.classroom  =  T2.classroom WHERE T1.grade  =  1 EXCEPT SELECT T1.firstname ,  T1.lastname FROM list AS T1 JOIN teachers AS T2 ON T1.classroom  =  T2.classroom WHERE T2.firstname  =  ""OTHA"" AND T2.lastname  =  ""MOYER""",What are the first and last names of the first-grade students who are NOT taught by teacher OTHA MOYER?,"['SELECT' 'DISTINCT' 'T1.firstname' ',' 'T1.lastname' 'FROM' 'list' 'AS'
  'T1' 'JOIN' 'teachers' 'AS' 'T2' 'ON' 'T1.classroom' '=' 'T2.classroom'
  'WHERE' 'T1.grade' '=' '1' 'EXCEPT' 'SELECT' 'T1.firstname' ','
  'T1.lastname' 'FROM' 'list' 'AS' 'T1' 'JOIN' 'teachers' 'AS' 'T2' 'ON'
@@ -1234,7 +1226,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'company' 'as' 't3' 'on' 't1' '.' 'company_id' '=' 't3' '.' 'company_id'
  'where' 't3' '.' 'sales_in_billion' '>' 'value']","['Show' 'the' 'names' 'of' 'employees' 'that' 'work' 'for' 'companies'
  'with' 'sales' 'bigger' 'than' '200' '.']",0,0,0,2,1
-34,4296,club_1,"SELECT t3.fname ,  t3.lname FROM club AS t1 JOIN member_of_club AS t2 ON t1.clubid  =  t2.clubid JOIN student AS t3 ON t2.stuid  =  t3.stuid WHERE t1.clubname  =  'Hopkins Student Enterprises' AND t2.position  =  'CTO'","Who is the ""CTO"" of club ""Hopkins Student Enterprises""? Show the first name and last name.","['SELECT' 't3.fname' ',' 't3.lname' 'FROM' 'club' 'AS' 't1' 'JOIN'
+34,4296,club_1,"SELECT t3.fname ,  t3.lname FROM club AS t1 JOIN member_of_club AS t2 ON t1.clubid  =  t2.clubid JOIN student AS t3 ON t2.stuid  =  t3.stuid WHERE t1.clubname  =  ""Hopkins Student Enterprises"" AND t2.position  =  ""CTO""","Who is the ""CTO"" of club ""Hopkins Student Enterprises""? Show the first name and last name.","['SELECT' 't3.fname' ',' 't3.lname' 'FROM' 'club' 'AS' 't1' 'JOIN'
  'member_of_club' 'AS' 't2' 'ON' 't1.clubid' '=' 't2.clubid' 'JOIN'
  'student' 'AS' 't3' 'ON' 't2.stuid' '=' 't3.stuid' 'WHERE' 't1.clubname'
  '=' '``' 'Hopkins' 'Student' 'Enterprises' ""''"" 'AND' 't2.position' '='
@@ -1320,7 +1312,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  't1' '.' 'outcome_code' '=' 'value']","['What' 'are' 'the' 'name' 'and' 'payment' 'method' 'of' 'customers' 'who'
  'have' 'both' 'mailshots' 'in' ""'Order"" ""'"" 'outcome' 'and' 'mailshots'
  'in' ""'No"" 'Response' ""'"" 'outcome' '.']",0,0,0,2,2
-46,4735,department_store,"SELECT T1.customer_name ,  T1.customer_address FROM customers AS T1 JOIN customer_orders AS T2 ON T1.customer_id  =  T2.customer_id WHERE T2.order_status_code  =  'New' INTERSECT SELECT T1.customer_name ,  T1.customer_address FROM customers AS T1 JOIN customer_orders AS T2 ON T1.customer_id  =  T2.customer_id WHERE T2.order_status_code  =  'Pending'",Find the name and address of the customers who have both New and Pending orders.,"['SELECT' 'T1.customer_name' ',' 'T1.customer_address' 'FROM' 'customers'
+46,4735,department_store,"SELECT T1.customer_name ,  T1.customer_address FROM customers AS T1 JOIN customer_orders AS T2 ON T1.customer_id  =  T2.customer_id WHERE T2.order_status_code  =  ""New"" INTERSECT SELECT T1.customer_name ,  T1.customer_address FROM customers AS T1 JOIN customer_orders AS T2 ON T1.customer_id  =  T2.customer_id WHERE T2.order_status_code  =  ""Pending""",Find the name and address of the customers who have both New and Pending orders.,"['SELECT' 'T1.customer_name' ',' 'T1.customer_address' 'FROM' 'customers'
  'AS' 'T1' 'JOIN' 'customer_orders' 'AS' 'T2' 'ON' 'T1.customer_id' '='
  'T2.customer_id' 'WHERE' 'T2.order_status_code' '=' '``' 'New' ""''""
  'INTERSECT' 'SELECT' 'T1.customer_name' ',' 'T1.customer_address' 'FROM'
@@ -1343,7 +1335,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'total_amount_purchased' ')' '>' 'value']","['What' 'are' 'the' 'ids' 'of' 'all' 'products' 'that' 'were' 'either'
  'ordered' 'more' 'than' '3' 'times' 'or' 'have' 'a' 'cumulative' 'amount'
  'purchased' 'of' 'above' '80000' '?']",2,0,2,0,2
-48,4778,department_store,SELECT DISTINCT T1.customer_name FROM customers AS T1 JOIN customer_orders AS T2 ON T1.customer_id  =  T2.customer_id JOIN order_items AS T3 ON T2.order_id  =  T3.order_id JOIN products AS T4 ON T3.product_id  =  T4.product_id WHERE T4.product_name  =  'keyboard',What are the distinct names of customers who have purchased a keyboard?,"['SELECT' 'DISTINCT' 'T1.customer_name' 'FROM' 'customers' 'AS' 'T1'
+48,4778,department_store,"SELECT DISTINCT T1.customer_name FROM customers AS T1 JOIN customer_orders AS T2 ON T1.customer_id  =  T2.customer_id JOIN order_items AS T3 ON T2.order_id  =  T3.order_id JOIN products AS T4 ON T3.product_id  =  T4.product_id WHERE T4.product_name  =  ""keyboard""",What are the distinct names of customers who have purchased a keyboard?,"['SELECT' 'DISTINCT' 'T1.customer_name' 'FROM' 'customers' 'AS' 'T1'
  'JOIN' 'customer_orders' 'AS' 'T2' 'ON' 'T1.customer_id' '='
  'T2.customer_id' 'JOIN' 'order_items' 'AS' 'T3' 'ON' 'T2.order_id' '='
  'T3.order_id' 'JOIN' 'products' 'AS' 'T4' 'ON' 'T3.product_id' '='
@@ -1354,7 +1346,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'product_id' '=' 't4' '.' 'product_id' 'where' 't4' '.' 'product_name'
  '=' 'value']","['What' 'are' 'the' 'distinct' 'names' 'of' 'customers' 'who' 'have'
  'purchased' 'a' 'keyboard' '?']",0,0,0,3,1
-49,4789,department_store,"SELECT T1.staff_name ,  T1.staff_gender FROM staff AS T1 JOIN Staff_Department_Assignments AS T2 ON T1.staff_id  =  T2.staff_id WHERE T2.job_title_code  =  'Sales Person' EXCEPT SELECT T1.staff_name ,  T1.staff_gender FROM staff AS T1 JOIN Staff_Department_Assignments AS T2 ON T1.staff_id  =  T2.staff_id WHERE T2.job_title_code  =  'Clerical Staff'",Find the name and gender of the staff who has been assigned the job of Sales Person but never Clerical Staff.,"['SELECT' 'T1.staff_name' ',' 'T1.staff_gender' 'FROM' 'staff' 'AS' 'T1'
+49,4789,department_store,"SELECT T1.staff_name ,  T1.staff_gender FROM staff AS T1 JOIN Staff_Department_Assignments AS T2 ON T1.staff_id  =  T2.staff_id WHERE T2.job_title_code  =  ""Sales Person"" EXCEPT SELECT T1.staff_name ,  T1.staff_gender FROM staff AS T1 JOIN Staff_Department_Assignments AS T2 ON T1.staff_id  =  T2.staff_id WHERE T2.job_title_code  =  ""Clerical Staff""",Find the name and gender of the staff who has been assigned the job of Sales Person but never Clerical Staff.,"['SELECT' 'T1.staff_name' ',' 'T1.staff_gender' 'FROM' 'staff' 'AS' 'T1'
  'JOIN' 'Staff_Department_Assignments' 'AS' 'T2' 'ON' 'T1.staff_id' '='
  'T2.staff_id' 'WHERE' 'T2.job_title_code' '=' '``' 'Sales' 'Person' ""''""
  'EXCEPT' 'SELECT' 'T1.staff_name' ',' 'T1.staff_gender' 'FROM' 'staff'
@@ -1369,7 +1361,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  't2' '.' 'staff_id' 'where' 't2' '.' 'job_title_code' '=' 'value']","['Find' 'the' 'name' 'and' 'gender' 'of' 'the' 'staff' 'who' 'has' 'been'
  'assigned' 'the' 'job' 'of' 'Sales' 'Person' 'but' 'never' 'Clerical'
  'Staff' '.']",0,0,0,2,2
-0,4815,aircraft,SELECT T1.Aircraft FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.Aircraft_ID  =  T2.Aircraft_ID JOIN airport AS T3 ON T2.Airport_ID  =  T3.Airport_ID WHERE T3.Airport_Name  =  'London Gatwick',"Please show the names of aircrafts associated with airport with name ""London Gatwick"".","['SELECT' 'T1.Aircraft' 'FROM' 'aircraft' 'AS' 'T1' 'JOIN'
+0,4815,aircraft,"SELECT T1.Aircraft FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.Aircraft_ID  =  T2.Aircraft_ID JOIN airport AS T3 ON T2.Airport_ID  =  T3.Airport_ID WHERE T3.Airport_Name  =  ""London Gatwick""","Please show the names of aircrafts associated with airport with name ""London Gatwick"".","['SELECT' 'T1.Aircraft' 'FROM' 'aircraft' 'AS' 'T1' 'JOIN'
  'airport_aircraft' 'AS' 'T2' 'ON' 'T1.Aircraft_ID' '=' 'T2.Aircraft_ID'
  'JOIN' 'airport' 'AS' 'T3' 'ON' 'T2.Airport_ID' '=' 'T3.Airport_ID'
  'WHERE' 'T3.Airport_Name' '=' '``' 'London' 'Gatwick' ""''""]","['select' 't1' '.' 'aircraft' 'from' 'aircraft' 'as' 't1' 'join'
@@ -1377,7 +1369,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'aircraft_id' 'join' 'airport' 'as' 't3' 'on' 't2' '.' 'airport_id' '='
  't3' '.' 'airport_id' 'where' 't3' '.' 'airport_name' '=' 'value']","['Please' 'show' 'the' 'names' 'of' 'aircrafts' 'associated' 'with'
  'airport' 'with' 'name' '``' 'London' 'Gatwick' ""''"" '.']",0,0,0,2,1
-1,4833,aircraft,SELECT T1.Aircraft FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.Aircraft_ID  =  T2.Aircraft_ID JOIN airport AS T3 ON T2.Airport_ID  =  T3.Airport_ID WHERE T3.Airport_Name  =  'London Heathrow' INTERSECT SELECT T1.Aircraft FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.Aircraft_ID  =  T2.Aircraft_ID JOIN airport AS T3 ON T2.Airport_ID  =  T3.Airport_ID WHERE T3.Airport_Name  =  'London Gatwick',"Show the names of aircrafts that are associated with both an airport named ""London Heathrow"" and an airport named ""London Gatwick""","['SELECT' 'T1.Aircraft' 'FROM' 'aircraft' 'AS' 'T1' 'JOIN'
+1,4833,aircraft,"SELECT T1.Aircraft FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.Aircraft_ID  =  T2.Aircraft_ID JOIN airport AS T3 ON T2.Airport_ID  =  T3.Airport_ID WHERE T3.Airport_Name  =  ""London Heathrow"" INTERSECT SELECT T1.Aircraft FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.Aircraft_ID  =  T2.Aircraft_ID JOIN airport AS T3 ON T2.Airport_ID  =  T3.Airport_ID WHERE T3.Airport_Name  =  ""London Gatwick""","Show the names of aircrafts that are associated with both an airport named ""London Heathrow"" and an airport named ""London Gatwick""","['SELECT' 'T1.Aircraft' 'FROM' 'aircraft' 'AS' 'T1' 'JOIN'
  'airport_aircraft' 'AS' 'T2' 'ON' 'T1.Aircraft_ID' '=' 'T2.Aircraft_ID'
  'JOIN' 'airport' 'AS' 'T3' 'ON' 'T2.Airport_ID' '=' 'T3.Airport_ID'
  'WHERE' 'T3.Airport_Name' '=' '``' 'London' 'Heathrow' ""''"" 'INTERSECT'
@@ -1394,7 +1386,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  '=' 't3' '.' 'airport_id' 'where' 't3' '.' 'airport_name' '=' 'value']","['Show' 'the' 'names' 'of' 'aircrafts' 'that' 'are' 'associated' 'with'
  'both' 'an' 'airport' 'named' '``' 'London' 'Heathrow' ""''"" 'and' 'an'
  'airport' 'named' '``' 'London' 'Gatwick' ""''""]",0,0,0,4,2
-2,4834,aircraft,SELECT T1.Aircraft FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.Aircraft_ID  =  T2.Aircraft_ID JOIN airport AS T3 ON T2.Airport_ID  =  T3.Airport_ID WHERE T3.Airport_Name  =  'London Heathrow' INTERSECT SELECT T1.Aircraft FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.Aircraft_ID  =  T2.Aircraft_ID JOIN airport AS T3 ON T2.Airport_ID  =  T3.Airport_ID WHERE T3.Airport_Name  =  'London Gatwick',What are the names of all aircrafts that are associated with both London Heathrow and Gatwick airports?,"['SELECT' 'T1.Aircraft' 'FROM' 'aircraft' 'AS' 'T1' 'JOIN'
+2,4834,aircraft,"SELECT T1.Aircraft FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.Aircraft_ID  =  T2.Aircraft_ID JOIN airport AS T3 ON T2.Airport_ID  =  T3.Airport_ID WHERE T3.Airport_Name  =  ""London Heathrow"" INTERSECT SELECT T1.Aircraft FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.Aircraft_ID  =  T2.Aircraft_ID JOIN airport AS T3 ON T2.Airport_ID  =  T3.Airport_ID WHERE T3.Airport_Name  =  ""London Gatwick""",What are the names of all aircrafts that are associated with both London Heathrow and Gatwick airports?,"['SELECT' 'T1.Aircraft' 'FROM' 'aircraft' 'AS' 'T1' 'JOIN'
  'airport_aircraft' 'AS' 'T2' 'ON' 'T1.Aircraft_ID' '=' 'T2.Aircraft_ID'
  'JOIN' 'airport' 'AS' 'T3' 'ON' 'T2.Airport_ID' '=' 'T3.Airport_ID'
  'WHERE' 'T3.Airport_Name' '=' '``' 'London' 'Heathrow' ""''"" 'INTERSECT'
@@ -1429,7 +1421,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  't1' '.' 'resident_id' 'order' 'by' 'count' '(' '*' ')' 'desc']","['How' 'many' 'services' 'has' 'each' 'resident' 'requested' '?' 'List'
  'the' 'resident' 'id' ',' 'details' ',' 'and' 'the' 'count' 'in'
  'descending' 'order' 'of' 'the' 'count' '.']",0,1,1,1,1
-5,4920,store_product,SELECT t3.headquartered_city FROM store AS t1 JOIN store_district AS t2 ON t1.store_id  =  t2.store_id JOIN district AS t3 ON t2.district_id  =  t3.district_id WHERE t1.store_name  =  'Blackville',"Which city is the headquarter of the store named ""Blackville"" in?","['SELECT' 't3.headquartered_city' 'FROM' 'store' 'AS' 't1' 'JOIN'
+5,4920,store_product,"SELECT t3.headquartered_city FROM store AS t1 JOIN store_district AS t2 ON t1.store_id  =  t2.store_id JOIN district AS t3 ON t2.district_id  =  t3.district_id WHERE t1.store_name  =  ""Blackville""","Which city is the headquarter of the store named ""Blackville"" in?","['SELECT' 't3.headquartered_city' 'FROM' 'store' 'AS' 't1' 'JOIN'
  'store_district' 'AS' 't2' 'ON' 't1.store_id' '=' 't2.store_id' 'JOIN'
  'district' 'AS' 't3' 'ON' 't2.district_id' '=' 't3.district_id' 'WHERE'
  't1.store_name' '=' '``' 'Blackville' ""''""]","['select' 't3' '.' 'headquartered_city' 'from' 'store' 'as' 't1' 'join'
@@ -1472,7 +1464,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  't3' '.' 'district_id' 'group' 'by' 't3' '.' 'headquartered_city' 'order'
  'by' 'count' '(' '*' ')' 'desc' 'limit' 'value']","['What' 'is' 'the' 'city' 'with' 'the' 'most' 'number' 'of' 'flagship'
  'stores' '?']",0,1,1,2,1
-10,4942,store_product,SELECT t3.District_name FROM store AS t1 JOIN store_district AS t2 ON t1.store_id  =  t2.store_id JOIN district AS t3 ON t2.district_id  =  t3.district_id WHERE t1.Type  =  'City Mall' INTERSECT SELECT t3.District_name FROM store AS t1 JOIN store_district AS t2 ON t1.store_id  =  t2.store_id JOIN district AS t3 ON t2.district_id  =  t3.district_id WHERE t1.Type  =  'Village Store',Find the names of districts where have both city mall and village store type stores.,"['SELECT' 't3.District_name' 'FROM' 'store' 'AS' 't1' 'JOIN'
+10,4942,store_product,"SELECT t3.District_name FROM store AS t1 JOIN store_district AS t2 ON t1.store_id  =  t2.store_id JOIN district AS t3 ON t2.district_id  =  t3.district_id WHERE t1.Type  =  ""City Mall"" INTERSECT SELECT t3.District_name FROM store AS t1 JOIN store_district AS t2 ON t1.store_id  =  t2.store_id JOIN district AS t3 ON t2.district_id  =  t3.district_id WHERE t1.Type  =  ""Village Store""",Find the names of districts where have both city mall and village store type stores.,"['SELECT' 't3.District_name' 'FROM' 'store' 'AS' 't1' 'JOIN'
  'store_district' 'AS' 't2' 'ON' 't1.store_id' '=' 't2.store_id' 'JOIN'
  'district' 'AS' 't3' 'ON' 't2.district_id' '=' 't3.district_id' 'WHERE'
  't1.Type' '=' '``' 'City' 'Mall' ""''"" 'INTERSECT' 'SELECT'
@@ -1488,7 +1480,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'store_id' 'join' 'district' 'as' 't3' 'on' 't2' '.' 'district_id' '='
  't3' '.' 'district_id' 'where' 't1' '.' 'type' '=' 'value']","['Find' 'the' 'names' 'of' 'districts' 'where' 'have' 'both' 'city' 'mall'
  'and' 'village' 'store' 'type' 'stores' '.']",0,0,0,4,2
-11,4943,store_product,SELECT t3.District_name FROM store AS t1 JOIN store_district AS t2 ON t1.store_id  =  t2.store_id JOIN district AS t3 ON t2.district_id  =  t3.district_id WHERE t1.Type  =  'City Mall' INTERSECT SELECT t3.District_name FROM store AS t1 JOIN store_district AS t2 ON t1.store_id  =  t2.store_id JOIN district AS t3 ON t2.district_id  =  t3.district_id WHERE t1.Type  =  'Village Store',What are the names of the districts that have both mall and village store style shops?,"['SELECT' 't3.District_name' 'FROM' 'store' 'AS' 't1' 'JOIN'
+11,4943,store_product,"SELECT t3.District_name FROM store AS t1 JOIN store_district AS t2 ON t1.store_id  =  t2.store_id JOIN district AS t3 ON t2.district_id  =  t3.district_id WHERE t1.Type  =  ""City Mall"" INTERSECT SELECT t3.District_name FROM store AS t1 JOIN store_district AS t2 ON t1.store_id  =  t2.store_id JOIN district AS t3 ON t2.district_id  =  t3.district_id WHERE t1.Type  =  ""Village Store""",What are the names of the districts that have both mall and village store style shops?,"['SELECT' 't3.District_name' 'FROM' 'store' 'AS' 't1' 'JOIN'
  'store_district' 'AS' 't2' 'ON' 't1.store_id' '=' 't2.store_id' 'JOIN'
  'district' 'AS' 't3' 'ON' 't2.district_id' '=' 't3.district_id' 'WHERE'
  't1.Type' '=' '``' 'City' 'Mall' ""''"" 'INTERSECT' 'SELECT'
@@ -1588,7 +1580,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  '.' 'product_id' 'group' 'by' 't1' '.' 'product_name' 'order' 'by'
  'count' '(' '*' ')' 'desc' 'limit' 'value']","['Which' 'product' 'has' 'the' 'most' 'problems' '?' 'Give' 'me' 'the'
  'number' 'of' 'problems' 'and' 'the' 'product' 'name' '.']",0,1,1,1,1
-23,5386,tracking_software_problems,SELECT product_id FROM problems AS T1 JOIN staff AS T2 ON T1.reported_by_staff_id = T2.staff_id WHERE T2.staff_first_name = 'Christop' AND T2.staff_last_name = 'Berge' INTERSECT SELECT product_id FROM problems AS T1 JOIN staff AS T2 ON T1.closure_authorised_by_staff_id = T2.staff_id WHERE T2.staff_first_name = 'Ashley' AND T2.staff_last_name = 'Medhurst',What are the product ids for the problems reported by Christop Berge with closure authorised by Ashley Medhurst?,"['SELECT' 'product_id' 'FROM' 'problems' 'AS' 'T1' 'JOIN' 'staff' 'AS'
+23,5386,tracking_software_problems,"SELECT product_id FROM problems AS T1 JOIN staff AS T2 ON T1.reported_by_staff_id = T2.staff_id WHERE T2.staff_first_name = ""Christop"" AND T2.staff_last_name = ""Berge"" INTERSECT SELECT product_id FROM problems AS T1 JOIN staff AS T2 ON T1.closure_authorised_by_staff_id = T2.staff_id WHERE T2.staff_first_name = ""Ashley"" AND T2.staff_last_name = ""Medhurst""",What are the product ids for the problems reported by Christop Berge with closure authorised by Ashley Medhurst?,"['SELECT' 'product_id' 'FROM' 'problems' 'AS' 'T1' 'JOIN' 'staff' 'AS'
  'T2' 'ON' 'T1.reported_by_staff_id' '=' 'T2.staff_id' 'WHERE'
  'T2.staff_first_name' '=' '``' 'Christop' ""''"" 'AND' 'T2.staff_last_name'
  '=' '``' 'Berge' ""''"" 'INTERSECT' 'SELECT' 'product_id' 'FROM' 'problems'
@@ -1604,7 +1596,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'and' 't2' '.' 'staff_last_name' '=' 'value']","['What' 'are' 'the' 'product' 'ids' 'for' 'the' 'problems' 'reported' 'by'
  'Christop' 'Berge' 'with' 'closure' 'authorised' 'by' 'Ashley' 'Medhurst'
  '?']",0,0,0,2,2
-24,5397,tracking_software_problems,"SELECT T3.staff_first_name ,  T3.staff_last_name FROM problems AS T1 JOIN product AS T2 JOIN staff AS T3 ON T1.product_id = T2.product_id AND T1.reported_by_staff_id = T3.staff_id WHERE T2.product_name = 'rem' EXCEPT SELECT T3.staff_first_name ,  T3.staff_last_name FROM problems AS T1 JOIN product AS T2 JOIN staff AS T3 ON T1.product_id = T2.product_id AND T1.reported_by_staff_id = T3.staff_id WHERE T2.product_name = 'aut'","Which staff members who reported problems from the product ""rem"" but not ""aut""? Give me their first and last names.","['SELECT' 'T3.staff_first_name' ',' 'T3.staff_last_name' 'FROM' 'problems'
+24,5397,tracking_software_problems,"SELECT T3.staff_first_name ,  T3.staff_last_name FROM problems AS T1 JOIN product AS T2 JOIN staff AS T3 ON T1.product_id = T2.product_id AND T1.reported_by_staff_id = T3.staff_id WHERE T2.product_name = ""rem"" EXCEPT SELECT T3.staff_first_name ,  T3.staff_last_name FROM problems AS T1 JOIN product AS T2 JOIN staff AS T3 ON T1.product_id = T2.product_id AND T1.reported_by_staff_id = T3.staff_id WHERE T2.product_name = ""aut""","Which staff members who reported problems from the product ""rem"" but not ""aut""? Give me their first and last names.","['SELECT' 'T3.staff_first_name' ',' 'T3.staff_last_name' 'FROM' 'problems'
  'AS' 'T1' 'JOIN' 'product' 'AS' 'T2' 'JOIN' 'staff' 'AS' 'T3' 'ON'
  'T1.product_id' '=' 'T2.product_id' 'AND' 'T1.reported_by_staff_id' '='
  'T3.staff_id' 'WHERE' 'T2.product_name' '=' '``' 'rem' ""''"" 'EXCEPT'
@@ -1734,7 +1726,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'customer_id' 'order' 'by' 'count' '(' '*' ')' 'limit' 'value']","['Return' 'the' 'names' 'of' 'products' 'that' 'have' 'had' 'complaints'
  'filed' 'by' 'the' 'customer' 'who' 'has' 'filed' 'the' 'fewest'
  'complaints' '.']",0,1,1,2,1
-36,5933,cre_Theme_park,"SELECT T1.Name ,  T3.Visit_Date FROM Tourist_Attractions AS T1 JOIN VISITORS AS T2 JOIN VISITS AS T3 ON T1.Tourist_Attraction_ID  =  T3.Tourist_Attraction_ID AND T2.Tourist_ID  =  T3.Tourist_ID WHERE T2.Tourist_Details  =  'Vincent' OR T2.Tourist_Details  =  'Vivian'",What are the names of the tourist attractions and the dates when the tourists named Vincent or Vivian visited there?,"['SELECT' 'T1.Name' ',' 'T3.Visit_Date' 'FROM' 'Tourist_Attractions' 'AS'
+36,5933,cre_Theme_park,"SELECT T1.Name ,  T3.Visit_Date FROM Tourist_Attractions AS T1 JOIN VISITORS AS T2 JOIN VISITS AS T3 ON T1.Tourist_Attraction_ID  =  T3.Tourist_Attraction_ID AND T2.Tourist_ID  =  T3.Tourist_ID WHERE T2.Tourist_Details  =  ""Vincent"" OR T2.Tourist_Details  =  ""Vivian""",What are the names of the tourist attractions and the dates when the tourists named Vincent or Vivian visited there?,"['SELECT' 'T1.Name' ',' 'T3.Visit_Date' 'FROM' 'Tourist_Attractions' 'AS'
  'T1' 'JOIN' 'VISITORS' 'AS' 'T2' 'JOIN' 'VISITS' 'AS' 'T3' 'ON'
  'T1.Tourist_Attraction_ID' '=' 'T3.Tourist_Attraction_ID' 'AND'
  'T2.Tourist_ID' '=' 'T3.Tourist_ID' 'WHERE' 'T2.Tourist_Details' '=' '``'
@@ -1964,7 +1956,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'as' 't2' 'on' 't1' '.' 'appelation' '=' 't2' '.' 'appelation' 'group'
  'by' 't2' '.' 'appelation' 'having' 'count' '(' '*' ')' '<' '=' 'value']","['What' 'are' 'the' 'countries' 'for' 'appelations' 'with' 'at' 'most' '3'
  'wines' '?']",1,0,1,1,1
-8,6587,wine_1,SELECT T2.Winery FROM GRAPES AS T1 JOIN WINE AS T2 ON T1.GRAPE  =  T2.GRAPE WHERE T1.Color  =  'White' GROUP BY T2.Winery ORDER BY count(*) DESC LIMIT 3,Find the top 3 wineries with the greatest number of wines made of white color grapes.,"['SELECT' 'T2.Winery' 'FROM' 'GRAPES' 'AS' 'T1' 'JOIN' 'WINE' 'AS' 'T2'
+8,6587,wine_1,"SELECT T2.Winery FROM GRAPES AS T1 JOIN WINE AS T2 ON T1.GRAPE  =  T2.GRAPE WHERE T1.Color  =  ""White"" GROUP BY T2.Winery ORDER BY count(*) DESC LIMIT 3",Find the top 3 wineries with the greatest number of wines made of white color grapes.,"['SELECT' 'T2.Winery' 'FROM' 'GRAPES' 'AS' 'T1' 'JOIN' 'WINE' 'AS' 'T2'
  'ON' 'T1.GRAPE' '=' 'T2.GRAPE' 'WHERE' 'T1.Color' '=' '``' 'White' ""''""
  'GROUP' 'BY' 'T2.Winery' 'ORDER' 'BY' 'count' '(' '*' ')' 'DESC' 'LIMIT'
  '3']","['select' 't2' '.' 'winery' 'from' 'grapes' 'as' 't1' 'join' 'wine' 'as'
@@ -1972,7 +1964,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  '=' 'value' 'group' 'by' 't2' '.' 'winery' 'order' 'by' 'count' '(' '*'
  ')' 'desc' 'limit' 'value']","['Find' 'the' 'top' '3' 'wineries' 'with' 'the' 'greatest' 'number' 'of'
  'wines' 'made' 'of' 'white' 'color' 'grapes' '.']",0,1,1,1,1
-9,6588,wine_1,SELECT T2.Winery FROM GRAPES AS T1 JOIN WINE AS T2 ON T1.GRAPE  =  T2.GRAPE WHERE T1.Color  =  'White' GROUP BY T2.Winery ORDER BY count(*) DESC LIMIT 3,Which 3 wineries produce the most wines made from white grapes?,"['SELECT' 'T2.Winery' 'FROM' 'GRAPES' 'AS' 'T1' 'JOIN' 'WINE' 'AS' 'T2'
+9,6588,wine_1,"SELECT T2.Winery FROM GRAPES AS T1 JOIN WINE AS T2 ON T1.GRAPE  =  T2.GRAPE WHERE T1.Color  =  ""White"" GROUP BY T2.Winery ORDER BY count(*) DESC LIMIT 3",Which 3 wineries produce the most wines made from white grapes?,"['SELECT' 'T2.Winery' 'FROM' 'GRAPES' 'AS' 'T1' 'JOIN' 'WINE' 'AS' 'T2'
  'ON' 'T1.GRAPE' '=' 'T2.GRAPE' 'WHERE' 'T1.Color' '=' '``' 'White' ""''""
  'GROUP' 'BY' 'T2.Winery' 'ORDER' 'BY' 'count' '(' '*' ')' 'DESC' 'LIMIT'
  '3']","['select' 't2' '.' 'winery' 'from' 'grapes' 'as' 't1' 'join' 'wine' 'as'
@@ -1980,7 +1972,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  '=' 'value' 'group' 'by' 't2' '.' 'winery' 'order' 'by' 'count' '(' '*'
  ')' 'desc' 'limit' 'value']","['Which' '3' 'wineries' 'produce' 'the' 'most' 'wines' 'made' 'from'
  'white' 'grapes' '?']",0,1,1,1,1
-10,6619,train_station,SELECT T2.name FROM train_station AS T1 JOIN station AS T2 ON T1.station_id  =  T2.station_id JOIN train AS T3 ON T3.train_id  =  T1.train_id WHERE T3.Name  =  'Ananthapuri Express' INTERSECT SELECT T2.name FROM train_station AS T1 JOIN station AS T2 ON T1.station_id  =  T2.station_id JOIN train AS T3 ON T3.train_id  =  T1.train_id WHERE T3.Name  =  'Guruvayur Express',"What are the names of the stations which serve both ""Ananthapuri Express"" and ""Guruvayur Express"" trains?","['SELECT' 'T2.name' 'FROM' 'train_station' 'AS' 'T1' 'JOIN' 'station' 'AS'
+10,6619,train_station,"SELECT T2.name FROM train_station AS T1 JOIN station AS T2 ON T1.station_id  =  T2.station_id JOIN train AS T3 ON T3.train_id  =  T1.train_id WHERE T3.Name  =  ""Ananthapuri Express"" INTERSECT SELECT T2.name FROM train_station AS T1 JOIN station AS T2 ON T1.station_id  =  T2.station_id JOIN train AS T3 ON T3.train_id  =  T1.train_id WHERE T3.Name  =  ""Guruvayur Express""","What are the names of the stations which serve both ""Ananthapuri Express"" and ""Guruvayur Express"" trains?","['SELECT' 'T2.name' 'FROM' 'train_station' 'AS' 'T1' 'JOIN' 'station' 'AS'
  'T2' 'ON' 'T1.station_id' '=' 'T2.station_id' 'JOIN' 'train' 'AS' 'T3'
  'ON' 'T3.train_id' '=' 'T1.train_id' 'WHERE' 'T3.Name' '=' '``'
  'Ananthapuri' 'Express' ""''"" 'INTERSECT' 'SELECT' 'T2.name' 'FROM'
@@ -2096,7 +2088,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'group' 'by' 't1' '.' 'order_id' 'order' 'by' 'count' '(' '*' ')' 'desc'
  'limit' 'value']","['Which' 'order' 'deals' 'with' 'the' 'most' 'items' '?' 'Return' 'the'
  'order' 'id' '.']",0,1,1,1,1
-23,6941,tracking_orders,SELECT T1.customer_name FROM customers AS T1 JOIN orders AS T2 JOIN order_items AS T3 JOIN products AS T4 ON T1.customer_id = T2.customer_id AND T2.order_id = T3.order_id AND T3.product_id = T4.product_id WHERE T4.product_name = 'food' GROUP BY T1.customer_id HAVING count(*)  >=  1,"List the names of the customers who have once bought product ""food"".","['SELECT' 'T1.customer_name' 'FROM' 'customers' 'AS' 'T1' 'JOIN' 'orders'
+23,6941,tracking_orders,"SELECT T1.customer_name FROM customers AS T1 JOIN orders AS T2 JOIN order_items AS T3 JOIN products AS T4 ON T1.customer_id = T2.customer_id AND T2.order_id = T3.order_id AND T3.product_id = T4.product_id WHERE T4.product_name = ""food"" GROUP BY T1.customer_id HAVING count(*)  >=  1","List the names of the customers who have once bought product ""food"".","['SELECT' 'T1.customer_name' 'FROM' 'customers' 'AS' 'T1' 'JOIN' 'orders'
  'AS' 'T2' 'JOIN' 'order_items' 'AS' 'T3' 'JOIN' 'products' 'AS' 'T4' 'ON'
  'T1.customer_id' '=' 'T2.customer_id' 'AND' 'T2.order_id' '='
  'T3.order_id' 'AND' 'T3.product_id' '=' 'T4.product_id' 'WHERE'
@@ -2108,7 +2100,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  't4' '.' 'product_id' 'where' 't4' '.' 'product_name' '=' 'value' 'group'
  'by' 't1' '.' 'customer_id' 'having' 'count' '(' '*' ')' '>' '=' 'value']","['List' 'the' 'names' 'of' 'the' 'customers' 'who' 'have' 'once' 'bought'
  'product' '``' 'food' ""''"" '.']",1,0,1,3,1
-24,6942,tracking_orders,SELECT T1.customer_name FROM customers AS T1 JOIN orders AS T2 JOIN order_items AS T3 JOIN products AS T4 ON T1.customer_id = T2.customer_id AND T2.order_id = T3.order_id AND T3.product_id = T4.product_id WHERE T4.product_name = 'food' GROUP BY T1.customer_id HAVING count(*)  >=  1,"What are the names of the customers who bought product ""food"" at least once?","['SELECT' 'T1.customer_name' 'FROM' 'customers' 'AS' 'T1' 'JOIN' 'orders'
+24,6942,tracking_orders,"SELECT T1.customer_name FROM customers AS T1 JOIN orders AS T2 JOIN order_items AS T3 JOIN products AS T4 ON T1.customer_id = T2.customer_id AND T2.order_id = T3.order_id AND T3.product_id = T4.product_id WHERE T4.product_name = ""food"" GROUP BY T1.customer_id HAVING count(*)  >=  1","What are the names of the customers who bought product ""food"" at least once?","['SELECT' 'T1.customer_name' 'FROM' 'customers' 'AS' 'T1' 'JOIN' 'orders'
  'AS' 'T2' 'JOIN' 'order_items' 'AS' 'T3' 'JOIN' 'products' 'AS' 'T4' 'ON'
  'T1.customer_id' '=' 'T2.customer_id' 'AND' 'T2.order_id' '='
  'T3.order_id' 'AND' 'T3.product_id' '=' 'T4.product_id' 'WHERE'
@@ -2120,7 +2112,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  't4' '.' 'product_id' 'where' 't4' '.' 'product_name' '=' 'value' 'group'
  'by' 't1' '.' 'customer_id' 'having' 'count' '(' '*' ')' '>' '=' 'value']","['What' 'are' 'the' 'names' 'of' 'the' 'customers' 'who' 'bought'
  'product' '``' 'food' ""''"" 'at' 'least' 'once' '?']",1,0,1,3,1
-25,6943,tracking_orders,SELECT T1.customer_name FROM customers AS T1 JOIN orders AS T2 JOIN order_items AS T3 JOIN products AS T4 ON T1.customer_id = T2.customer_id AND T2.order_id = T3.order_id AND T3.product_id = T4.product_id WHERE T3.order_item_status = 'Cancel' AND T4.product_name = 'food' GROUP BY T1.customer_id HAVING count(*)  >=  1,"List the names of customers who have once canceled the purchase of the product ""food"" (the item status is ""Cancel"").","['SELECT' 'T1.customer_name' 'FROM' 'customers' 'AS' 'T1' 'JOIN' 'orders'
+25,6943,tracking_orders,"SELECT T1.customer_name FROM customers AS T1 JOIN orders AS T2 JOIN order_items AS T3 JOIN products AS T4 ON T1.customer_id = T2.customer_id AND T2.order_id = T3.order_id AND T3.product_id = T4.product_id WHERE T3.order_item_status = ""Cancel"" AND T4.product_name = ""food"" GROUP BY T1.customer_id HAVING count(*)  >=  1","List the names of customers who have once canceled the purchase of the product ""food"" (the item status is ""Cancel"").","['SELECT' 'T1.customer_name' 'FROM' 'customers' 'AS' 'T1' 'JOIN' 'orders'
  'AS' 'T2' 'JOIN' 'order_items' 'AS' 'T3' 'JOIN' 'products' 'AS' 'T4' 'ON'
  'T1.customer_id' '=' 'T2.customer_id' 'AND' 'T2.order_id' '='
  'T3.order_id' 'AND' 'T3.product_id' '=' 'T4.product_id' 'WHERE'
@@ -2135,7 +2127,7 @@ HAVING COUNT(*) > 1;",What are the official names of cities that have hosted mor
  'customer_id' 'having' 'count' '(' '*' ')' '>' '=' 'value']","['List' 'the' 'names' 'of' 'customers' 'who' 'have' 'once' 'canceled'
  'the' 'purchase' 'of' 'the' 'product' '``' 'food' ""''"" '(' 'the' 'item'
  'status' 'is' '``' 'Cancel' ""''"" ')' '.']",1,0,1,3,1
-26,6944,tracking_orders,SELECT T1.customer_name FROM customers AS T1 JOIN orders AS T2 JOIN order_items AS T3 JOIN products AS T4 ON T1.customer_id = T2.customer_id AND T2.order_id = T3.order_id AND T3.product_id = T4.product_id WHERE T3.order_item_status = 'Cancel' AND T4.product_name = 'food' GROUP BY T1.customer_id HAVING count(*)  >=  1,"Which customers have ever canceled the purchase of the product ""food"" (the item status is ""Cancel"")?","['SELECT' 'T1.customer_name' 'FROM' 'customers' 'AS' 'T1' 'JOIN' 'orders'
+26,6944,tracking_orders,"SELECT T1.customer_name FROM customers AS T1 JOIN orders AS T2 JOIN order_items AS T3 JOIN products AS T4 ON T1.customer_id = T2.customer_id AND T2.order_id = T3.order_id AND T3.product_id = T4.product_id WHERE T3.order_item_status = ""Cancel"" AND T4.product_name = ""food"" GROUP BY T1.customer_id HAVING count(*)  >=  1","Which customers have ever canceled the purchase of the product ""food"" (the item status is ""Cancel"")?","['SELECT' 'T1.customer_name' 'FROM' 'customers' 'AS' 'T1' 'JOIN' 'orders'
  'AS' 'T2' 'JOIN' 'order_items' 'AS' 'T3' 'JOIN' 'products' 'AS' 'T4' 'ON'
  'T1.customer_id' '=' 'T2.customer_id' 'AND' 'T2.order_id' '='
  'T3.order_id' 'AND' 'T3.product_id' '=' 'T4.product_id' 'WHERE'
