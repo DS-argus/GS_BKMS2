@@ -99,6 +99,7 @@ class MyPostgreSQL:
         except Exception as e:
             print(f"Error: {str(e)}")
             c.execute("ROLLBACK;")
+            return pd.DataFrame(["Error"])
         finally:
             c.close()
 
@@ -119,8 +120,9 @@ class MyPostgreSQL:
         finally:
             c.close()
 
-    def drop_all_tables(self) -> None:
-        print("Drop all tables in this database")
+    def drop_all_tables(self, verbose=False) -> None:
+        if verbose:
+            print("Drop all tables in this database")
 
         c = self.conn.cursor()
         qry = """
@@ -139,7 +141,8 @@ class MyPostgreSQL:
         try:
             c.execute(qry)
             self.conn.commit()
-            print("All tables dropped successfully.")
+            if verbose:
+                print("All tables dropped successfully.")
         except Exception as e:
             # Print error details for debugging
             print(f"Error code: {e.pgcode}")
@@ -156,9 +159,9 @@ if __name__=="__main__":
     # print(db.show_databases())
     # print(db.show_schemas())
 
-    qry = "SELECT count(*) FROM department WHERE department_id NOT IN (SELECT department_id FROM management);"
-
-    print(db.select_query(qry))
+    qry = "SELECT T1.name ,  T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id WHERE T1.breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )"
+    a = db.select_query(qry)
+    print(f"qSQL_result : \n{a}")
     # dataset = pd.read_csv("rawdata/DDL_TABLE.csv")
 
     # ## test
