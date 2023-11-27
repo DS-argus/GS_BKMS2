@@ -59,8 +59,7 @@ class NO2SQL():
             current_schema = self.ddl[self.ddl['db_id'] == db_id].copy()
 
             for row in current_schema.iterrows():
-                schema_info += row[1]["CREATE"]
-                schema_info += "\n"
+                schema_info += f"{row[1]['CREATE']}\n"
             
             system_message += f" The schema of database is as following: \n{schema_info}\n"
             print(system_message)
@@ -81,7 +80,7 @@ class NO2SQL():
         # 반환 받은 response에서 쿼리만 따로 추출합니다.
             # 예) qNL = 'How many departments are led by heads who are not mentioned?'
             #    qSQL = 'SELECT COUNT(*) FROM departments WHERE head_id NOT IN (SELECT id FROM heads)'
-        qSQL = response.choices[0].message.content.replace('\n', '')        
+        qSQL = response.choices[0].message.content.replace('\n', ' ')        
         
         if token:
             print(response.usage)
