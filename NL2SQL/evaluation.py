@@ -199,19 +199,19 @@ class NO2SQL():
 if __name__ == "__main__":
 
     # 전체 실행
-    spider = pd.read_csv("rawdata/SPIDER_SELECTED.csv", encoding='cp949')
+    spider = pd.read_csv("rawdata/SPIDER_SELECTED.csv", encoding='cp949').iloc[15:16,:]
     ddl = pd.read_csv("rawdata/DDL_SELECTED.csv")
 
     task = NO2SQL(spider, ddl)
     
     start = time.time()
-    result = task.run_NO2SQLs(model='gpt-3.5-turbo', schema=True, token=True) # gpt-3.5-turbo, gpt-4
+    result = task.run_NO2SQLs(model='gpt-3.5-turbo', schema=True, token=False) # gpt-3.5-turbo, gpt-4
     end = time.time()
 
     print(result)
     print(f"execution time : {end - start:.5f} sec")
 
-
+    ## push 확인용
 
         
 
