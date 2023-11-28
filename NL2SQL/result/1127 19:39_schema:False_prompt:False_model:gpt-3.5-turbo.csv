@@ -1,0 +1,1099 @@
+,true_SQL,qSQL,true_SQL_result,qSQL_result
+0,SELECT count(*) FROM department WHERE department_id NOT IN (SELECT department_id FROM management);,SELECT COUNT(*)  FROM departments  WHERE head NOT IN (SELECT name FROM employees),[[11]],[['Error']]
+1,SELECT T3.born_state FROM department AS T1 JOIN management AS T2 ON T1.department_id  =  T2.department_id JOIN head AS T3 ON T2.head_id  =  T3.head_id WHERE T1.name  =  'Treasury' INTERSECT SELECT T3.born_state FROM department AS T1 JOIN management AS T2 ON T1.department_id  =  T2.department_id JOIN head AS T3 ON T2.head_id  =  T3.head_id WHERE T1.name  =  'Homeland Security',SELECT state FROM cabinet_members WHERE department = 'Treasury' AND secretary_born = true INTERSECT SELECT state FROM cabinet_members WHERE department = 'Homeland Security' AND secretary_born = true;,[['California']],[['Error']]
+2,"SELECT T1.department_id ,  T1.name ,  count(*) FROM management AS T2 JOIN department AS T1 ON T1.department_id  =  T2.department_id GROUP BY T1.department_id HAVING count(*)  >  1","SELECT department.id, department.name, COUNT(employee.id) AS number_of_heads FROM department JOIN employee ON department.id = employee.department_id GROUP BY department.id, department.name HAVING COUNT(employee.id) > 1;",[[2 'Treasury' 2]],[['Error']]
+3,"SELECT T1.Official_Name
+FROM city AS T1
+JOIN farm_competition AS T2 ON T1.City_ID = T2.Host_city_ID
+GROUP BY T1.Official_Name, T2.Host_city_ID
+HAVING COUNT(*) > 1;",SELECT official_name FROM cities GROUP BY official_name HAVING COUNT(*) > 1;,[['Aroostook']],[['Error']]
+4,"SELECT T1.Official_Name
+FROM city AS T1
+JOIN farm_competition AS T2 ON T1.City_ID = T2.Host_city_ID
+GROUP BY T1.Official_Name, T2.Host_city_ID
+HAVING COUNT(*) > 1;",SELECT official_name FROM cities GROUP BY official_name HAVING COUNT(*) > 1;,[['Aroostook']],[['Error']]
+5,SELECT Official_Name FROM city WHERE City_ID NOT IN (SELECT Host_city_ID FROM farm_competition),SELECT official_name FROM cities WHERE city_id NOT IN (SELECT city_id FROM competitions),[],[['Error']]
+6,SELECT Official_Name FROM city WHERE City_ID NOT IN (SELECT Host_city_ID FROM farm_competition),SELECT official_name FROM cities WHERE city_id NOT IN (SELECT city_id FROM competitions WHERE competition_type = 'farm'),[],[['Error']]
+7,"SELECT T3.course_name, count(T1.student_id) FROM students AS T1 JOIN student_course_registrations AS T2 ON T1.student_id = T2.student_id JOIN courses AS T3 ON T2.course_id = T3.course_id GROUP BY T3.course_name;","SELECT course.name, COUNT(student.id) AS num_registered_students FROM course JOIN enrollment ON course.id = enrollment.course_id JOIN student ON enrollment.student_id = student.id GROUP BY course.name;","[['statistics' 4]
+ ['French' 2]
+ ['data structure' 1]
+ ['English' 2]]",[['Error']]
+8,"SELECT T3.course_name, count(T1.student_id) FROM students AS T1 JOIN student_course_registrations AS T2 ON T1.student_id = T2.student_id JOIN courses AS T3 ON T2.course_id = T3.course_id GROUP BY T3.course_name;","SELECT course_id, COUNT(student_id) AS num_students, course_name FROM courses JOIN registrations ON courses.course_id = registrations.course_id GROUP BY course_id, course_name;","[['statistics' 4]
+ ['French' 2]
+ ['data structure' 1]
+ ['English' 2]]",[['Error']]
+9,"SELECT T1.name, T1.id FROM station AS T1 JOIN status AS T2 ON T1.id = T2.station_id GROUP BY T1.id HAVING avg(T2.bikes_available) > 14 UNION SELECT name , id FROM station WHERE installation_date LIKE '12/%'","SELECT name, id FROM stations WHERE (SELECT AVG(available_bikes) FROM bikes WHERE bikes.station_id = stations.id) > 14 OR EXTRACT(MONTH FROM installation_date) = 12;",[],[['Error']]
+10,"SELECT T1.name, T1.id FROM station AS T1 JOIN status AS T2 ON T1.id = T2.station_id GROUP BY T1.id HAVING avg(T2.bikes_available) > 14 UNION SELECT name , id FROM station WHERE installation_date LIKE '12/%'","SELECT name, id FROM stations WHERE (SELECT AVG(available_bikes) FROM bikes WHERE bikes.station_id = stations.id) > 14 OR EXTRACT(MONTH FROM installation_date) = 12;",[],[['Error']]
+11,"SELECT T1.name 
+FROM station AS T1 JOIN status AS T2 ON T1.id  =  T2.station_id 
+GROUP BY T1.name  
+HAVING avg(bikes_available)  >  10 
+EXCEPT SELECT name FROM station WHERE city  =  'San Jose'",SELECT name  FROM stations  WHERE average_bike_availability > 10  AND city != 'San Jose';,[],[['Error']]
+12,"SELECT T1.name 
+FROM station AS T1 JOIN status AS T2 ON T1.id  =  T2.station_id 
+GROUP BY T1.name  
+HAVING avg(bikes_available)  >  10 
+EXCEPT SELECT name FROM station WHERE city  =  'San Jose'",SELECT name FROM stations WHERE bikes_available > 10 AND location <> 'San Jose';,[],[['Error']]
+13,SELECT zip_code FROM weather GROUP BY zip_code HAVING avg(mean_humidity)  <  70 INTERSECT SELECT zip_code FROM trip GROUP BY zip_code HAVING count(*)  >=  100,SELECT zip_code FROM trips GROUP BY zip_code HAVING AVG(mean_humidity) < 70 AND COUNT(*) >= 100;,[],[['Error']]
+14,SELECT zip_code FROM weather GROUP BY zip_code HAVING avg(mean_humidity)  <  70 INTERSECT SELECT zip_code FROM trip GROUP BY zip_code HAVING count(*)  >=  100,SELECT zip_code FROM trips GROUP BY zip_code HAVING AVG(mean_humidity) < 70 AND COUNT(*) >= 100;,[],[['Error']]
+15,SELECT T1.name FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid  =  T2.f1 GROUP BY T1.name  HAVING count(*)  >  (SELECT count(*) FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid  =  T2.f1 WHERE T1.name  =  'Tyler Swift'),SELECT name FROM users WHERE followers > (SELECT followers FROM users WHERE name = 'Tyler Swift');,[['Iron Man']],[['Error']]
+16,SELECT T2.f1 FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid  =  T2.f2 WHERE T1.name  =  'Mary' INTERSECT SELECT T2.f1 FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid  =  T2.f2 WHERE T1.name  =  'Susan',SELECT id FROM users WHERE id IN (     SELECT followed_id     FROM follows     WHERE follower_id IN (         SELECT id         FROM users         WHERE name = 'Mary' OR name = 'Susan'     )     GROUP BY followed_id     HAVING COUNT(DISTINCT follower_id) = 2 ),[],[['Error']]
+17,SELECT name FROM Employee EXCEPT SELECT T1.name FROM Employee AS T1 JOIN Certificate AS T2 ON T1.eid  =  T2.eid JOIN Aircraft AS T3 ON T3.aid  =  T2.aid WHERE T3.name  =  'Boeing 737-800',SELECT name FROM employees WHERE employee_id NOT IN (     SELECT employee_id     FROM certificates     WHERE certificate_name = 'Boeing 737-800' ),"[['Joseph Thompson']
+ ['Karen Scott']
+ ['Angela Martinez']
+ ['Jennifer Thomas']
+ ['Patricia Jones']
+ ['Eric Cooper']
+ ['Linda Davis']
+ ['Chad Stewart']
+ ['Robert Brown']
+ ['William Moore']
+ ['Haywood Kelly']
+ ['Richard Jackson']
+ ['Donald King']
+ ['William Jones']
+ ['William Ward']
+ ['Michael Miller']
+ ['Lawrence Sperry']
+ ['David Anderson']
+ ['Elizabeth Taylor']
+ ['Barbara Wilson']
+ ['Milo Brooks']
+ ['Dorthy Lewis']]",[['Error']]
+18,SELECT name FROM Employee EXCEPT SELECT T1.name FROM Employee AS T1 JOIN Certificate AS T2 ON T1.eid  =  T2.eid JOIN Aircraft AS T3 ON T3.aid  =  T2.aid WHERE T3.name  =  'Boeing 737-800',SELECT name FROM employees WHERE certification <> 'Boeing 737-800';,"[['Joseph Thompson']
+ ['Karen Scott']
+ ['Angela Martinez']
+ ['Jennifer Thomas']
+ ['Patricia Jones']
+ ['Eric Cooper']
+ ['Linda Davis']
+ ['Chad Stewart']
+ ['Robert Brown']
+ ['William Moore']
+ ['Haywood Kelly']
+ ['Richard Jackson']
+ ['Donald King']
+ ['William Jones']
+ ['William Ward']
+ ['Michael Miller']
+ ['Lawrence Sperry']
+ ['David Anderson']
+ ['Elizabeth Taylor']
+ ['Barbara Wilson']
+ ['Milo Brooks']
+ ['Dorthy Lewis']]",[['Error']]
+19,SELECT T1.name FROM Employee AS T1 JOIN Certificate AS T2 ON T1.eid  =  T2.eid JOIN Aircraft AS T3 ON T3.aid  =  T2.aid WHERE T3.distance  >  5000 GROUP BY T1.eid ORDER BY count(*) DESC LIMIT 1,"SELECT e.name, e.salary FROM employees e JOIN certificates c ON e.employee_id = c.employee_id JOIN aircrafts a ON c.aircraft_id = a.aircraft_id WHERE a.distance > 5000 GROUP BY e.employee_id, e.name, e.salary ORDER BY COUNT(c.certificate_id) DESC LIMIT 1;",[['Lisa Walker']],[['Error']]
+20,SELECT T1.name FROM Employee AS T1 JOIN Certificate AS T2 ON T1.eid  =  T2.eid JOIN Aircraft AS T3 ON T3.aid  =  T2.aid WHERE T3.distance  >  5000 GROUP BY T1.eid ORDER BY count(*) DESC LIMIT 1,"SELECT salary, name FROM employees WHERE certificates > (SELECT COUNT(*)                        FROM flights                        WHERE distance > 5000) ORDER BY certificates DESC LIMIT 1;",[['Lisa Walker']],[['Error']]
+21,"SELECT lname ,  age FROM Student WHERE StuID IN (SELECT StuID FROM Has_allergy WHERE Allergy  =  'Milk' INTERSECT SELECT StuID FROM Has_allergy WHERE Allergy  =  'Cat')","SELECT last_name, age FROM students WHERE allergy = 'milk' AND allergy = 'cat' ORDER BY last_name DESC LIMIT 1;","[['Apap' 18]
+ ['Lee' 17]]",[['Error']]
+22,"SELECT lname ,  age FROM Student WHERE StuID IN (SELECT StuID FROM Has_allergy WHERE Allergy  =  'Milk' INTERSECT SELECT StuID FROM Has_allergy WHERE Allergy  =  'Cat')","SELECT last_name, age FROM students WHERE allergic_to_milk = true AND allergic_to_cat = true;","[['Apap' 18]
+ ['Lee' 17]]",[['Error']]
+23,"SELECT fname ,  sex FROM Student WHERE StuID IN (SELECT StuID FROM Has_allergy WHERE Allergy  =  'Milk' EXCEPT SELECT StuID FROM Has_allergy WHERE Allergy  =  'Cat')","SELECT first_name, gender FROM students WHERE allergy = 'milk' AND allergy != 'cat' LIMIT 1;",[['Mark' 'M']],[['Error']]
+24,"SELECT fname ,  sex FROM Student WHERE StuID IN (SELECT StuID FROM Has_allergy WHERE Allergy  =  'Milk' EXCEPT SELECT StuID FROM Has_allergy WHERE Allergy  =  'Cat')","SELECT first_name, gender FROM students WHERE allergy = 'milk' AND tolerance = 'cats';",[['Mark' 'M']],[['Error']]
+25,SELECT avg(age) FROM Student WHERE StuID IN ( SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy  =  T2.Allergy WHERE T2.allergytype  =  'food' INTERSECT SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy  =  T2.Allergy WHERE T2.allergytype  =  'animal'),SELECT AVG(age)  FROM students  WHERE allergies LIKE '%food%' AND allergies LIKE '%animal%';,[[Decimal('18.3333333333333333')]],[['Error']]
+26,SELECT avg(age) FROM Student WHERE StuID IN ( SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy  =  T2.Allergy WHERE T2.allergytype  =  'food' INTERSECT SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy  =  T2.Allergy WHERE T2.allergytype  =  'animal'),SELECT AVG(age)  FROM students  WHERE allergies LIKE '%food%'  AND allergies LIKE '%animal%';,[[Decimal('18.3333333333333333')]],[['Error']]
+27,SELECT T1.name FROM tracks AS T1 JOIN playlist_tracks AS T2 ON T1.id  =  T2.track_id JOIN playlists AS T3 ON T2.playlist_id  =  T3.id WHERE T3.name  =  'Movies' EXCEPT SELECT T1.name FROM tracks AS T1 JOIN playlist_tracks AS T2 ON T1.id  =  T2.track_id JOIN playlists AS T3 ON T2.playlist_id  =  T3.id WHERE T3.name  =  'Music',SELECT t.name FROM tracks t JOIN playlist_track pt ON t.track_id = pt.track_id JOIN playlists p ON pt.playlist_id = p.playlist_id WHERE p.name = 'Movies' AND t.track_id NOT IN (     SELECT t.track_id     FROM tracks t     JOIN playlist_track pt ON t.track_id = pt.track_id     JOIN playlists p ON pt.playlist_id = p.playlist_id     WHERE p.name = 'Music' ),[],[['Error']]
+28,SELECT T1.name FROM tracks AS T1 JOIN playlist_tracks AS T2 ON T1.id  =  T2.track_id JOIN playlists AS T3 ON T2.playlist_id  =  T3.id WHERE T3.name  =  'Movies' EXCEPT SELECT T1.name FROM tracks AS T1 JOIN playlist_tracks AS T2 ON T1.id  =  T2.track_id JOIN playlists AS T3 ON T2.playlist_id  =  T3.id WHERE T3.name  =  'Music',SELECT track_name FROM tracks WHERE playlist_id = (SELECT playlist_id FROM playlists WHERE playlist_name = 'Movies') AND track_id NOT IN (SELECT track_id FROM playlists WHERE playlist_name = 'Music');,[],[['Error']]
+29,SELECT T1.name FROM tracks AS T1 JOIN playlist_tracks AS T2 ON T1.id  =  T2.track_id JOIN playlists AS T3 ON T2.playlist_id  =  T3.id WHERE T3.name  =  'Movies' INTERSECT SELECT T1.name FROM tracks AS T1 JOIN playlist_tracks AS T2 ON T1.id  =  T2.track_id JOIN playlists AS T3 ON T2.playlist_id  =  T3.id WHERE T3.name  =  'Music',SELECT name  FROM tracks  WHERE playlist_id = (SELECT playlist_id                       FROM playlists                       WHERE name = 'Movies')  AND playlist_id = (SELECT playlist_id                     FROM playlists                     WHERE name = 'Music');,[],[['Error']]
+30,SELECT T1.name FROM tracks AS T1 JOIN playlist_tracks AS T2 ON T1.id  =  T2.track_id JOIN playlists AS T3 ON T2.playlist_id  =  T3.id WHERE T3.name  =  'Movies' INTERSECT SELECT T1.name FROM tracks AS T1 JOIN playlist_tracks AS T2 ON T1.id  =  T2.track_id JOIN playlists AS T3 ON T2.playlist_id  =  T3.id WHERE T3.name  =  'Music',SELECT track_name  FROM tracks  WHERE playlist_name = 'Movies'  INTERSECT  SELECT track_name  FROM tracks  WHERE playlist_name = 'Music';,[],[['Error']]
+31,SELECT DISTINCT t3.policy_type_code FROM customers AS t1 JOIN customers_policies AS t2 ON t1.customer_id  =  t2.customer_id JOIN available_policies AS t3 ON t2.policy_id  =  t3.policy_id WHERE t1.customer_name  =  (SELECT t1.customer_name FROM customers AS t1 JOIN customers_policies AS t2 ON t1.customer_id  =  t2.customer_id GROUP BY t1.customer_name ORDER BY count(*) DESC LIMIT 1),SELECT policy_type FROM customers WHERE num_policies = (SELECT MAX(num_policies) FROM customers),"[['Mortgage Insurance            ']
+ ['Property Insurance            ']]",[['Error']]
+32,SELECT t1.customer_name FROM customers AS t1 JOIN first_notification_of_loss AS t2 ON t1.customer_id  =  t2.customer_id JOIN services AS t3 ON t2.service_id  =  t3.service_id WHERE t3.service_name  =  'Close a policy' INTERSECT SELECT t1.customer_name FROM customers AS t1 JOIN first_notification_of_loss AS t2 ON t1.customer_id  =  t2.customer_id JOIN services AS t3 ON t2.service_id  =  t3.service_id WHERE t3.service_name  =  'New policy application',SELECT c.name FROM customers c WHERE EXISTS (     SELECT 1     FROM services s     WHERE s.customer_id = c.id     AND s.service_name = 'Close a policy' ) AND EXISTS (     SELECT 1     FROM services s     WHERE s.customer_id = c.id     AND s.service_name = 'New policy application' );,[],[['Error']]
+33,SELECT t1.customer_name FROM customers AS t1 JOIN first_notification_of_loss AS t2 ON t1.customer_id  =  t2.customer_id JOIN services AS t3 ON t2.service_id  =  t3.service_id WHERE t3.service_name  =  'Close a policy' INTERSECT SELECT t1.customer_name FROM customers AS t1 JOIN first_notification_of_loss AS t2 ON t1.customer_id  =  t2.customer_id JOIN services AS t3 ON t2.service_id  =  t3.service_id WHERE t3.service_name  =  'New policy application',SELECT customer_name FROM customers WHERE customer_id IN (     SELECT customer_id     FROM services     WHERE service_name = 'Close a policy' ) AND customer_id IN (     SELECT customer_id     FROM services     WHERE service_name = 'Upgrade a policy' );,[],"[['America Jaskolski']
+ ['Ellsworth Paucek']
+ ['Mrs. Hanna Willms']
+ ['Dr. Diana Rath']
+ ['Selena Gerhold']
+ ['Dayana Robel']
+ ['Mr. Edwardo Blanda I']
+ ['Mr. Randal Lynch III']
+ ['Mrs. Liza Heller V']
+ ['Mrs. Lilly Graham III']
+ ['Miss Felicita Reichel']
+ ['Sydnie Friesen']
+ ['David Ross']
+ ['Cai Zhang']
+ ['Jay Chou']]"
+34,"SELECT T1.name ,  T1.trade_name FROM medicine AS T1 JOIN medicine_enzyme_interaction AS T2 ON T2.medicine_id  =  T1.id WHERE interaction_type  =  'inhibitor' INTERSECT SELECT T1.name ,  T1.trade_name FROM medicine AS T1 JOIN medicine_enzyme_interaction AS T2 ON T2.medicine_id  =  T1.id WHERE interaction_type  =  'activitor'","SELECT medicine_name, trade_name FROM medicine_table WHERE interaction_type = 'inhibitor' AND medicine_name IN (     SELECT medicine_name     FROM medicine_table     WHERE interaction_type = 'activator' )",[],[['Error']]
+35,"SELECT T1.name ,  T1.trade_name FROM medicine AS T1 JOIN medicine_enzyme_interaction AS T2 ON T2.medicine_id  =  T1.id WHERE interaction_type  =  'inhibitor' INTERSECT SELECT T1.name ,  T1.trade_name FROM medicine AS T1 JOIN medicine_enzyme_interaction AS T2 ON T2.medicine_id  =  T1.id WHERE interaction_type  =  'activitor'","SELECT medicine_name, trade_name FROM medicine_table WHERE interaction_type = 'inhibitor' OR interaction_type = 'activator' AND interaction_target = 'enzymes';",[],[['Error']]
+36,"SELECT name ,  trade_name FROM medicine EXCEPT SELECT T1.name ,  T1.trade_name FROM medicine AS T1 JOIN medicine_enzyme_interaction AS T2 ON T2.medicine_id  =  T1.id JOIN enzyme AS T3 ON T3.id  =  T2.enzyme_id WHERE T3.product  =  'Protoporphyrinogen IX'","SELECT medicine_name, trade_name FROM medicine_table WHERE medicine_id NOT IN (     SELECT medicine_id     FROM interaction_table     WHERE enzyme_product = 'Heme' )","[['Aripiprazole' 'Abilify']
+ ['Olanzapine' 'Zyprexa']
+ ['Clozapine' 'Clozaril']
+ ['Remoxipride' 'Roxiam']
+ ['Blonanserin' 'Lonasen']
+ ['Asenapine' 'Saphris']
+ ['Lurasidone' 'Latuda']
+ ['Carpipramine' 'Prazinil']
+ ['Perospirone' 'Lullan']
+ ['Iloperidone' 'Fanapt']
+ ['Paliperidone' 'Invega']
+ ['Sertindole' 'Serdolect']
+ ['Melperone' 'Buronil']
+ ['Sulpiride' 'Sulpirid']
+ ['Risperidone' 'Risperdal']
+ ['Amisulpride' 'Solian']
+ ['Zotepine' 'Nipolept']
+ ['Clocapramine' 'Clofekton']
+ ['Mosapramine' 'Cremin']
+ ['Quetiapine' 'Seroquel']]",[['Error']]
+37,"SELECT name ,  trade_name FROM medicine EXCEPT SELECT T1.name ,  T1.trade_name FROM medicine AS T1 JOIN medicine_enzyme_interaction AS T2 ON T2.medicine_id  =  T1.id JOIN enzyme AS T3 ON T3.id  =  T2.enzyme_id WHERE T3.product  =  'Protoporphyrinogen IX'","SELECT medicine_name, trade_name FROM medicine_table WHERE enzyme_interaction NOT LIKE '%Heme%';","[['Aripiprazole' 'Abilify']
+ ['Olanzapine' 'Zyprexa']
+ ['Clozapine' 'Clozaril']
+ ['Remoxipride' 'Roxiam']
+ ['Blonanserin' 'Lonasen']
+ ['Asenapine' 'Saphris']
+ ['Lurasidone' 'Latuda']
+ ['Carpipramine' 'Prazinil']
+ ['Perospirone' 'Lullan']
+ ['Iloperidone' 'Fanapt']
+ ['Paliperidone' 'Invega']
+ ['Sertindole' 'Serdolect']
+ ['Melperone' 'Buronil']
+ ['Sulpiride' 'Sulpirid']
+ ['Risperidone' 'Risperdal']
+ ['Amisulpride' 'Solian']
+ ['Zotepine' 'Nipolept']
+ ['Clocapramine' 'Clofekton']
+ ['Mosapramine' 'Cremin']
+ ['Quetiapine' 'Seroquel']]",[['Error']]
+38,SELECT t1.pixels FROM screen_mode AS t1 JOIN phone AS t2 ON t1.Graphics_mode  =  t2.screen_mode WHERE t2.Accreditation_type  =  'Provisional' INTERSECT SELECT t1.pixels FROM screen_mode AS t1 JOIN phone AS t2 ON t1.Graphics_mode  =  t2.screen_mode WHERE t2.Accreditation_type  =  'Full',SELECT DISTINCT screen_mode FROM phones WHERE accreditation_type = 'full' AND screen_mode IN (     SELECT screen_mode     FROM phones     WHERE accreditation_type = 'Provisional' );,"[['640 × 200']
+ ['160 × 256']
+ ['320 × 256']]",[['Error']]
+39,SELECT T1.Country_name FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country WHERE T2.Position  =  'Forward' INTERSECT SELECT T1.Country_name FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country WHERE T2.Position  =  'Defender',SELECT DISTINCT country_name FROM players WHERE position = 'forward' AND country_name IN (     SELECT country_name     FROM players     WHERE position = 'defender' ),[['United States']],[['Error']]
+40,SELECT T1.Country_name FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country WHERE T2.Position  =  'Forward' INTERSECT SELECT T1.Country_name FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country WHERE T2.Position  =  'Defender',SELECT DISTINCT country_name FROM players WHERE position = 'Forward' OR position = 'Defender';,[['United States']],[['Error']]
+41,SELECT T2.apt_number FROM Apartment_Bookings AS T1 JOIN Apartments AS T2 ON T1.apt_id  =  T2.apt_id WHERE T1.booking_status_code  =  'Confirmed' INTERSECT SELECT T2.apt_number FROM Apartment_Bookings AS T1 JOIN Apartments AS T2 ON T1.apt_id  =  T2.apt_id WHERE T1.booking_status_code  =  'Provisional',SELECT apartment_number FROM bookings WHERE status_code = 'Provisional' AND apartment_number IN (     SELECT apartment_number     FROM bookings     WHERE status_code = 'Confirmed' ),"[['Apt. 859  ']
+ ['Suite 693 ']
+ ['Suite 749 ']]",[['Error']]
+42,"SELECT T1.apt_number 
+FROM Apartments AS T1 JOIN View_Unit_Status AS T2 ON T1.apt_id  =  T2.apt_id 
+WHERE T2.available_yn  =  false  
+INTERSECT 
+SELECT T1.apt_number 
+FROM Apartments AS T1 JOIN View_Unit_Status AS T2 ON T1.apt_id  =  T2.apt_id 
+WHERE T2.available_yn  =  true",SELECT apartment_number FROM apartments WHERE unit_status = 0 AND unit_status = 1;,"[['Apt. 411  ']
+ ['Apt. 837  ']]",[['Error']]
+43,"SELECT T1.id ,  T1.name FROM stadium AS T1 JOIN game AS T2 ON T1.id  =  T2.stadium_id JOIN injury_accident AS T3 ON T2.id  =  T3.game_id GROUP BY T1.id ORDER BY count(*) DESC LIMIT 1","SELECT id, name FROM stadium WHERE id = (     SELECT stadium_id     FROM accidents     GROUP BY stadium_id     ORDER BY COUNT(*) DESC     LIMIT 1 )",[[10 'Louisiana Superdome']],[['Error']]
+44,"SELECT T1.id ,  T1.name FROM stadium AS T1 JOIN game AS T2 ON T1.id  =  T2.stadium_id JOIN injury_accident AS T3 ON T2.id  =  T3.game_id GROUP BY T1.id ORDER BY count(*) DESC LIMIT 1","SELECT id, name FROM stadium WHERE id = (     SELECT stadium_id     FROM accidents     GROUP BY stadium_id     ORDER BY COUNT(*) DESC     LIMIT 1 )",[[10 'Louisiana Superdome']],[['Error']]
+45,SELECT T2.name FROM game AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.id JOIN injury_accident AS T3 ON T1.id  =  T3.game_id WHERE T3.player  =  'Walter Samuel' INTERSECT SELECT T2.name FROM game AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.id JOIN injury_accident AS T3 ON T1.id  =  T3.game_id WHERE T3.player  =  'Thiago Motta',SELECT stadium_name FROM injuries WHERE player_name = 'Walter Samuel' OR player_name = 'Thiago Motta' GROUP BY stadium_name HAVING COUNT(DISTINCT player_name) = 2;,[['Bank of America Stadium']],[['Error']]
+46,"SELECT count(DISTINCT T2.id) ,  count(DISTINCT T3.id) ,  T3.dept_name FROM department AS T1 JOIN student AS T2 ON T1.dept_name  =  T2.dept_name JOIN instructor AS T3 ON T1.dept_name  =  T3.dept_name GROUP BY T3.dept_name","SELECT department,         COUNT(DISTINCT CASE WHEN role = 'student' THEN id END) AS total_students,        COUNT(DISTINCT CASE WHEN role = 'instructor' THEN id END) AS total_instructors FROM table_name GROUP BY department;","[[1 2 'Biology']
+ [1 4 'Cybernetics']
+ [1 4 'English']
+ [1 1 'Finance']
+ [1 6 'Statistics']]",[['Error']]
+47,"SELECT count(DISTINCT T2.id) ,  count(DISTINCT T3.id) ,  T3.dept_name FROM department AS T1 JOIN student AS T2 ON T1.dept_name  =  T2.dept_name JOIN instructor AS T3 ON T1.dept_name  =  T3.dept_name GROUP BY T3.dept_name","SELECT department, COUNT(DISTINCT CASE WHEN role = 'student' THEN id END) AS num_students, COUNT(DISTINCT CASE WHEN role = 'instructor' THEN id END) AS num_instructors FROM table_name GROUP BY department;","[[1 2 'Biology']
+ [1 4 'Cybernetics']
+ [1 4 'English']
+ [1 1 'Finance']
+ [1 6 'Statistics']]",[['Error']]
+48,"SELECT T2.product_name ,  count(*) FROM Order_items AS T1 JOIN Products AS T2 ON T1.product_id  =  T2.product_id JOIN Orders AS T3 ON T3.order_id  =  T1.order_id GROUP BY T2.product_name","SELECT p.product_name, COUNT(DISTINCT o.customer_id) AS num_customers FROM products p JOIN orders o ON p.product_id = o.product_id GROUP BY p.product_name;","[['TV' 1]
+ ['Harry Potter 3' 4]
+ ['Harry Potter 2' 1]
+ ['Arts' 2]
+ ['Learning English' 1]
+ ['Harry Potter 4' 1]
+ ['Fans' 1]
+ ['Chocolate' 1]
+ ['Hard Drive' 2]
+ ['Beer Menus' 1]]",[['Error']]
+49,SELECT T4.name FROM wedding AS T1 JOIN people AS T2 ON T1.male_id  =  T2.people_id JOIN people AS T3 ON T1.female_id  =  T3.people_id JOIN church AS T4 ON T4.church_id  =  T1.church_id WHERE T2.age  >  30 OR T3.age  >  30,SELECT church_name FROM weddings JOIN people ON weddings.person_id = people.id WHERE people.age > 30;,"[['Pure Church of Christ']
+ ['Church of Christ (Parrishite)']]",[['Error']]
+50,"SELECT T1.theme ,  T2.name FROM exhibition AS T1 JOIN artist AS T2 ON T1.artist_id  =  T2.artist_id WHERE T1.ticket_price  >  (SELECT avg(ticket_price) FROM exhibition)","SELECT artist.name, exhibition.theme FROM artist JOIN exhibition ON artist.id = exhibition.artist_id WHERE exhibition.ticket_price > (SELECT AVG(ticket_price) FROM exhibition)","[['Santa Claus' 'Vijay Singh']
+ ['Christmas stocking' 'John Daly']
+ ['Spring' 'Nick Price']]",[['Error']]
+51,SELECT T3.name FROM exhibition_record AS T1 JOIN exhibition AS T2 ON T1.exhibition_id  =  T2.exhibition_id JOIN artist AS T3 ON T3.artist_id  =  T2.artist_id GROUP BY T3.artist_id HAVING avg(T1.attendance)  >  200,SELECT artist_name FROM exhibitions GROUP BY artist_name HAVING AVG(attendance) > 200;,"[['Jeff Sluman']
+ ['Nick Price']
+ ['John Daly']
+ ['Vijay Singh']]",[['Error']]
+52,"SELECT T1.title 
+FROM item AS T1 JOIN review AS T2 ON T1.i_id  =  T2.i_id 
+WHERE T2.rank  >  3 
+INTERSECT 
+SELECT T1.title 
+FROM item AS T1 JOIN review AS T2 ON T1.i_id  =  T2.i_id 
+GROUP BY T1.title 
+HAVING avg(T2.rating)  >  5",SELECT name FROM items WHERE rank > 3 AND average_rating > 5;,"[['cup']
+ ['comb']]",[['Error']]
+53,SELECT T1.name FROM accounts AS T1 JOIN checking AS T2 ON T1.custid  =  T2.custid WHERE T2.balance  >  (SELECT avg(balance) FROM checking) INTERSECT SELECT T1.name FROM accounts AS T1 JOIN savings AS T2 ON T1.custid  =  T2.custid WHERE T2.balance  <  (SELECT avg(balance) FROM savings),SELECT name FROM accounts WHERE checking_balance > (SELECT AVG(checking_balance) FROM accounts) AND savings_balance < (SELECT AVG(savings_balance) FROM accounts);,"[['Weeks']
+ ['Granger']
+ ['Brown']]",[['Error']]
+54,SELECT T2.balance FROM accounts AS T1 JOIN checking AS T2 ON T1.custid  =  T2.custid WHERE T1.name IN (SELECT T1.name FROM accounts AS T1 JOIN savings AS T2 ON T1.custid  =  T2.custid WHERE T2.balance  >  (SELECT avg(balance) FROM savings)),SELECT checking_balance FROM accounts WHERE savings_balance > (SELECT AVG(savings_balance) FROM accounts),[[2000.]],[['Error']]
+55,"SELECT T1.name ,  T2.balance + T3.balance FROM accounts AS T1 JOIN checking AS T2 ON T1.custid  =  T2.custid JOIN savings AS T3 ON T1.custid  =  T3.custid WHERE T3.balance  >  (SELECT avg(balance) FROM savings)","SELECT name, (checking_balance + savings_balance) AS total_balance FROM accounts WHERE savings_balance > (SELECT AVG(savings_balance) FROM accounts)",[['Wang' 1000001999.0]],[['Error']]
+56,"SELECT T2.balance ,  T3.balance ,  T1.name FROM accounts AS T1 JOIN checking AS T2 ON T1.custid  =  T2.custid JOIN savings AS T3 ON T1.custid  =  T3.custid ORDER BY T2.balance + T3.balance DESC","SELECT name, checking_balance, savings_balance FROM accounts ORDER BY (checking_balance + savings_balance) DESC;","[[2000.0 999999999.0 'Wang']
+ [3000.0 230000.0 ""O'mahony""]
+ [10000.0 200000.0 'Brown']
+ [10000.0 80000.0 'Granger']
+ [7000.0 60.0 'Weeks']
+ [77.0 240.0 'Porter']]",[['Error']]
+57,SELECT T3.name FROM web_client_accelerator AS T1 JOIN accelerator_compatible_browser AS T2 ON T2.accelerator_id  =  T1.id JOIN browser AS T3 ON T2.browser_id  =  T3.id WHERE T1.name  =  'CACHEbox' INTERSECT SELECT T3.name FROM web_client_accelerator AS T1 JOIN accelerator_compatible_browser AS T2 ON T2.accelerator_id  =  T1.id JOIN browser AS T3 ON T2.browser_id  =  T3.id WHERE T1.name  =  'Fasterfox',"SELECT browser_name FROM browser_table WHERE browser_name IN ('CACHEbox', 'Fasterfox') GROUP BY browser_name HAVING COUNT(DISTINCT browser_name) = 2;","[['Firefox']
+ ['Internet Explorer']]",[['Error']]
+58,SELECT T2.school_name FROM budget AS T1 JOIN school AS T2 ON T1.school_id  =  T2.school_id JOIN endowment AS T3 ON T2.school_id  =  T3.school_id GROUP BY T2.school_name HAVING sum(T1.budgeted)  >  100 OR sum(T3.amount)  >  10,SELECT name FROM schools WHERE total_budget > 100 OR total_endowment > 10;,"[['Culver Community']
+ ['Knox Community']
+ ['Bremen']
+ ['Glenn']
+ ['Jimtown']]",[['Error']]
+59,SELECT count(*) FROM (SELECT school_id FROM endowment WHERE amount  >  8.5 GROUP BY school_id HAVING count(*)  >  1) as T,SELECT COUNT(DISTINCT school_id) FROM donations WHERE donation_amount < 8.5 GROUP BY school_id HAVING COUNT(DISTINCT donator_id) > 1;,[[2]],[['Error']]
+60,SELECT count(*) FROM building WHERE height_feet  >  (SELECT avg(height_feet) FROM building) OR floors  >  (SELECT avg(floors) FROM building),SELECT COUNT(*)  FROM buildings  WHERE height > (SELECT AVG(height) FROM buildings)     OR num_floors > (SELECT AVG(num_floors) FROM buildings);,[[4]],[['Error']]
+61,SELECT T2.Name FROM phone_market AS T1 JOIN phone AS T2 ON T1.Phone_ID  =  T2.Phone_ID GROUP BY T2.Name HAVING sum(T1.Num_of_stock)  >=  2000 ORDER BY sum(T1.Num_of_stock) DESC,SELECT name FROM phones WHERE total_stocks > 2000 ORDER BY total_stocks DESC;,"[['IPhone 6s']
+ ['IPhone 5s']
+ ['IPhone X']]",[['Error']]
+62,SELECT member_name FROM member EXCEPT SELECT T1.member_name FROM member AS T1 JOIN party_events AS T2 ON T1.member_id  =  T2.member_in_charge_id,SELECT member_name FROM members WHERE member_id NOT IN (SELECT member_id FROM events),"[['Hon Bruce Baird']
+ ['Mark Baker']
+ ['Hon Tony Abbott']
+ ['Peter Andren']
+ ['Hon Kim Beazley']
+ ['Hon Kevin Andrews']
+ ['Hon Arch Bevis']
+ ['Hon Fran Bailey']]",[['Error']]
+63,"SELECT Employees.employee_name, count(*)
+FROM Employees JOIN Circulation_History ON Circulation_History.employee_id = Employees.employee_id 
+GROUP BY Employees.employee_name, Circulation_History.draft_number , Circulation_History.copy_number
+ORDER BY count(*) 
+DESC LIMIT 1;","SELECT employee.name, COUNT(circulation_history.document_type) AS total_documents FROM employee JOIN circulation_history ON employee.employee_id = circulation_history.employee_id WHERE circulation_history.document_type IN ('draft', 'copy') GROUP BY employee.name ORDER BY total_documents DESC LIMIT 1;",[['Kenyon' 1]],[['Error']]
+64,"SELECT T3.service_id ,  T4.Service_Type_Code 
+FROM participants AS T1 
+JOIN Participants_in_Events AS T2 ON T1.Participant_ID  =  T2.Participant_ID 
+JOIN EVENTS AS T3 ON T2.Event_ID   =  T3.Event_ID 
+JOIN services AS T4 ON T3.service_id  =  T4.service_id 
+GROUP BY T3.service_id, T4.Service_Type_Code  
+ORDER BY count(*) ASC LIMIT 1","SELECT service_id, type FROM table_name GROUP BY service_id, type ORDER BY COUNT(*) ASC LIMIT 1;",[[6 'Birth Proof    ']],[['Error']]
+65,SELECT campus FROM campuses WHERE LOCATION  =  'Northridge' AND county  =  'Los Angeles' UNION SELECT campus FROM campuses WHERE LOCATION  =  'San Francisco' AND county  =  'San Francisco',SELECT name FROM campuses WHERE (city = 'Northridge' AND state = 'Los Angeles') OR (city = 'San Francisco' AND state = 'San Francisco');,"[['California State University-Northridge']
+ ['San Francisco State University']]",[['Error']]
+66,SELECT T1.campus FROM campuses AS T1 JOIN faculty AS T2 ON T1.id  =  T2.campus WHERE T2.year  =  2002 AND faculty  >  (SELECT max(faculty) FROM campuses AS T1 JOIN faculty AS T2 ON T1.id  =  T2.campus WHERE T2.year  =  2002 AND T1.county  =  'Orange'),SELECT campus_name FROM campuses WHERE campus_name NOT IN (     SELECT campus_name     FROM faculties     WHERE year = 2002     AND county = 'Orange'     GROUP BY campus_name     HAVING COUNT(*) >= (         SELECT COUNT(*)         FROM faculties         WHERE year = 2002         AND county = 'Orange'         GROUP BY campus_name         ORDER BY COUNT(*) DESC         LIMIT 1     ) ),[['Long Beach State University']],[['Error']]
+67,SELECT T2.faculty FROM campuses AS T1 JOIN faculty AS T2 ON T1.id  =  t2.campus JOIN degrees AS T3 ON T1.id  =  t3.campus AND t2.year  =  t3.year WHERE t2.year  =  2002 ORDER BY t3.degrees DESC LIMIT 1,SELECT COUNT(*)  FROM faculty  WHERE university_id = (     SELECT university_id      FROM degrees      WHERE year = 2002      GROUP BY university_id      ORDER BY COUNT(*) DESC      LIMIT 1 ),[],[['Error']]
+68,"SELECT t1.name ,  t1.sex ,  min(oppose_rate) FROM people AS t1 JOIN candidate AS t2 ON t1.people_id  =  t2.people_id GROUP BY t1.sex","SELECT sex, name FROM candidates WHERE oppose_percentage = (     SELECT MIN(oppose_percentage)     FROM candidates     GROUP BY sex )",[['Error']],[['Error']]
+69,"SELECT T2.title ,  T2.director FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID  =  T2.mID WHERE T1.stars  >  (SELECT avg(T1.stars) FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID  =  T2.mID WHERE T2.director  =  'James Cameron')","SELECT title, director FROM movies WHERE star > (     SELECT AVG(star)     FROM movies     WHERE director = 'James Cameron' )","[['Snow White' None]
+ ['Avatar' 'James Cameron']]",[['Error']]
+70,"SELECT mID ,  avg(stars) FROM Rating WHERE mID NOT IN (SELECT T1.mID FROM Rating AS T1 JOIN Reviewer AS T2 ON T1.rID  =  T2.rID WHERE T2.name  =  'Brittany Harris') GROUP BY mID","SELECT movie_id, AVG(rating_star) AS average_rating FROM reviews WHERE reviewer_name <> 'Brittany Harris' GROUP BY movie_id;","[[101 Decimal('3.0000000000000000')]
+ [104 Decimal('2.5000000000000000')]
+ [107 Decimal('4.0000000000000000')]
+ [106 Decimal('4.5000000000000000')]]",[['Error']]
+71,SELECT name FROM city WHERE county_ID  =  (SELECT county_ID FROM county_public_safety ORDER BY Police_officers DESC LIMIT 1),SELECT city.name FROM city JOIN county ON city.county_id = county.id JOIN police_officer ON county.id = police_officer.county_id GROUP BY city.name ORDER BY COUNT(police_officer.id) DESC LIMIT 1;,"[['Aguas Buenas']
+ ['Aibonito']]",[['Error']]
+72,"SELECT T1.cmi_cross_ref_id ,  T1.source_system_code FROM CMI_Cross_References AS T1 JOIN Council_Tax AS T2 ON T1.cmi_cross_ref_id  =  T2.cmi_cross_ref_id GROUP BY T1.cmi_cross_ref_id HAVING count(*)  >=  1","SELECT cross_reference_id, source_system_code FROM cmi_table WHERE cross_reference_id IN (     SELECT cross_reference_id     FROM council_tax_table )","[[101 'Tax            ']
+ [103 'Tax            ']
+ [104 'Tax            ']
+ [105 'Tax            ']
+ [106 'Tax            ']
+ [102 'Tax            ']]",[['Error']]
+73,"SELECT T2.cmi_cross_ref_id ,  T2.master_customer_id ,  count(*) FROM Business_Rates AS T1 JOIN CMI_Cross_References AS T2 ON T1.cmi_cross_ref_id  =  T2.cmi_cross_ref_id GROUP BY T2.cmi_cross_ref_id","SELECT cmi_cross_reference_id, master_customer_id, COUNT(*) AS rate_count FROM business_rates GROUP BY cmi_cross_reference_id, master_customer_id;","[[95  2  1]
+ [99  9  1]
+ [49  1  1]]",[['Error']]
+74,"SELECT sum(number_deaths) ,  sum(damage_millions_USD) FROM storm WHERE max_speed  >  (SELECT avg(max_speed) FROM storm)","SELECT SUM(deaths), SUM(damage) FROM storms WHERE max_speed > (SELECT AVG(max_speed) FROM storms)",[[ 5.    40.529]],[['Error']]
+75,SELECT T1.name FROM storm AS T1 JOIN affected_region AS T2 ON T1.storm_id  =  T2.storm_id GROUP BY T1.storm_id HAVING count(*)  >=  2 INTERSECT SELECT T1.name FROM storm AS T1 JOIN affected_region AS T2 ON T1.storm_id  =  T2.storm_id GROUP BY T1.storm_id HAVING sum(T2.number_city_affected)  >=  10,SELECT storm_name FROM storm_table WHERE (SELECT COUNT(DISTINCT region) FROM affected_regions_table WHERE affected_regions_table.storm_id = storm_table.storm_id) >= 2 AND (SELECT COUNT(DISTINCT city) FROM affected_cities_table WHERE affected_cities_table.storm_id = storm_table.storm_id) >= 10;,"[['Five']
+ ['One']]",[['Error']]
+76,SELECT name FROM storm EXCEPT SELECT T1.name FROM storm AS T1 JOIN affected_region AS T2 ON T1.storm_id  =  T2.storm_id GROUP BY T1.storm_id HAVING count(*)  >=  2,SELECT storm_name FROM storm_table WHERE storm_name NOT IN (     SELECT storm_name     FROM affected_regions_table     GROUP BY storm_name     HAVING COUNT(*) >= 2 );,"[['Two']
+ ['Three']
+ ['Eight']
+ ['Nine']
+ ['Six']
+ ['Seven']
+ ['Four']
+ ['9 cyclones']]",[['Error']]
+77,SELECT T3.Name FROM affected_region AS T1 JOIN region AS T2 ON T1.region_id  =  T2.region_id JOIN storm AS T3 ON T1.storm_id  =  T3.storm_id WHERE T2.Region_name  =  'Afghanistan' INTERSECT SELECT T3.Name FROM affected_region AS T1 JOIN region AS T2 ON T1.region_id  =  T2.region_id JOIN storm AS T3 ON T1.storm_id  =  T3.storm_id WHERE T2.Region_name  =  'Albania',SELECT name FROM storms WHERE region = 'Afghanistan' AND region = 'Albania';,[['One']],[['Error']]
+78,SELECT Nationality FROM journalist WHERE Years_working  >  10 INTERSECT SELECT Nationality FROM journalist WHERE Years_working  <  3,SELECT nation FROM journalists WHERE years_of_working > 10 INTERSECT SELECT nation FROM journalists WHERE years_of_working < 3;,[['England']],[['Error']]
+79,"SELECT T3.Name ,  COUNT(*) FROM news_report AS T1 JOIN event AS T2 ON T1.Event_ID  =  T2.Event_ID JOIN journalist AS T3 ON T1.journalist_ID  =  T3.journalist_ID GROUP BY T3.Name","SELECT journalists.name, COUNT(events.id) AS num_events FROM journalists JOIN events ON journalists.id = events.journalist_id GROUP BY journalists.name;","[['Tony Waddington' 1]
+ ['John Meaney' 1]
+ ['Jackie Waring' 2]
+ ['Ray Ferris' 1]
+ ['Herbert Swindells' 1]
+ ['Tom Briggs' 1]]",[['Error']]
+80,SELECT T3.Name FROM news_report AS T1 JOIN event AS T2 ON T1.Event_ID  =  T2.Event_ID JOIN journalist AS T3 ON T1.journalist_ID  =  T3.journalist_ID GROUP BY T3.Name HAVING COUNT(*)  >  1,SELECT journalist_name FROM events GROUP BY journalist_name HAVING COUNT(event_id) > 1;,[['Jackie Waring']],[['Error']]
+81,SELECT TIME FROM Student JOIN Visits_Restaurant ON Student.StuID = Visits_Restaurant.StuID JOIN Restaurant ON Visits_Restaurant.ResID = Restaurant.ResID WHERE Student.Fname = 'Linda' AND Student.Lname = 'Smith' AND Restaurant.ResName = 'Subway';,SELECT visit_date FROM visits WHERE visitor_name = 'Linda Smith' AND location_name = 'Subway';,[['2017-10-09T18:15:00.000000000']],[['Error']]
+82,"SELECT Restaurant.ResName ,  sum(Visits_Restaurant.Spent) FROM Visits_Restaurant JOIN Restaurant ON Visits_Restaurant.ResID = Restaurant.ResID GROUP BY Restaurant.ResID ORDER BY sum(Visits_Restaurant.Spent) ASC LIMIT 1;","SELECT restaurant, SUM(time_spent) AS total_time FROM students GROUP BY restaurant ORDER BY total_time ASC LIMIT 1;",[['Subway' 6.53]],[['Error']]
+83,SELECT t3.title FROM authors AS t1 JOIN authorship AS t2 ON t1.authid  =  t2.authid JOIN papers AS t3 ON t2.paperid  =  t3.paperid JOIN inst AS t4 ON t2.instid  =  t4.instid WHERE t4.country  =  'USA' AND t2.authorder  =  2 AND t1.lname  =  'Turon',SELECT paper FROM table_name WHERE institution = 'USA' AND author2 = 'Turon',[['Functional Pearl: Modular Rollback through Control Logging']],[['Error']]
+84,"SELECT t1.lname FROM authors AS t1 JOIN authorship AS t2 ON t1.authid  =  t2.authid JOIN papers AS t3 ON t2.paperid  =  t3.paperid GROUP BY t1.fname ,  t1.lname ORDER BY count(*) DESC LIMIT 1",SELECT last_name FROM authors WHERE author_id = (     SELECT author_id     FROM papers     GROUP BY author_id     ORDER BY COUNT(*) DESC     LIMIT 1 ),[['Hinze']],[['Error']]
+85,SELECT t1.lname FROM authors AS t1 JOIN authorship AS t2 ON t1.authid  =  t2.authid JOIN papers AS t3 ON t2.paperid  =  t3.paperid WHERE t3.title LIKE '%Monadic%',SELECT last_name FROM authors WHERE author_id IN (     SELECT author_id     FROM papers     WHERE title LIKE '%Monadic%' ),"[['Gibbons']
+ ['Hinze']]",[['Error']]
+86,"SELECT T1.cust_name ,  T1.acc_type 
+FROM customer AS T1 JOIN loan AS T2 ON T1.cust_id  =  T2.cust_id 
+GROUP BY T1.cust_name, T1.acc_type  
+HAVING sum(T2.amount)  >  5000","SELECT c.name, c.account_balance FROM customers c JOIN loans l ON c.customer_id = l.customer_id GROUP BY c.name, c.account_balance HAVING SUM(l.amount) > 5000;",[['Mary' 'saving    ']],[['Error']]
+87,SELECT T2.bname FROM loan AS T1 JOIN bank AS T2 ON T1.branch_id  =  T2.branch_id JOIN customer AS T3 ON T1.cust_id  =  T3.cust_id WHERE T3.credit_score  <  100 GROUP BY T2.bname ORDER BY sum(T1.amount) DESC LIMIT 1,SELECT branch_name FROM bank_branches WHERE branch_id IN (     SELECT branch_id     FROM loans     WHERE credit_score < 100     GROUP BY branch_id     ORDER BY SUM(amount) DESC     LIMIT 1 ),[['downtown']],[['Error']]
+88,"SELECT T1.asset_id ,  T1.asset_details FROM Assets AS T1 JOIN Asset_Parts AS T2 ON T1.asset_id  =  T2.asset_id GROUP BY T1.asset_id HAVING count(*)  =  2 INTERSECT SELECT T1.asset_id ,  T1.asset_details FROM Assets AS T1 JOIN Fault_Log AS T2 ON T1.asset_id  =  T2.asset_id GROUP BY T1.asset_id HAVING count(*)  <  2","SELECT asset_id, detail FROM assets WHERE parts = 2 AND fault_logs < 2;","[[2 'dell laptop2']
+ [15 'system3']]",[['Error']]
+89,"SELECT T1.company_id ,  T1.company_name FROM Third_Party_Companies AS T1 JOIN Maintenance_Engineers AS T2 ON T1.company_id  =  T2.company_id GROUP BY T1.company_id HAVING count(*)  >=  2 UNION SELECT T3.company_id ,  T3.company_name FROM Third_Party_Companies AS T3 JOIN Maintenance_Contracts AS T4 ON T3.company_id  =  T4.maintenance_contract_company_id GROUP BY T3.company_id HAVING count(*)  >=  2","SELECT company_id, name FROM companies WHERE company_id IN (     SELECT company_id     FROM maintenance_engineers     GROUP BY company_id     HAVING COUNT(*) >= 2 ) OR company_id IN (     SELECT company_id     FROM maintenance_contracts     GROUP BY company_id     HAVING COUNT(*) >= 2 );","[[15 'Rau, Ullrich and King']
+ [11 'Kuvalis, Boehm and Hettinger']
+ [2 'McDermott Group']
+ [13 ""Greenholt-D'Amore""]
+ [6 'Grimes, Mosciski and Renner']
+ [4 'Dooley-Langosh']
+ [3 'Schuppe-Carroll']]",[['Error']]
+90,"SELECT T1.part_id ,  T1.part_name FROM Parts AS T1 JOIN Part_Faults AS T2 ON T1.part_id  =  T2.part_id JOIN Skills_Required_To_Fix AS T3 ON T2.part_fault_id  =  T3.part_fault_id GROUP BY T1.part_id ORDER BY count(*) DESC LIMIT 1","SELECT part_id, name FROM parts WHERE part_id IN (     SELECT part_id     FROM part_faults     GROUP BY part_id     HAVING COUNT(skill_id) = (         SELECT MAX(skill_count)         FROM (             SELECT COUNT(skill_id) AS skill_count             FROM part_faults             GROUP BY part_id         ) AS counts     ) );",[[1 'top']],[['Error']]
+91,"SELECT count(*) ,  class_room FROM CLASS GROUP BY class_room HAVING count(*)  >=  2",SELECT COUNT(*)  FROM (     SELECT class_room_id      FROM classes      GROUP BY class_room_id      HAVING COUNT(*) >= 2 ) AS subquery;,"[[4 'KLR200']
+ [2 'BUS252']
+ [2 'BUS311']
+ [3 'KLR209']]",[['Error']]
+92,"SELECT count(*) ,  T1.school_code FROM department AS T1 JOIN professor AS T2 ON T1.dept_code  =  T2.dept_code GROUP BY T1.school_code","SELECT COUNT(DISTINCT professor_id) AS num_professors, COUNT(DISTINCT school_id) AS num_schools FROM professors JOIN schools ON professors.school_id = schools.school_id;","[[12 'A&SCI']
+ [10 'BUS']]",[['Error']]
+93,"SELECT T2.dept_name ,  avg(T1.stu_gpa) 
+FROM student AS T1 JOIN department AS T2 ON T1.dept_code  =  T2.dept_code 
+GROUP BY T2.dept_name  
+ORDER BY avg(T1.stu_gpa) 
+DESC LIMIT 1","SELECT department.name, AVG(student.gpa) AS average_gpa FROM department JOIN student ON department.id = student.department_id GROUP BY department.name HAVING AVG(student.gpa) = (     SELECT MAX(avg_gpa)     FROM (         SELECT AVG(gpa) AS avg_gpa         FROM student         GROUP BY department_id     ) AS subquery )",[['Computer Info. Systems' Decimal('3.1800000000000000')]],[['Error']]
+94,"SELECT T3.dept_name 
+FROM course AS T1 
+JOIN CLASS AS T2 ON T1.crs_code  =  T2.crs_code 
+JOIN department AS T3 ON T1.dept_code  =  T3.dept_code 
+GROUP BY T3.dept_name  
+ORDER BY sum(T1.crs_credit) DESC LIMIT 1",SELECT department_name FROM departments WHERE department_id = (     SELECT department_id     FROM classes     GROUP BY department_id     ORDER BY SUM(credits) DESC     LIMIT 1 ),[['Computer Info. Systems']],[['Error']]
+95,SELECT count(*) FROM CLASS AS T1 JOIN enroll AS T2 ON T1.class_code  =  T2.class_code JOIN course AS T3 ON T1.crs_code  =  T3.crs_code JOIN department AS T4 ON T3.dept_code  =  T4.dept_code WHERE T4.dept_name  =  'Accounting',SELECT COUNT(*)  FROM students  WHERE class_id IN (SELECT class_id                     FROM classes                     WHERE professor_id IN (SELECT professor_id                                            FROM professors                                            WHERE department = 'accounting')),[[2]],[['Error']]
+96,"SELECT T4.dept_name 
+FROM CLASS AS T1 
+JOIN enroll AS T2 ON T1.class_code  =  T2.class_code 
+JOIN course AS T3 ON T1.crs_code  =  T3.crs_code 
+JOIN department AS T4 ON T3.dept_code  =  T4.dept_code 
+GROUP BY T4.dept_name 
+ORDER BY count(*) DESC LIMIT 1",SELECT department_name FROM departments WHERE department_id = (     SELECT department_id     FROM enrollments     GROUP BY department_id     ORDER BY COUNT(student_id) DESC     LIMIT 1 ),[['Computer Info. Systems']],[['Error']]
+97,SELECT T1.stu_fname FROM student AS T1 JOIN enroll AS T2 ON T1.stu_num  =  T2.stu_num JOIN CLASS AS T3 ON T2.class_code  =  T3.class_code JOIN course AS T4 ON T3.crs_code  =  T4.crs_code JOIN department AS T5 ON T5.dept_code  =  T4.dept_code WHERE T5.dept_name  =  'Accounting' INTERSECT SELECT T1.stu_fname FROM student AS T1 JOIN enroll AS T2 ON T1.stu_num  =  T2.stu_num JOIN CLASS AS T3 ON T2.class_code  =  T3.class_code JOIN course AS T4 ON T3.crs_code  =  T4.crs_code JOIN department AS T5 ON T5.dept_code  =  T4.dept_code WHERE T5.dept_name  =  'Computer Info. Systems',"SELECT first_name FROM students WHERE student_id IN (     SELECT student_id     FROM enrollments     WHERE department_id IN (         SELECT department_id         FROM departments         WHERE department_name IN ('accounting', 'Computer Info. Systems')     ) ) LIMIT 1;","[['Anne']
+ ['William']]",[['Error']]
+98,"SELECT T2.emp_fname ,  T4.prof_office ,  T3.crs_description ,  T5.dept_name FROM CLASS AS T1 JOIN employee AS T2 ON T1.prof_num  =  T2.emp_num JOIN course AS T3 ON T1.crs_code  =  T3.crs_code JOIN professor AS T4 ON T2.emp_num  =  T4.emp_num JOIN department AS T5 ON T4.dept_code  =  T5.dept_code","SELECT instructors.first_name, instructors.office, courses.description, departments.name FROM instructors JOIN courses ON instructors.instructor_id = courses.instructor_id JOIN departments ON courses.department_id = departments.department_id;","[['Arnelle' 'KLR 229D' 'Accounting I' 'Accounting']
+ ['Arnelle' 'KLR 229D' 'Accounting I' 'Accounting']
+ ['Robert' 'BBG 208' 'Accounting I' 'Sociology']
+ ['Ismael' 'KLR 244' 'Accounting II' 'Accounting']
+ ['Ismael' 'KLR 244' 'Accounting II' 'Accounting']
+ ['Carlos' 'KLR 300' 'Intro. to Microcomputing' 'Computer Info. Systems']
+ ['Gerald' 'KLR 211' 'Intro. to Microcomputing' 'Accounting']
+ ['Carlos' 'KLR 300' 'Intro. to Microcomputing' 'Computer Info. Systems']
+ ['Peter' 'KLR 203E' 'Database Design and Implementation'
+  'Computer Info. Systems']
+ ['Gerald' 'KLR 211' 'Intro. to Statistics' 'Accounting']
+ ['Gerald' 'KLR 211' 'Intro. to Statistics' 'Accounting']
+ ['Peter' 'KLR 203E' 'Statistical Applications' 'Computer Info. Systems']
+ ['Peter' 'KLR 203E' 'Statistical Applications' 'Computer Info. Systems']]",[['Error']]
+99,"SELECT T2.emp_fname ,  T1.class_room FROM CLASS AS T1 JOIN employee AS T2 ON T1.prof_num  =  T2.emp_num JOIN professor AS T3 ON T2.emp_num  =  T3.emp_num JOIN department AS T4 ON T4.dept_code  =  T3.dept_code WHERE T4.dept_name  =  'Accounting'","SELECT professor.first_name, course.classroom FROM professor JOIN course ON professor.professor_id = course.professor_id WHERE professor.department = 'Accounting'","[['Arnelle' 'BUS311']
+ ['Arnelle' 'BUS200']
+ ['Ismael' 'BUS311']
+ ['Ismael' 'BUS252']
+ ['Gerald' 'KLR211']
+ ['Gerald' 'KLR200']
+ ['Gerald' 'KLR200']]",[['Error']]
+100,"SELECT t1.manufacturer_id ,  t1.num_of_shops FROM manufacturer AS t1 JOIN furniture_manufacte AS t2 ON t1.manufacturer_id  =  t2.manufacturer_id ORDER BY t2.Price_in_Dollar DESC LIMIT 1","SELECT s.id, s.number_of_shops FROM company c JOIN furniture f ON c.id = f.company_id JOIN shop s ON c.id = s.company_id WHERE f.price = (SELECT MAX(price) FROM furniture)",[[7 4]],[['Error']]
+101,SELECT t3.name FROM furniture AS t1 JOIN furniture_manufacte AS t2 ON t1.Furniture_ID  =  t2.Furniture_ID JOIN manufacturer AS t3 ON t2.manufacturer_id  =  t3.manufacturer_id WHERE t1.num_of_component  <  6 INTERSECT SELECT t3.name FROM furniture AS t1 JOIN furniture_manufacte AS t2 ON t1.Furniture_ID  =  t2.Furniture_ID JOIN manufacturer AS t3 ON t2.manufacturer_id  =  t3.manufacturer_id WHERE t1.num_of_component  >  10,SELECT company_name FROM companies WHERE EXISTS (     SELECT *     FROM furnitures     WHERE companies.company_id = furnitures.company_id     AND (furnitures.component_count < 6 OR furnitures.component_count > 10)     GROUP BY company_id     HAVING COUNT(DISTINCT component_count) = 2 ),[['Tomorrow']],[['Error']]
+102,"SELECT first_name ,  last_name ,  hire_date ,  salary ,  department_id FROM employees WHERE first_name NOT LIKE '%M%' ORDER BY department_id","SELECT first_name || ' ' || last_name AS full_name, hire_date, salary, department_number FROM employees WHERE first_name NOT LIKE '%M%' ORDER BY department_number ASC;","[['Jennifer' 'Whalen' datetime.date(1987, 9, 25) Decimal('4400.00')
+  Decimal('10')]
+ ['Pat' 'Fay' datetime.date(1987, 9, 27) Decimal('6000.00') Decimal('20')]
+ ['Sigal' 'Tobias' datetime.date(1987, 7, 4) Decimal('2800.00')
+  Decimal('30')]
+ ['Guy' 'Himuro' datetime.date(1987, 7, 5) Decimal('2600.00')
+  Decimal('30')]
+ ['Alexander' 'Khoo' datetime.date(1987, 7, 2) Decimal('3100.00')
+  Decimal('30')]
+ ['Den' 'Raphaely' datetime.date(1987, 7, 1) Decimal('11000.00')
+  Decimal('30')]
+ ['Shelli' 'Baida' datetime.date(1987, 7, 3) Decimal('2900.00')
+  Decimal('30')]
+ ['Karen' 'Colmenares' datetime.date(1987, 7, 6) Decimal('2500.00')
+  Decimal('30')]
+ ['Susan' 'Mavris' datetime.date(1987, 9, 28) Decimal('6500.00')
+  Decimal('40')]
+ ['Steven' 'Markle' datetime.date(1987, 7, 15) Decimal('2200.00')
+  Decimal('50')]
+ ['Laura' 'Bissot' datetime.date(1987, 7, 16) Decimal('3300.00')
+  Decimal('50')]
+ ['James' 'Marlow' datetime.date(1987, 7, 18) Decimal('2500.00')
+  Decimal('50')]
+ ['TJ' 'Olson' datetime.date(1987, 7, 19) Decimal('2100.00')
+  Decimal('50')]
+ ['Jason' 'Mallin' datetime.date(1987, 7, 20) Decimal('3300.00')
+  Decimal('50')]
+ ['Ki' 'Gee' datetime.date(1987, 7, 22) Decimal('2400.00') Decimal('50')]
+ ['Kimberely' 'Grant' datetime.date(1987, 9, 3) Decimal('7000.00')
+  Decimal('50')]
+ ['Hazel' 'Philtanker' datetime.date(1987, 7, 23) Decimal('2200.00')
+  Decimal('50')]
+ ['Winston' 'Taylor' datetime.date(1987, 9, 5) Decimal('3200.00')
+  Decimal('50')]
+ ['Jean' 'Fleaur' datetime.date(1987, 9, 6) Decimal('3100.00')
+  Decimal('50')]
+ ['Girard' 'Geoni' datetime.date(1987, 9, 8) Decimal('2800.00')
+  Decimal('50')]
+ ['Nandita' 'Sarchand' datetime.date(1987, 9, 9) Decimal('4200.00')
+  Decimal('50')]
+ ['Alexis' 'Bull' datetime.date(1987, 9, 10) Decimal('4100.00')
+  Decimal('50')]
+ ['Julia' 'Dellinger' datetime.date(1987, 9, 11) Decimal('3400.00')
+  Decimal('50')]
+ ['Anthony' 'Cabrio' datetime.date(1987, 9, 12) Decimal('3000.00')
+  Decimal('50')]
+ ['Kelly' 'Chung' datetime.date(1987, 9, 13) Decimal('3800.00')
+  Decimal('50')]
+ ['Jennifer' 'Dilly' datetime.date(1987, 9, 14) Decimal('3600.00')
+  Decimal('50')]
+ ['Timothy' 'Gates' datetime.date(1987, 9, 15) Decimal('2900.00')
+  Decimal('50')]
+ ['Randall' 'Perkins' datetime.date(1987, 9, 16) Decimal('2500.00')
+  Decimal('50')]
+ ['Sarah' 'Bell' datetime.date(1987, 9, 17) Decimal('4000.00')
+  Decimal('50')]
+ ['Britney' 'Everett' datetime.date(1987, 9, 18) Decimal('3900.00')
+  Decimal('50')]
+ ['Samuel' 'McCain' datetime.date(1987, 9, 19) Decimal('3200.00')
+  Decimal('50')]
+ ['Vance' 'Jones' datetime.date(1987, 9, 20) Decimal('2800.00')
+  Decimal('50')]
+ ['Renske' 'Ladwig' datetime.date(1987, 7, 24) Decimal('3600.00')
+  Decimal('50')]
+ ['Stephen' 'Stiles' datetime.date(1987, 7, 25) Decimal('3200.00')
+  Decimal('50')]
+ ['Joshua' 'Patel' datetime.date(1987, 7, 27) Decimal('2500.00')
+  Decimal('50')]
+ ['Trenna' 'Rajs' datetime.date(1987, 7, 28) Decimal('3500.00')
+  Decimal('50')]
+ ['Curtis' 'Davies' datetime.date(1987, 7, 29) Decimal('3100.00')
+  Decimal('50')]
+ ['Randall' 'Matos' datetime.date(1987, 7, 30) Decimal('2600.00')
+  Decimal('50')]
+ ['Peter' 'Vargas' datetime.date(1987, 7, 31) Decimal('2500.00')
+  Decimal('50')]
+ ['John' 'Seo' datetime.date(1987, 7, 26) Decimal('2700.00')
+  Decimal('50')]
+ ['Adam' 'Fripp' datetime.date(1987, 7, 8) Decimal('8200.00')
+  Decimal('50')]
+ ['Payam' 'Kaufling' datetime.date(1987, 7, 9) Decimal('7900.00')
+  Decimal('50')]
+ ['Shanta' 'Vollman' datetime.date(1987, 7, 10) Decimal('6500.00')
+  Decimal('50')]
+ ['Alana' 'Walsh' datetime.date(1987, 9, 21) Decimal('3100.00')
+  Decimal('50')]
+ ['Kevin' 'Mourgos' datetime.date(1987, 7, 11) Decimal('5800.00')
+  Decimal('50')]
+ ['Julia' 'Nayer' datetime.date(1987, 7, 12) Decimal('3200.00')
+  Decimal('50')]
+ ['Irene' 'Mikkilineni' datetime.date(1987, 7, 13) Decimal('2700.00')
+  Decimal('50')]
+ ['James' 'Landry' datetime.date(1987, 7, 14) Decimal('2400.00')
+  Decimal('50')]
+ ['Douglas' 'Grant' datetime.date(1987, 9, 24) Decimal('2600.00')
+  Decimal('50')]
+ ['Donald' 'OConnell' datetime.date(1987, 9, 23) Decimal('2600.00')
+  Decimal('50')]
+ ['Kevin' 'Feeney' datetime.date(1987, 9, 22) Decimal('3000.00')
+  Decimal('50')]
+ ['Alexander' 'Hunold' datetime.date(1987, 6, 20) Decimal('9000.00')
+  Decimal('60')]
+ ['David' 'Austin' datetime.date(1987, 6, 22) Decimal('4800.00')
+  Decimal('60')]
+ ['Diana' 'Lorentz' datetime.date(1987, 6, 24) Decimal('4200.00')
+  Decimal('60')]
+ ['Valli' 'Pataballa' datetime.date(1987, 6, 23) Decimal('4800.00')
+  Decimal('60')]
+ ['Bruce' 'Ernst' datetime.date(1987, 6, 21) Decimal('6000.00')
+  Decimal('60')]
+ ['Hermann' 'Baer' datetime.date(1987, 9, 29) Decimal('10000.00')
+  Decimal('70')]
+ ['Amit' 'Banda' datetime.date(1987, 8, 23) Decimal('6200.00')
+  Decimal('80')]
+ ['John' 'Russell' datetime.date(1987, 8, 1) Decimal('14000.00')
+  Decimal('80')]
+ ['Karen' 'Partners' datetime.date(1987, 8, 2) Decimal('13500.00')
+  Decimal('80')]
+ ['Alberto' 'Errazuriz' datetime.date(1987, 8, 3) Decimal('12000.00')
+  Decimal('80')]
+ ['Gerald' 'Cambrault' datetime.date(1987, 8, 4) Decimal('11000.00')
+  Decimal('80')]
+ ['Eleni' 'Zlotkey' datetime.date(1987, 8, 5) Decimal('10500.00')
+  Decimal('80')]
+ ['Peter' 'Tucker' datetime.date(1987, 8, 6) Decimal('10000.00')
+  Decimal('80')]
+ ['David' 'Bernstein' datetime.date(1987, 8, 7) Decimal('9500.00')
+  Decimal('80')]
+ ['Peter' 'Hall' datetime.date(1987, 8, 8) Decimal('9000.00')
+  Decimal('80')]
+ ['Christopher' 'Olsen' datetime.date(1987, 8, 9) Decimal('8000.00')
+  Decimal('80')]
+ ['Nanette' 'Cambrault' datetime.date(1987, 8, 10) Decimal('7500.00')
+  Decimal('80')]
+ ['Oliver' 'Tuvault' datetime.date(1987, 8, 11) Decimal('7000.00')
+  Decimal('80')]
+ ['Janette' 'King' datetime.date(1987, 8, 12) Decimal('10000.00')
+  Decimal('80')]
+ ['Patrick' 'Sully' datetime.date(1987, 8, 13) Decimal('9500.00')
+  Decimal('80')]
+ ['Allan' 'McEwen' datetime.date(1987, 8, 14) Decimal('9000.00')
+  Decimal('80')]
+ ['Lindsey' 'Smith' datetime.date(1987, 8, 15) Decimal('8000.00')
+  Decimal('80')]
+ ['Louise' 'Doran' datetime.date(1987, 8, 16) Decimal('7500.00')
+  Decimal('80')]
+ ['Sarath' 'Sewall' datetime.date(1987, 8, 17) Decimal('7000.00')
+  Decimal('80')]
+ ['Clara' 'Vishney' datetime.date(1987, 8, 18) Decimal('10500.00')
+  Decimal('80')]
+ ['Danielle' 'Greene' datetime.date(1987, 8, 19) Decimal('9500.00')
+  Decimal('80')]
+ ['David' 'Lee' datetime.date(1987, 8, 21) Decimal('6800.00')
+  Decimal('80')]
+ ['Sundar' 'Ande' datetime.date(1987, 8, 22) Decimal('6400.00')
+  Decimal('80')]
+ ['Lisa' 'Ozer' datetime.date(1987, 8, 24) Decimal('11500.00')
+  Decimal('80')]
+ ['Harrison' 'Bloom' datetime.date(1987, 8, 25) Decimal('10000.00')
+  Decimal('80')]
+ ['Tayler' 'Fox' datetime.date(1987, 8, 26) Decimal('9600.00')
+  Decimal('80')]
+ ['William' 'Smith' datetime.date(1987, 8, 27) Decimal('7400.00')
+  Decimal('80')]
+ ['Elizabeth' 'Bates' datetime.date(1987, 8, 28) Decimal('7300.00')
+  Decimal('80')]
+ ['Sundita' 'Kumar' datetime.date(1987, 8, 29) Decimal('6100.00')
+  Decimal('80')]
+ ['Ellen' 'Abel' datetime.date(1987, 8, 30) Decimal('11000.00')
+  Decimal('80')]
+ ['Alyssa' 'Hutton' datetime.date(1987, 8, 31) Decimal('8800.00')
+  Decimal('80')]
+ ['Jonathon' 'Taylor' datetime.date(1987, 9, 1) Decimal('8600.00')
+  Decimal('80')]
+ ['Jack' 'Livingston' datetime.date(1987, 9, 2) Decimal('8400.00')
+  Decimal('80')]
+ ['Charles' 'Johnson' datetime.date(1987, 9, 4) Decimal('6200.00')
+  Decimal('80')]
+ ['Steven' 'King' datetime.date(1987, 6, 17) Decimal('24000.00')
+  Decimal('90')]
+ ['Lex' 'De Haan' datetime.date(1987, 6, 19) Decimal('17000.00')
+  Decimal('90')]
+ ['Neena' 'Kochhar' datetime.date(1987, 6, 18) Decimal('17000.00')
+  Decimal('90')]
+ ['John' 'Chen' datetime.date(1987, 6, 27) Decimal('8200.00')
+  Decimal('100')]
+ ['Daniel' 'Faviet' datetime.date(1987, 6, 26) Decimal('9000.00')
+  Decimal('100')]
+ ['Nancy' 'Greenberg' datetime.date(1987, 6, 25) Decimal('12000.00')
+  Decimal('100')]
+ ['Luis' 'Popp' datetime.date(1987, 6, 30) Decimal('6900.00')
+  Decimal('100')]
+ ['Ismael' 'Sciarra' datetime.date(1987, 6, 28) Decimal('7700.00')
+  Decimal('100')]
+ ['Shelley' 'Higgins' datetime.date(1987, 9, 30) Decimal('12000.00')
+  Decimal('110')]
+ ['William' 'Gietz' datetime.date(1987, 10, 1) Decimal('8300.00')
+  Decimal('110')]]",[['Error']]
+103,"SELECT DISTINCT department_id FROM employees GROUP BY department_id ,  manager_id HAVING COUNT(employee_id)  >= 4",SELECT department_id FROM employees GROUP BY department_id HAVING COUNT(manager_id) >= 4;,"[[Decimal('100')]
+ [Decimal('60')]
+ [Decimal('30')]
+ [Decimal('50')]
+ [Decimal('80')]]","[[Decimal('60')]
+ [Decimal('80')]
+ [Decimal('100')]
+ [Decimal('30')]
+ [Decimal('50')]]"
+104,SELECT * FROM employees WHERE salary BETWEEN (SELECT MIN(salary) FROM employees) AND 2500,SELECT * FROM employees WHERE salary >= (SELECT MIN(salary) FROM employees) AND salary <= 2500;,"[[Decimal('119') 'Karen' 'Colmenares' 'KCOLMENA' '515.127.4566'
+  datetime.date(1987, 7, 6) 'PU_CLERK' Decimal('2500.00') Decimal('0.00')
+  Decimal('114') Decimal('30')]
+ [Decimal('127') 'James' 'Landry' 'JLANDRY' '650.124.1334'
+  datetime.date(1987, 7, 14) 'ST_CLERK' Decimal('2400.00')
+  Decimal('0.00') Decimal('120') Decimal('50')]
+ [Decimal('128') 'Steven' 'Markle' 'SMARKLE' '650.124.1434'
+  datetime.date(1987, 7, 15) 'ST_CLERK' Decimal('2200.00')
+  Decimal('0.00') Decimal('120') Decimal('50')]
+ [Decimal('131') 'James' 'Marlow' 'JAMRLOW' '650.124.7234'
+  datetime.date(1987, 7, 18) 'ST_CLERK' Decimal('2500.00')
+  Decimal('0.00') Decimal('121') Decimal('50')]
+ [Decimal('132') 'TJ' 'Olson' 'TJOLSON' '650.124.8234'
+  datetime.date(1987, 7, 19) 'ST_CLERK' Decimal('2100.00')
+  Decimal('0.00') Decimal('121') Decimal('50')]
+ [Decimal('135') 'Ki' 'Gee' 'KGEE' '650.127.1734'
+  datetime.date(1987, 7, 22) 'ST_CLERK' Decimal('2400.00')
+  Decimal('0.00') Decimal('122') Decimal('50')]
+ [Decimal('136') 'Hazel' 'Philtanker' 'HPHILTAN' '650.127.1634'
+  datetime.date(1987, 7, 23) 'ST_CLERK' Decimal('2200.00')
+  Decimal('0.00') Decimal('122') Decimal('50')]
+ [Decimal('140') 'Joshua' 'Patel' 'JPATEL' '650.121.1834'
+  datetime.date(1987, 7, 27) 'ST_CLERK' Decimal('2500.00')
+  Decimal('0.00') Decimal('123') Decimal('50')]
+ [Decimal('144') 'Peter' 'Vargas' 'PVARGAS' '650.121.2004'
+  datetime.date(1987, 7, 31) 'ST_CLERK' Decimal('2500.00')
+  Decimal('0.00') Decimal('124') Decimal('50')]
+ [Decimal('182') 'Martha' 'Sullivan' 'MSULLIVA' '650.507.9878'
+  datetime.date(1987, 9, 7) 'SH_CLERK' Decimal('2500.00') Decimal('0.00')
+  Decimal('120') Decimal('50')]
+ [Decimal('191') 'Randall' 'Perkins' 'RPERKINS' '650.505.4876'
+  datetime.date(1987, 9, 16) 'SH_CLERK' Decimal('2500.00')
+  Decimal('0.00') Decimal('122') Decimal('50')]]","[[Decimal('119') 'Karen' 'Colmenares' 'KCOLMENA' '515.127.4566'
+  datetime.date(1987, 7, 6) 'PU_CLERK' Decimal('2500.00') Decimal('0.00')
+  Decimal('114') Decimal('30')]
+ [Decimal('127') 'James' 'Landry' 'JLANDRY' '650.124.1334'
+  datetime.date(1987, 7, 14) 'ST_CLERK' Decimal('2400.00')
+  Decimal('0.00') Decimal('120') Decimal('50')]
+ [Decimal('128') 'Steven' 'Markle' 'SMARKLE' '650.124.1434'
+  datetime.date(1987, 7, 15) 'ST_CLERK' Decimal('2200.00')
+  Decimal('0.00') Decimal('120') Decimal('50')]
+ [Decimal('131') 'James' 'Marlow' 'JAMRLOW' '650.124.7234'
+  datetime.date(1987, 7, 18) 'ST_CLERK' Decimal('2500.00')
+  Decimal('0.00') Decimal('121') Decimal('50')]
+ [Decimal('132') 'TJ' 'Olson' 'TJOLSON' '650.124.8234'
+  datetime.date(1987, 7, 19) 'ST_CLERK' Decimal('2100.00')
+  Decimal('0.00') Decimal('121') Decimal('50')]
+ [Decimal('135') 'Ki' 'Gee' 'KGEE' '650.127.1734'
+  datetime.date(1987, 7, 22) 'ST_CLERK' Decimal('2400.00')
+  Decimal('0.00') Decimal('122') Decimal('50')]
+ [Decimal('136') 'Hazel' 'Philtanker' 'HPHILTAN' '650.127.1634'
+  datetime.date(1987, 7, 23) 'ST_CLERK' Decimal('2200.00')
+  Decimal('0.00') Decimal('122') Decimal('50')]
+ [Decimal('140') 'Joshua' 'Patel' 'JPATEL' '650.121.1834'
+  datetime.date(1987, 7, 27) 'ST_CLERK' Decimal('2500.00')
+  Decimal('0.00') Decimal('123') Decimal('50')]
+ [Decimal('144') 'Peter' 'Vargas' 'PVARGAS' '650.121.2004'
+  datetime.date(1987, 7, 31) 'ST_CLERK' Decimal('2500.00')
+  Decimal('0.00') Decimal('124') Decimal('50')]
+ [Decimal('182') 'Martha' 'Sullivan' 'MSULLIVA' '650.507.9878'
+  datetime.date(1987, 9, 7) 'SH_CLERK' Decimal('2500.00') Decimal('0.00')
+  Decimal('120') Decimal('50')]
+ [Decimal('191') 'Randall' 'Perkins' 'RPERKINS' '650.505.4876'
+  datetime.date(1987, 9, 16) 'SH_CLERK' Decimal('2500.00')
+  Decimal('0.00') Decimal('122') Decimal('50')]]"
+105,"SELECT employee_id ,  first_name ,  last_name ,  salary FROM employees WHERE salary  >  ( SELECT AVG (salary) FROM employees ) AND department_id IN ( SELECT department_id FROM employees WHERE first_name LIKE '%J%')","SELECT employee_number, first_name || ' ' || last_name AS name, salary FROM employees WHERE salary > (SELECT AVG(salary) FROM employees) AND department_id IN (SELECT department_id FROM employees WHERE first_name LIKE '%J%');","[[Decimal('108') 'Nancy' 'Greenberg' Decimal('12000.00')]
+ [Decimal('109') 'Daniel' 'Faviet' Decimal('9000.00')]
+ [Decimal('110') 'John' 'Chen' Decimal('8200.00')]
+ [Decimal('111') 'Ismael' 'Sciarra' Decimal('7700.00')]
+ [Decimal('112') 'Jose Manuel' 'Urman' Decimal('7800.00')]
+ [Decimal('113') 'Luis' 'Popp' Decimal('6900.00')]
+ [Decimal('120') 'Matthew' 'Weiss' Decimal('8000.00')]
+ [Decimal('121') 'Adam' 'Fripp' Decimal('8200.00')]
+ [Decimal('122') 'Payam' 'Kaufling' Decimal('7900.00')]
+ [Decimal('123') 'Shanta' 'Vollman' Decimal('6500.00')]
+ [Decimal('145') 'John' 'Russell' Decimal('14000.00')]
+ [Decimal('146') 'Karen' 'Partners' Decimal('13500.00')]
+ [Decimal('147') 'Alberto' 'Errazuriz' Decimal('12000.00')]
+ [Decimal('148') 'Gerald' 'Cambrault' Decimal('11000.00')]
+ [Decimal('149') 'Eleni' 'Zlotkey' Decimal('10500.00')]
+ [Decimal('150') 'Peter' 'Tucker' Decimal('10000.00')]
+ [Decimal('151') 'David' 'Bernstein' Decimal('9500.00')]
+ [Decimal('152') 'Peter' 'Hall' Decimal('9000.00')]
+ [Decimal('153') 'Christopher' 'Olsen' Decimal('8000.00')]
+ [Decimal('154') 'Nanette' 'Cambrault' Decimal('7500.00')]
+ [Decimal('155') 'Oliver' 'Tuvault' Decimal('7000.00')]
+ [Decimal('156') 'Janette' 'King' Decimal('10000.00')]
+ [Decimal('157') 'Patrick' 'Sully' Decimal('9500.00')]
+ [Decimal('158') 'Allan' 'McEwen' Decimal('9000.00')]
+ [Decimal('159') 'Lindsey' 'Smith' Decimal('8000.00')]
+ [Decimal('160') 'Louise' 'Doran' Decimal('7500.00')]
+ [Decimal('161') 'Sarath' 'Sewall' Decimal('7000.00')]
+ [Decimal('162') 'Clara' 'Vishney' Decimal('10500.00')]
+ [Decimal('163') 'Danielle' 'Greene' Decimal('9500.00')]
+ [Decimal('164') 'Mattea' 'Marvins' Decimal('7200.00')]
+ [Decimal('165') 'David' 'Lee' Decimal('6800.00')]
+ [Decimal('168') 'Lisa' 'Ozer' Decimal('11500.00')]
+ [Decimal('169') 'Harrison' 'Bloom' Decimal('10000.00')]
+ [Decimal('170') 'Tayler' 'Fox' Decimal('9600.00')]
+ [Decimal('171') 'William' 'Smith' Decimal('7400.00')]
+ [Decimal('172') 'Elizabeth' 'Bates' Decimal('7300.00')]
+ [Decimal('174') 'Ellen' 'Abel' Decimal('11000.00')]
+ [Decimal('175') 'Alyssa' 'Hutton' Decimal('8800.00')]
+ [Decimal('176') 'Jonathon' 'Taylor' Decimal('8600.00')]
+ [Decimal('177') 'Jack' 'Livingston' Decimal('8400.00')]
+ [Decimal('178') 'Kimberely' 'Grant' Decimal('7000.00')]]",[['Error']]
+106,"SELECT T1.artist_name 
+FROM artist AS T1 
+JOIN song AS T2 ON T1.artist_name  =  T2.artist_name 
+WHERE T2.languages  =  'bangla' 
+GROUP BY T1.artist_name ORDER BY count(*) DESC LIMIT 3","SELECT artist_name, COUNT(song_id) AS num_songs FROM songs WHERE language = 'Bangla' GROUP BY artist_name ORDER BY num_songs DESC LIMIT 3;","[['Farida']
+ ['Prity']
+ ['Shrikanta']]",[['Error']]
+107,SELECT T3.brand FROM mountain AS T1 JOIN photos AS T2 ON T1.id  =  T2.mountain_id JOIN camera_lens AS T3 ON T2.camera_lens_id  =  T3.id WHERE T1.range  =  'Toubkal Atlas' INTERSECT SELECT T3.brand FROM mountain AS T1 JOIN photos AS T2 ON T1.id  =  T2.mountain_id JOIN camera_lens AS T3 ON T2.camera_lens_id  =  T3.id WHERE T1.range  =  'Lasta Massif',SELECT brand FROM lenses WHERE lens_id IN (     SELECT lens_id     FROM pictures     WHERE (mountain_range = 'Toubkal Atlas' OR mountain_range = 'Lasta Massif')     GROUP BY lens_id     HAVING COUNT(DISTINCT mountain_range) = 2 ),[['Sigma']],[['Error']]
+108,SELECT t1.name FROM channel AS t1 JOIN broadcast AS t2 ON t1.channel_id  =  t2.channel_id WHERE t2.time_of_day  =  'Morning' INTERSECT SELECT t1.name FROM channel AS t1 JOIN broadcast AS t2 ON t1.channel_id  =  t2.channel_id WHERE t2.time_of_day  =  'Night',SELECT channel_name FROM channels WHERE morning_broadcast = true AND night_broadcast = true;,[['CCTV-1']],[['Error']]
+109,SELECT t1.owner FROM program AS t1 JOIN broadcast AS t2 ON t1.program_id  =  t2.program_id WHERE t2.Time_of_day  =  'Morning' INTERSECT SELECT t1.owner FROM program AS t1 JOIN broadcast AS t2 ON t1.program_id  =  t2.program_id WHERE t2.Time_of_day  =  'Night',SELECT owner FROM programs WHERE time = 'morning' AND owner IN (     SELECT owner     FROM programs     WHERE time = 'night' ),"[['Southern Media Corporation (SMC)']
+ ['Beijing Television (BTV)']
+ ['Hunan Broadcasting System (HBS)']]",[['Error']]
+110,"SELECT T1.subject_id ,  T2.subject_name ,  COUNT(*) 
+FROM ""Courses"" AS T1 JOIN ""Subjects"" AS T2 ON T1.subject_id  =  T2.subject_id 
+GROUP BY T1.subject_id, T2.subject_name  
+ORDER BY COUNT(*) ASC","SELECT subject_id, subject_name, COUNT(course_id) AS course_count FROM subjects JOIN courses ON subjects.subject_id = courses.subject_id GROUP BY subject_id, subject_name ORDER BY course_count ASC;","[[2 'Arts' 4]
+ [3 'Language' 5]
+ [1 'Computer Science' 6]]",[['Error']]
+111,"SELECT T1.Date_Claim_Made ,  T1.Claim_id FROM Claims AS T1 JOIN Settlements AS T2 ON T1.Claim_id  =  T2.Claim_id GROUP BY T1.Claim_id HAVING count(*)  >  2 UNION SELECT T1.Date_Claim_Made ,  T1.Claim_id FROM Claims AS T1 JOIN Settlements AS T2 ON T1.Claim_id  =  T2.Claim_id WHERE T1.Amount_Claimed  =  ( SELECT max(Amount_Claimed) FROM Claims )","SELECT date_claim_made, claim_id FROM claims WHERE settlements > 2 OR claim_value = (SELECT MAX(claim_value) FROM claims);","[[datetime.date(2017, 10, 21) 801]
+ [datetime.date(2017, 8, 3) 571]]",[['Error']]
+112,"SELECT T1.customer_details ,  T1.customer_id FROM Customers AS T1 JOIN Customer_Policies AS T2 ON T1.Customer_id  =  T2.customer_id GROUP BY T1.customer_id HAVING count(*)  >=  2 EXCEPT SELECT T1.customer_details ,  T1.customer_id FROM Customers AS T1 JOIN Customer_Policies AS T2 ON T1.Customer_id  =  T2.customer_id JOIN Claims AS T3 ON T2.policy_id  =  T3.policy_id","SELECT customer_id, customer_details FROM customers WHERE customer_id IN (     SELECT customer_id     FROM policies     GROUP BY customer_id     HAVING COUNT(*) >= 2 ) AND customer_id NOT IN (     SELECT customer_id     FROM claims )",[['Dr. Diana Rath' 4]],[['Error']]
+113,"SELECT Amount_Settled ,  Amount_Claimed FROM Claims ORDER BY Amount_Claimed DESC LIMIT 1","SELECT settlement_amount, claim_amount FROM claims ORDER BY claim_amount DESC LIMIT 1;",[[ 1528 89632]],[['Error']]
+114,"SELECT Date_Claim_Made ,  Date_Claim_Settled FROM Claims WHERE Amount_Claimed  >  ( SELECT avg(Amount_Claimed) FROM Claims )","SELECT claim_date, settlement_date FROM claims WHERE claimed_amount > (SELECT AVG(claimed_amount) FROM claims);","[[datetime.date(2016, 8, 12) datetime.date(2018, 1, 27)]
+ [datetime.date(2017, 2, 24) datetime.date(2018, 1, 21)]
+ [datetime.date(2018, 6, 14) datetime.date(2017, 12, 20)]
+ [datetime.date(2017, 8, 3) datetime.date(2018, 2, 18)]
+ [datetime.date(2016, 8, 26) datetime.date(2017, 9, 4)]
+ [datetime.date(2018, 7, 13) datetime.date(2017, 11, 22)]]",[['Error']]
+115,"SELECT DISTINCT T1.firstname ,  T1.lastname FROM list AS T1 JOIN teachers AS T2 ON T1.classroom  =  T2.classroom WHERE T1.grade  =  1 EXCEPT SELECT T1.firstname ,  T1.lastname FROM list AS T1 JOIN teachers AS T2 ON T1.classroom  =  T2.classroom WHERE T2.firstname  =  'OTHA' AND T2.lastname  =  'MOYER'","SELECT first_name, last_name FROM students WHERE grade = 'first-grade' AND teacher <> 'OTHA MOYER';","[['RODGER' 'RANSLER']
+ ['MARCUS' 'RUNKLE']
+ ['ANTONY' 'BRIGHTBILL']
+ ['CHANTAL' 'HANNEMANN']
+ ['REYNALDO' 'BARTKUS']
+ ['KERI' 'TRAYWICK']
+ ['PATRINA' 'AMY']]",[['Error']]
+116,"SELECT T2.""Name""
+FROM employment AS T1 
+JOIN people AS T2 ON T1.""People_ID"" =  T2.""People_ID"" 
+JOIN company AS T3 ON T1.""Company_ID""  =  T3.""Company_ID""
+WHERE T3.""Sales_in_Billion""  >  200",SELECT e.name FROM employees e JOIN companies c ON e.company_id = c.id WHERE c.sales > 200;,"[['Tom Sheehey']
+ ['Jerry Corcoran']
+ ['Darryl Kennedy']]",[['Error']]
+117,"SELECT t3.fname ,  t3.lname FROM club AS t1 JOIN member_of_club AS t2 ON t1.clubid  =  t2.clubid JOIN student AS t3 ON t2.stuid  =  t3.stuid WHERE t1.clubname  =  'Hopkins Student Enterprises' AND t2.position  =  'CTO'","SELECT first_name, last_name FROM employees WHERE job_title = 'CTO' AND club = 'Hopkins Student Enterprises';",[['Jandy' 'Nelson']],[['Error']]
+118,"SELECT T1.name ,  T1.age FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name  =  T2.name WHERE T2.friend  =  'Dan' INTERSECT SELECT T1.name ,   T1.age FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name  =  T2.name WHERE T2.friend  =  'Alice'","SELECT name, age FROM persons WHERE name IN (     SELECT friend_name     FROM friendships     WHERE person_name = 'Dan' ) AND name IN (     SELECT friend_name     FROM friendships     WHERE person_name = 'Alice' );",[['Zach' 45]],[['Error']]
+119,"SELECT T1.name ,  T1.age ,  T1.job FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name  =  T2.name WHERE T2.friend =  'Alice' AND T2.year  =  (SELECT max(YEAR) FROM PersonFriend WHERE friend =  'Alice')","SELECT name, age, job FROM people WHERE id IN (     SELECT friend_id     FROM friendships     WHERE person_id = (         SELECT id         FROM people         WHERE name = 'Alice'     )     GROUP BY friend_id     HAVING MAX(duration) )",[['Zach' 45 'doctor']],[['Error']]
+120,SELECT DISTINCT T4.name FROM PersonFriend AS T1 JOIN Person AS T2 ON T1.name  =  T2.name JOIN PersonFriend AS T3 ON T1.friend  =  T3.name JOIN PersonFriend AS T4 ON T3.friend  =  T4.name WHERE T2.name  =  'Alice' AND T4.name != 'Alice',SELECT DISTINCT fof.friend_name FROM friends AS f1 JOIN friends AS f2 ON f1.friend_name = f2.user_name JOIN friends AS fof ON f2.friend_name = fof.user_name WHERE f1.user_name = 'Alice';,[['Zach']],[['Error']]
+121,SELECT document_name FROM documents GROUP BY document_type_code ORDER BY count(*) DESC LIMIT 3 INTERSECT SELECT document_name FROM documents GROUP BY document_structure_code ORDER BY count(*) DESC LIMIT 3,SELECT name FROM documents WHERE type IN (SELECT type                FROM documents                GROUP BY type                ORDER BY COUNT(*) DESC                LIMIT 3)   AND structure IN (SELECT structure                     FROM documents                     GROUP BY structure                     ORDER BY COUNT(*) DESC                     LIMIT 3);,[['Error']],[['Error']]
+122,SELECT document_name FROM documents EXCEPT SELECT t1.document_name FROM documents AS t1 JOIN document_sections AS t2 ON t1.document_code  =  t2.document_code JOIN document_sections_images AS t3 ON t2.section_id  =  t3.section_id,SELECT name FROM document WHERE document_id NOT IN (SELECT document_id FROM image),"[['Learning Database']
+ ['Life about Claude Monet']
+ ['How to cook pasta']
+ ['Learning Japanese']
+ ['Humanity: a fact']]",[['Error']]
+123,SELECT T1.Product_Name FROM Products AS T1 JOIN Products_in_Events AS T2 ON T1.Product_ID  =  T2.Product_ID GROUP BY T1.Product_Name HAVING COUNT(*)  >=  2 ORDER BY T1.Product_Name,SELECT name FROM products WHERE product_id IN (     SELECT product_id     FROM events     GROUP BY product_id     HAVING COUNT(DISTINCT event_id) >= 2 ) ORDER BY name ASC;,"[['Men suits']
+ ['Special Dinning']
+ ['TV Equipments']]",[['Error']]
+124,"SELECT T2.customer_name ,  T2.payment_method FROM mailshot_customers AS T1 JOIN customers AS T2 ON T1.customer_id  =  T2.customer_id WHERE T1.outcome_code  =  'Order' INTERSECT SELECT T2.customer_name ,  T2.payment_method FROM mailshot_customers AS T1 JOIN customers AS T2 ON T1.customer_id  =  T2.customer_id WHERE T1.outcome_code  =  'No Response'","SELECT name, payment_method FROM customers WHERE customer_id IN (     SELECT customer_id     FROM orders     WHERE outcome = 'Mailshots in Order' ) AND customer_id IN (     SELECT customer_id     FROM orders     WHERE outcome = 'Mailshots in No Response' );","[['Wendell' 'Credit Card']
+ ['Carlotta' 'Direct Debit']]",[['Error']]
+125,"SELECT T1.customer_name ,  T1.customer_address FROM customers AS T1 JOIN customer_orders AS T2 ON T1.customer_id  =  T2.customer_id WHERE T2.order_status_code  =  'New' INTERSECT SELECT T1.customer_name ,  T1.customer_address FROM customers AS T1 JOIN customer_orders AS T2 ON T1.customer_id  =  T2.customer_id WHERE T2.order_status_code  =  'Pending'","SELECT name, address FROM customers WHERE customer_id IN (     SELECT customer_id     FROM orders     WHERE status = 'New' ) AND customer_id IN (     SELECT customer_id     FROM orders     WHERE status = 'Pending' );","[['Lexus' '9581 Will Flat Suite 272\nEast Cathryn, WY 30751-4404']]",[['Error']]
+126,"SELECT product_id
+FROM Order_Items
+GROUP BY product_id
+HAVING COUNT(*) > 3
+UNION
+SELECT product_id
+FROM Product_Suppliers
+GROUP BY product_id
+HAVING SUM(CAST(total_amount_purchased AS numeric)) > 80000;",SELECT id FROM products WHERE id IN (     SELECT product_id     FROM orders     GROUP BY product_id     HAVING COUNT(*) > 3 ) OR id IN (     SELECT product_id     FROM orders     GROUP BY product_id     HAVING SUM(amount) > 80000 ),"[[5]
+ [4]
+ [8]]",[['Error']]
+127,SELECT DISTINCT T1.customer_name FROM customers AS T1 JOIN customer_orders AS T2 ON T1.customer_id  =  T2.customer_id JOIN order_items AS T3 ON T2.order_id  =  T3.order_id JOIN products AS T4 ON T3.product_id  =  T4.product_id WHERE T4.product_name  =  'keyboard',SELECT DISTINCT customer_name FROM purchases WHERE product_name = 'keyboard';,"[['Cordell']
+ ['Jon']]",[['Error']]
+128,"SELECT T1.staff_name ,  T1.staff_gender FROM staff AS T1 JOIN Staff_Department_Assignments AS T2 ON T1.staff_id  =  T2.staff_id WHERE T2.job_title_code  =  'Sales Person' EXCEPT SELECT T1.staff_name ,  T1.staff_gender FROM staff AS T1 JOIN Staff_Department_Assignments AS T2 ON T1.staff_id  =  T2.staff_id WHERE T2.job_title_code  =  'Clerical Staff'","SELECT name, gender FROM staff WHERE job = 'Sales Person' AND staff_id NOT IN (SELECT staff_id FROM staff WHERE job = 'Clerical Staff');","[['Melody' '1']
+ ['Sabrina' '1']
+ ['Zakary' '1']]",[['Error']]
+129,"SELECT T1.""Aircraft"" FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.""Aircraft_ID""  =  T2.""Aircraft_ID"" JOIN airport AS T3 ON T2.""Airport_ID""  =  T3.""Airport_ID"" WHERE T3.""Airport_Name""  =  'London Gatwick'",SELECT aircrafts.name FROM aircrafts JOIN airports ON aircrafts.airport_id = airports.id WHERE airports.name = 'London Gatwick';,[['Robinson R-22']],[['Error']]
+130,"SELECT T1.""Aircraft"" FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.""Aircraft_ID""  =  T2.""Aircraft_ID"" 
+JOIN airport AS T3 ON T2.""Airport_ID""  =  T3.""Airport_ID"" WHERE T3.""Airport_Name""  =  'London Heathrow' 
+INTERSECT SELECT T1.""Aircraft"" FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.""Aircraft_ID""  =  T2.""Aircraft_ID"" JOIN airport AS T3 ON T2.""Airport_ID""  =  T3.""Airport_ID"" WHERE T3.""Airport_Name""  =  'London Gatwick'",SELECT a.name FROM aircrafts a JOIN airports_aircrafts aa ON a.id = aa.aircraft_id JOIN airports ap1 ON aa.airport_id = ap1.id JOIN airports ap2 ON aa.airport_id = ap2.id WHERE ap1.name = 'London Heathrow' AND ap2.name = 'London Gatwick';,[],[['Error']]
+131,"SELECT T1.""Aircraft"" 
+FROM aircraft AS T1 JOIN airport_aircraft AS T2 ON T1.""Aircraft_ID""  =  T2.""Aircraft_ID"" 
+JOIN airport AS T3 ON T2.""Airport_ID""  =  T3.""Airport_ID"" 
+WHERE T3.""Airport_Name""  =  'London Heathrow' 
+INTERSECT 
+SELECT T1.""Aircraft"" 
+FROM aircraft AS T1 
+JOIN airport_aircraft AS T2 ON T1.""Aircraft_ID""  =  T2.""Aircraft_ID"" 
+JOIN airport AS T3 ON T2.""Airport_ID""  =  T3.""Airport_ID"" 
+WHERE T3.""Airport_Name""  =  'London Gatwick'",SELECT aircraft_name FROM aircrafts WHERE airport_name = 'London Heathrow' AND airport_name = 'Gatwick';,[],[['Error']]
+132,"SELECT t1.""Name"" ,  t1.""Age"" 
+FROM pilot AS t1 
+JOIN MATCH AS t2 ON t1.""Pilot_Id""  =  t2.""Winning_Pilot"" 
+WHERE t1.""Age""  <  30 
+GROUP BY t1.""Name"" ,  t1.""Age"" 
+ORDER BY count(*) DESC LIMIT 1","SELECT name, age FROM pilots WHERE age < 30 ORDER BY wins DESC LIMIT 1;",[['Ayana Spencer' 25]],[['Error']]
+133,"SELECT T1.resident_id ,  T1.other_details ,  count(*) 
+FROM Residents AS T1 
+JOIN Residents_Services AS T2 ON T1.resident_id  =  T2.resident_id 
+GROUP BY T1.resident_id, T1.other_details  
+ORDER BY count(*) DESC","SELECT resident_id, details, COUNT(*) AS count FROM services GROUP BY resident_id, details ORDER BY count DESC;","[[28 'Miss Alanis Lockman' 1]
+ [87 'Mrs. Raphaelle Fisher' 1]
+ [67 'Terrill Bernhard' 1]
+ [6 'Anderson Batz' 1]
+ [45 'Prof. Nasir Hoppe' 1]
+ [47 'Tiffany Jaskolski' 1]
+ [43 'Elroy Schuster' 1]
+ [90 'Cassie Johnson' 1]
+ [88 'Jacques Glover II' 1]
+ [23 'Jess Wyman' 1]
+ [83 'Loy Walter' 1]]",[['Error']]
+134,"SELECT t3.""Headquartered_City"" 
+FROM store AS t1 
+JOIN store_district AS t2 ON t1.""Store_ID"" =  t2.""Store_ID"" 
+JOIN district AS t3 ON t2.""District_ID""  =  t3.""District_ID"" 
+WHERE t1.""Store_Name""  =  'Blackville'",SELECT city FROM stores WHERE store_name = 'Blackville';,[['Bhakkar City']],[['Error']]
+135,"SELECT t3.""Headquartered_City"" ,  count(*) 
+FROM store AS t1 
+JOIN store_district AS t2 ON t1.""Store_ID""  =  t2.""Store_ID""
+JOIN district AS t3 ON t2.""District_ID""  =  t3.""District_ID""
+GROUP BY t3.""Headquartered_City""","SELECT city, COUNT(store_id) AS number_of_stores FROM stores GROUP BY city;","[['Hafizabad City' 1]
+ ['Bhakkar City' 1]
+ ['Bahawalpur City' 1]
+ ['Khanewal City' 2]]",[['Error']]
+136,"SELECT t3.""Headquartered_City"" ,  count(*) 
+FROM store AS t1 
+JOIN store_district AS t2 ON t1.""Store_ID""  =  t2.""Store_ID""
+JOIN district AS t3 ON t2.""District_ID""  =  t3.""District_ID"" 
+GROUP BY t3.""Headquartered_City""","SELECT city, COUNT(*) AS num_stores FROM stores GROUP BY city;","[['Hafizabad City' 1]
+ ['Bhakkar City' 1]
+ ['Bahawalpur City' 1]
+ ['Khanewal City' 2]]",[['Error']]
+137,"SELECT t3.""Headquartered_City""
+FROM store AS t1 
+JOIN store_district AS t2 ON t1.""Store_ID""  =  t2.""Store_ID""
+JOIN district AS t3 ON t2.""District_ID""  =  t3.""District_ID"" 
+GROUP BY t3.""Headquartered_City""
+ORDER BY count(*) DESC LIMIT 1",SELECT city FROM stores GROUP BY city ORDER BY COUNT(*) DESC LIMIT 1;,[['Khanewal City']],[['Error']]
+138,"SELECT t3.""Headquartered_City"" FROM ""store"" AS t1 JOIN ""store_district"" AS t2 ON t1.""Store_ID"" = t2.""Store_ID"" JOIN ""district"" AS t3 ON t2.""District_ID"" = t3.""District_ID"" GROUP BY t3.""Headquartered_City"" ORDER BY count(*) DESC LIMIT 1",SELECT city FROM stores GROUP BY city ORDER BY COUNT(*) DESC LIMIT 1;,[['Khanewal City']],[['Error']]
+139,"SELECT t3.""District_name"" FROM ""store"" AS t1 JOIN ""store_district"" AS t2 ON t1.""Store_ID"" = t2.""Store_ID"" JOIN ""district"" AS t3 ON t2.""District_ID"" = t3.""District_ID"" WHERE t1.""Type"" = 'City Mall' INTERSECT SELECT t3.""District_name"" FROM store AS t1 JOIN ""store_district"" AS t2 ON t1.""Store_ID"" = t2.""Store_ID"" JOIN ""district"" AS t3 ON t2.""District_ID"" = t3.""District_ID"" WHERE t1.""Type"" = 'Village Store';",SELECT district_name FROM stores WHERE store_type = 'city mall' AND district_name IN (     SELECT district_name     FROM stores     WHERE store_type = 'village store' ),[['Khanewal District']],[['Error']]
+140,"SELECT t3.""District_name"" FROM ""store"" AS t1 JOIN ""store_district"" AS t2 ON t1.""Store_ID"" = t2.""Store_ID"" JOIN ""district"" AS t3 ON t2.""District_ID"" = t3.""District_ID"" WHERE t1.""Type"" = 'City Mall' INTERSECT SELECT t3.""District_name"" FROM store AS t1 JOIN ""store_district"" AS t2 ON t1.""Store_ID"" = t2.""Store_ID"" JOIN ""district"" AS t3 ON t2.""District_ID"" = t3.""District_ID"" WHERE t1.""Type"" = 'Village Store';",SELECT district_name FROM districts WHERE shop_style = 'mall' AND district_name IN (     SELECT district_name     FROM districts     WHERE shop_style = 'village store' ),[['Khanewal District']],[['Error']]
+141,SELECT T1.state FROM college AS T1 JOIN tryout AS T2 ON T1.cName  =  T2.cName WHERE T2.pPos  =  'goalie' INTERSECT SELECT T1.state FROM college AS T1 JOIN tryout AS T2 ON T1.cName  =  T2.cName WHERE T2.pPos  =  'mid',"SELECT DISTINCT state_name FROM states WHERE state_id IN (     SELECT state_id     FROM players     WHERE position IN ('goalie', 'mid')     AND college_student = true )",[['LA']],[['Error']]
+142,SELECT T1.state FROM college AS T1 JOIN tryout AS T2 ON T1.cName  =  T2.cName WHERE T2.pPos  =  'goalie' INTERSECT SELECT T1.state FROM college AS T1 JOIN tryout AS T2 ON T1.cName  =  T2.cName WHERE T2.pPos  =  'mid',"SELECT state_name FROM states WHERE state_id IN (     SELECT state_id     FROM players     WHERE position IN ('goalie', 'mid-field')     AND education_level = 'college' )",[['LA']],[['Error']]
+143,SELECT T1.state FROM college AS T1 JOIN tryout AS T2 ON T1.cName  =  T2.cName WHERE T2.pPos  =  'mid' EXCEPT SELECT T1.state FROM college AS T1 JOIN tryout AS T2 ON T1.cName  =  T2.cName WHERE T2.pPos  =  'goalie',SELECT DISTINCT state_name FROM states WHERE state_id IN (     SELECT state_id     FROM players     WHERE position = 'mid' ) AND state_id NOT IN (     SELECT state_id     FROM players     WHERE position = 'goalie' );,[['OK']],[['Error']]
+144,SELECT T1.state FROM college AS T1 JOIN tryout AS T2 ON T1.cName  =  T2.cName WHERE T2.pPos  =  'mid' EXCEPT SELECT T1.state FROM college AS T1 JOIN tryout AS T2 ON T1.cName  =  T2.cName WHERE T2.pPos  =  'goalie',SELECT state_name FROM states WHERE mid_position = true AND goalie = false;,[['OK']],[['Error']]
+145,SELECT COUNT(*) FROM (SELECT T1.state FROM college AS T1 JOIN tryout AS T2 ON T1.cName  =  T2.cName WHERE T2.pPos  =  'mid' EXCEPT SELECT T1.state FROM college AS T1 JOIN tryout AS T2 ON T1.cName  =  T2.cName WHERE T2.pPos  =  'goalie') as T,SELECT COUNT(DISTINCT state)  FROM players  WHERE position = 'mid'  AND state IN (SELECT state FROM players WHERE position = 'college')  AND state NOT IN (SELECT state FROM players WHERE position = 'goalie');,[[1]],[['Error']]
+146,SELECT COUNT(*) FROM (SELECT T1.state FROM college AS T1 JOIN tryout AS T2 ON T1.cName  =  T2.cName WHERE T2.pPos  =  'mid' EXCEPT SELECT T1.state FROM college AS T1 JOIN tryout AS T2 ON T1.cName  =  T2.cName WHERE T2.pPos  =  'goalie') as T,SELECT COUNT(DISTINCT state)  FROM table_name  WHERE position = 'mid'  AND player_type != 'goalie';,[[1]],[['Error']]
+147,"SELECT T3.""Shop_Name"", T2.""Carrier"" 
+FROM ""stock"" AS T1 JOIN ""device"" AS T2 ON T1.""Device_ID"" = T2.""Device_ID"" 
+JOIN ""shop"" AS T3 ON T1.""Shop_ID"" = T3.""Shop_ID""","SELECT shop.name, device.carrier FROM shop JOIN device ON shop.device_id = device.id;","[['Dinas Device' 'Vodafone AU']
+ ['Best Buy' 'Vodafone AU']
+ ['Ferndale' 'Vodafone AU']
+ ['Apple' 'Vodafone AU']
+ ['Dinas Device' 'Bell Mobility']
+ ['ATnT' 'Vodafone AU']
+ ['Ferndale' 'Bell Mobility']
+ ['Gelli repair' 'Bell Mobility']]",[['Error']]
+148,"SELECT T2.""Shop_Name"" FROM ""stock"" AS T1 JOIN ""shop"" AS T2 ON T1.""Shop_ID"" = T2.""Shop_ID"" GROUP BY T1.""Shop_ID"", T2.""Shop_Name"" ORDER BY COUNT(*) DESC LIMIT 1",SELECT shop_name FROM inventory GROUP BY shop_name ORDER BY COUNT(DISTINCT device_name) DESC LIMIT 1;,[['Dinas Device']],[['Error']]
+149,"SELECT count(*) ,  T1.product_name FROM product AS T1 JOIN problems AS T2 ON T1.product_id = T2.product_id GROUP BY T1.product_name ORDER BY count(*) DESC LIMIT 1","SELECT COUNT(*) AS num_problems, product_name FROM problems GROUP BY product_name ORDER BY num_problems DESC LIMIT 1;",[[4 'rose']],[['Error']]
+150,SELECT product_id FROM problems AS T1 JOIN staff AS T2 ON T1.reported_by_staff_id = T2.staff_id WHERE T2.staff_first_name = 'Christop' AND T2.staff_last_name = 'Berge' INTERSECT SELECT product_id FROM problems AS T1 JOIN staff AS T2 ON T1.closure_authorised_by_staff_id = T2.staff_id WHERE T2.staff_first_name = 'Ashley' AND T2.staff_last_name = 'Medhurst',SELECT product_id FROM problems WHERE reported_by = 'Christop Berge' AND closure_authorised = 'Ashley Medhurst';,[[8]],[['Error']]
+151,"SELECT T3.staff_first_name , T3.staff_last_name FROM problems AS T1 JOIN product AS T2 ON T1.product_id = T2.product_id JOIN staff AS T3 ON T1.reported_by_staff_id = T3.staff_id WHERE T2.product_name = 'rem' EXCEPT SELECT T3.staff_first_name , T3.staff_last_name FROM problems AS T1 JOIN product AS T2 ON T1.product_id = T2.product_id JOIN staff AS T3 ON T1.reported_by_staff_id = T3.staff_id WHERE T2.product_name = 'aut'","SELECT first_name, last_name FROM staff WHERE staff_id IN (     SELECT staff_id     FROM reports     WHERE product = 'rem' ) AND staff_id NOT IN (     SELECT staff_id     FROM reports     WHERE product = 'aut' );",[],[['Error']]
+152,"SELECT T3.name ,  T2.name FROM membership_register_branch AS T1 JOIN branch AS T2 ON T1.branch_id  =  T2.branch_id JOIN member AS T3 ON T1.member_id  =  T3.member_id ORDER BY T1.register_year","SELECT members.name, branches.name FROM members JOIN registrations ON members.member_id = registrations.member_id JOIN branches ON registrations.branch_id = branches.branch_id ORDER BY registrations.year_of_registration;","[['Trevard Lindley' 'Brooke Greville']
+ ['Myron Pryor' 'Zytogorski']
+ ['Johnny Williams' 'Popert']
+ ['Jeremy Jarmon' 'Stanley']
+ ['Ventrell Jenkins' 'Alexandre']
+ ['Braxton Kelley' 'Cochrane']
+ ['Corey Peters' 'Alexandre']
+ ['Micah Johnson' 'Taverner']]",[['Error']]
+153,"SELECT T2.name ,T2.open_year FROM membership_register_branch AS T1 JOIN branch AS T2 ON T1.branch_id = T2.branch_id WHERE T1.register_year = '2016' GROUP BY T2.branch_id ORDER BY count(*) DESC LIMIT 1","SELECT branch_name, opening_year FROM branches WHERE branch_id = (     SELECT branch_id     FROM memberships     WHERE registration_year = 2016     GROUP BY branch_id     ORDER BY COUNT(*) DESC     LIMIT 1 )",[['Alexandre' '2001']],[['Error']]
+154,"SELECT t1.product_id, t2.color_description FROM products AS t1 JOIN ref_colors AS t2 ON t1.color_code = t2.color_code JOIN product_characteristics AS t3 ON t1.product_id = t3.product_id GROUP BY t1.product_id, t2.color_description HAVING count(*) >= 2","SELECT product_id, color_description FROM products WHERE product_id IN (     SELECT product_id     FROM characteristics     GROUP BY product_id     HAVING COUNT(*) >= 2 );","[[6 'blue']
+ [7 'red']
+ [11 'black']
+ [12 'blue']]",[['Error']]
+155,SELECT T1.customer_name FROM customers AS T1 JOIN customer_orders AS T2 ON T1.customer_id  =  T2.customer_id WHERE T1.payment_method_code  =  'Credit Card' GROUP BY T1.customer_id HAVING count(*)  >  2,SELECT c.name FROM customers c JOIN orders o ON c.customer_id = o.customer_id WHERE o.payment_method = 'Credit Card' GROUP BY c.name HAVING COUNT(o.order_id) > 2;,"[['Sterling']
+ ['Cleo']]",[['Error']]
+156,"SELECT T1.customer_name, T1.customer_phone FROM customers AS T1 JOIN customer_orders AS T2 ON T1.customer_id = T2.customer_id JOIN order_items AS T3 ON T3.order_id = T2.order_id GROUP BY T1.customer_id ORDER BY SUM(CAST(t3.order_quantity AS integer)) DESC LIMIT 1","SELECT c.name, c.phone FROM customers c JOIN orders o ON c.customer_id = o.customer_id JOIN order_details od ON o.order_id = od.order_id GROUP BY c.name, c.phone ORDER BY SUM(od.quantity) DESC LIMIT 1;",[['Cleo' '1-202-928-5395']],[['Error']]
+157,SELECT T1.dorm_name FROM dorm AS T1 JOIN has_amenity AS T2 ON T1.dormid  =  T2.dormid JOIN dorm_amenity AS T3 ON T2.amenid  =  T3.amenid WHERE T3.amenity_name  =  'TV Lounge' INTERSECT SELECT T1.dorm_name FROM dorm AS T1 JOIN has_amenity AS T2 ON T1.dormid  =  T2.dormid JOIN dorm_amenity AS T3 ON T2.amenid  =  T3.amenid WHERE T3.amenity_name  =  'Study Room',SELECT name FROM dorms WHERE amenities LIKE '%TV Lounge%' AND amenities LIKE '%Study Room%';,"[['Dorm-plex 2000']
+ ['Anonymous Donor Hall']]",[['Error']]
+158,SELECT T1.fname FROM student AS T1 JOIN lives_in AS T2 ON T1.stuid  =  T2.stuid WHERE T2.dormid IN (SELECT T2.dormid FROM dorm AS T3 JOIN has_amenity AS T4 ON T3.dormid  =  T4.dormid JOIN dorm_amenity AS T5 ON T4.amenid  =  T5.amenid GROUP BY T3.dormid ORDER BY count(*) DESC LIMIT 1),SELECT first_name FROM students WHERE dorm_id = (     SELECT dorm_id     FROM dorms     ORDER BY amenities DESC     LIMIT 1 ),"[['Linda']
+ ['Tracy']
+ ['Shiela']
+ ['Dinesh']
+ ['Paul']
+ ['Lisa']
+ ['Jandy']
+ ['Eric']
+ ['Derek']
+ ['David']
+ ['Steven']
+ ['Charles']
+ ['Susan']
+ ['Mark']
+ ['Bruce']
+ ['Michael']
+ ['Ian']
+ ['George']
+ ['Michael']
+ ['David']
+ ['Stacy']
+ ['Mark']
+ ['Paul']
+ ['Eric']
+ ['Jun']
+ ['Lisa']
+ ['Sarah']
+ ['Eric']
+ ['William']
+ ['Eric']
+ ['Sarah']]",[['Error']]
+159,SELECT T3.amenity_name FROM dorm AS T1 JOIN has_amenity AS T2 ON T1.dormid  =  T2.dormid JOIN dorm_amenity AS T3 ON T2.amenid  =  T3.amenid JOIN lives_in AS T4 ON T4.dormid  =  T1.dormid JOIN student AS T5 ON T5.stuid  =  T4.stuid WHERE T5.lname  =  'Smith',SELECT amenities FROM dorms WHERE student_last_name = 'Smith';,"[['TV Lounge']
+ ['Study Room']
+ ['Carpeted Rooms']
+ ['4 Walls']
+ ['Roof']
+ ['Ethernet Ports']
+ ['Air Conditioning']
+ ['Heat']
+ ['Study Room']
+ ['Carpeted Rooms']
+ ['4 Walls']
+ ['Roof']
+ ['Heat']]",[['Error']]
+160,SELECT t1.email_address FROM customers AS t1 JOIN complaints AS t2 ON t1.customer_id  =  t2.customer_id GROUP BY t1.customer_id ORDER BY count(*) LIMIT 1,SELECT customer.email FROM customer JOIN complaint ON customer.customer_id = complaint.customer_id JOIN product ON complaint.product_id = product.product_id WHERE product.product_id = (     SELECT product_id     FROM complaint     GROUP BY product_id     ORDER BY COUNT(*) DESC     LIMIT 1 ),[['ubeier@example.org']],[['Error']]
+161,"SELECT t1.product_name FROM products AS t1 JOIN complaints AS t2 ON t1.product_id = t2.product_id JOIN customers AS t3 ON t2.customer_id = t3.customer_id GROUP BY t3.customer_id, t1.product_name ORDER BY COUNT(*) LIMIT 1",SELECT product FROM complaints GROUP BY product HAVING COUNT(*) = (     SELECT MIN(complaint_count)     FROM (         SELECT COUNT(*) as complaint_count         FROM complaints         GROUP BY customer     ) AS subquery ),[['Mouse']],[['Error']]
+162,"SELECT t1.product_name FROM products AS t1 JOIN complaints AS t2 ON t1.product_id = t2.product_id JOIN customers AS t3 ON t2.customer_id = t3.customer_id GROUP BY t3.customer_id, t1.product_name ORDER BY COUNT(*) LIMIT 1","SELECT p.name FROM products p JOIN complaints c ON p.product_id = c.product_id JOIN (     SELECT customer_id, COUNT(*) as num_complaints     FROM complaints     GROUP BY customer_id     ORDER BY num_complaints ASC     LIMIT 1 ) AS min_complaints ON c.customer_id = min_complaints.customer_id;",[['Mouse']],[['Error']]
+163,"SELECT T1.Name, T3.Visit_Date FROM Tourist_Attractions AS T1 JOIN VISITS AS T3 ON T1.Tourist_Attraction_ID = T3.Tourist_Attraction_ID JOIN VISITORS AS T2 ON T2.Tourist_ID = T3.Tourist_ID WHERE T2.Tourist_Details = 'Vincent' OR T2.Tourist_Details = 'Vivian'","SELECT tourist_attractions.name, visits.date FROM tourist_attractions JOIN visits ON tourist_attractions.id = visits.attraction_id JOIN tourists ON visits.tourist_id = tourists.id WHERE tourists.name = 'Vincent' OR tourists.name = 'Vivian';","[['flying elephant' Timestamp('2013-08-06 05:35:51')]
+ ['fun shops' Timestamp('2013-10-27 09:56:08')]
+ ['fun games' Timestamp('2017-03-19 08:48:19')]
+ ['parking' Timestamp('2007-09-17 10:12:45')]]",[['Error']]
+164,SELECT T1.Name FROM Tourist_Attractions AS T1 JOIN Tourist_Attraction_Features AS T2 ON T1.tourist_attraction_id  =  T2.tourist_attraction_id JOIN Features AS T3 ON T2.Feature_ID  =  T3.Feature_ID WHERE T3.feature_Details  =  'park' UNION SELECT T1.Name FROM Tourist_Attractions AS T1 JOIN Tourist_Attraction_Features AS T2 ON T1.tourist_attraction_id  =  T2.tourist_attraction_id JOIN Features AS T3 ON T2.Feature_ID  =  T3.Feature_ID WHERE T3.feature_Details  =  'shopping',SELECT name FROM tourist_attractions WHERE feature_details LIKE '%parking%' OR feature_details LIKE '%shopping%';,"[['US museum']
+ ['impressions de France']
+ ['flying elephant']
+ ['cafe']
+ ['parking']
+ ['jungle cruise']
+ ['fun games']
+ ['exploration trial']
+ ['presidents hall']]",[['Error']]
+165,SELECT t1.customer_name FROM customers AS t1 JOIN customer_orders AS t2 ON t1.customer_id = t2.customer_id JOIN order_items AS t3 ON t2.order_id = t3.order_id GROUP BY t1.customer_name ORDER BY SUM(CAST(t3.order_quantity AS integer)) DESC LIMIT 1,SELECT c.name FROM customers c JOIN orders o ON c.customer_id = o.customer_id JOIN order_items oi ON o.order_id = oi.order_id GROUP BY c.name ORDER BY SUM(oi.quantity) DESC LIMIT 1;,[['Clifford Pagac']],[['Error']]
+166,"SELECT t1.payment_method FROM customers AS t1 JOIN customer_orders AS t2 ON t1.customer_id = t2.customer_id JOIN order_items AS t3 ON t2.order_id = t3.order_id GROUP BY t1.customer_name, t1.payment_method ORDER BY SUM(CAST(t3.order_quantity AS integer)) LIMIT 1",SELECT payment_method FROM customers WHERE customer_id = (     SELECT customer_id     FROM orders     GROUP BY customer_id     ORDER BY COUNT(*) ASC     LIMIT 1 ) LIMIT 1;,[['Credit Card']],[['Error']]
+167,"SELECT t1.payment_method FROM customers AS t1 JOIN customer_orders AS t2 ON t1.customer_id = t2.customer_id JOIN order_items AS t3 ON t2.order_id = t3.order_id GROUP BY t1.customer_name, t1.payment_method ORDER BY SUM(CAST(t3.order_quantity AS integer)) LIMIT 1",SELECT payment_method FROM orders GROUP BY customer_id ORDER BY SUM(quantity) ASC LIMIT 1;,[['Credit Card']],[['Error']]
+168,SELECT customer_name FROM customers EXCEPT SELECT t1.customer_name FROM customers AS t1 JOIN customer_orders AS t2 ON t1.customer_id  =  t2.customer_id JOIN order_items AS t3 ON t2.order_id  =  t3.order_id JOIN products AS t4 ON t3.product_id  =  t4.product_id WHERE t4.product_details  =  'Latte',SELECT name FROM customers WHERE customer_id NOT IN (     SELECT customer_id     FROM orders     WHERE product = 'Latte' ),"[['Prof. Alexzander Hamill']
+ ['Tillman Ernser']
+ ['Prof. Ibrahim Bashirian']
+ ['Dr. Julia Wuckert MD']
+ ['Alexane Kilback']
+ ['Eunice Morar']
+ ['Prof. Reyes Berge II']
+ ['Devin Mills']
+ ['Mozell Morissette']
+ ['Miss Aliyah Witting']
+ ['Maudie Kertzmann']
+ ['Rodrick Heaney']
+ ['Kitty Padberg III']]",[['Error']]
+169,SELECT t1.customer_name FROM customers AS t1 JOIN customer_orders AS t2 ON t1.customer_id  =  t2.customer_id JOIN order_items AS t3 ON t2.order_id  =  t3.order_id JOIN products AS t4 ON t3.product_id  =  t4.product_id WHERE t4.product_details  =  'Latte' INTERSECT SELECT t1.customer_name FROM customers AS t1 JOIN customer_orders AS t2 ON t1.customer_id  =  t2.customer_id JOIN order_items AS t3 ON t2.order_id  =  t3.order_id JOIN products AS t4 ON t3.product_id  =  t4.product_id WHERE t4.product_details  =  'Americano',SELECT c.name FROM customers c JOIN orders o ON c.customer_id = o.customer_id JOIN order_items oi ON o.order_id = oi.order_id JOIN products p ON oi.product_id = p.product_id WHERE p.name = 'Latte' OR p.name = 'Americano' GROUP BY c.name HAVING COUNT(DISTINCT p.name) = 2;,[['Clifford Pagac']],[['Error']]
+170,SELECT T1.Famous_Title FROM artist AS T1 JOIN volume AS T2 ON T1.Artist_ID  =  T2.Artist_ID WHERE T2.Weeks_on_Top  >  2 INTERSECT SELECT T1.Famous_Title FROM artist AS T1 JOIN volume AS T2 ON T1.Artist_ID  =  T2.Artist_ID WHERE T2.Weeks_on_Top  <  2,SELECT title FROM artists WHERE volume_weeks_on_top > 2 AND volume_weeks_on_top < 14;,[['Bergen 1996']],[['Error']]
+171,SELECT t3.individual_last_name FROM organizations AS t1 JOIN organization_contact_individuals AS t2 ON t1.organization_id  =  t2.organization_id JOIN individuals AS t3 ON t2.individual_id  =  t3.individual_id WHERE t1.uk_vat_number  =  (SELECT max(uk_vat_number) FROM organizations) ORDER BY t2.date_contact_to ASC LIMIT 1,SELECT last_name FROM contact_person WHERE organization_id = (     SELECT organization_id     FROM organization     WHERE vat_number = (         SELECT MAX(vat_number)         FROM organization         WHERE country = 'UK'     ) ) ORDER BY created_at ASC LIMIT 1;,[['Jacobs']],[['Error']]
+172,SELECT t3.individual_last_name FROM organizations AS t1 JOIN organization_contact_individuals AS t2 ON t1.organization_id  =  t2.organization_id JOIN individuals AS t3 ON t2.individual_id  =  t3.individual_id WHERE t1.uk_vat_number  =  (SELECT max(uk_vat_number) FROM organizations) ORDER BY t2.date_contact_to ASC LIMIT 1,SELECT last_name FROM individuals WHERE organization_id = (     SELECT organization_id     FROM organizations     WHERE vat_number = (         SELECT MAX(vat_number)         FROM organizations         WHERE country = 'UK'     ) ) ORDER BY contact_date ASC LIMIT 1;,[['Jacobs']],[['Error']]
+173,SELECT t1.party_email FROM parties AS t1 JOIN party_services AS t2 ON t1.party_id  =  t2.customer_id GROUP BY t1.party_email ORDER BY count(*) DESC LIMIT 1,SELECT email FROM party WHERE party_id = (     SELECT party_id     FROM service_usage     GROUP BY party_id     ORDER BY COUNT(*) DESC     LIMIT 1 ),[['frida57@example.org']],[['Error']]
+174,SELECT t1.party_email FROM parties AS t1 JOIN party_services AS t2 ON t1.party_id  =  t2.customer_id GROUP BY t1.party_email ORDER BY count(*) DESC LIMIT 1,SELECT party_email FROM party_services GROUP BY party_email ORDER BY COUNT(*) DESC LIMIT 1;,[['frida57@example.org']],[['Error']]
+175,"SELECT T1.statement_id, T2.statement_details FROM Accounts AS T1 JOIN Statements AS T2 ON T1.statement_id = T2.statement_id GROUP BY T1.statement_id, T2.statement_details ORDER BY count(*) DESC LIMIT 1","SELECT statement_id, statement_detail FROM statements WHERE statement_id = (     SELECT statement_id     FROM accounts     GROUP BY statement_id     ORDER BY COUNT(*) DESC     LIMIT 1 )",[[57 'Open Project']],[['Error']]
+176,SELECT T3.name FROM assignedto AS T1 JOIN projects AS T2 ON T1.project  =  T2.code JOIN scientists AS T3 ON T1.scientist  =  T3.SSN WHERE T2.name  =  'Matter of Time' INTERSECT SELECT T3.name FROM assignedto AS T1 JOIN projects AS T2 ON T1.project  =  T2.code JOIN scientists AS T3 ON T1.scientist  =  T3.SSN WHERE T2.name  =  'A Puzzling Parallax',SELECT scientist.name FROM scientist JOIN works_on ON scientist.id = works_on.scientist_id JOIN project ON works_on.project_id = project.id WHERE project.name = 'Matter of Time' AND scientist.id IN (     SELECT scientist_id     FROM works_on     JOIN project ON works_on.project_id = project.id     WHERE project.name = 'A Puzzling Parallax' ),[],[['Error']]
+177,SELECT T3.name FROM assignedto AS T1 JOIN projects AS T2 ON T1.project  =  T2.code JOIN scientists AS T3 ON T1.scientist  =  T3.SSN WHERE T2.name  =  'Matter of Time' INTERSECT SELECT T3.name FROM assignedto AS T1 JOIN projects AS T2 ON T1.project  =  T2.code JOIN scientists AS T3 ON T1.scientist  =  T3.SSN WHERE T2.name  =  'A Puzzling Parallax',"SELECT scientist_name FROM scientists WHERE project_name IN ('Matter of Time', 'A Puzzling Pattern');",[],[['Error']]
+178,"SELECT T1.Area FROM APPELLATIONS AS T1 JOIN WINE AS T2 ON T1.Appelation = T2.Appelation WHERE T2.year < 2010 GROUP BY T2.Appelation, T1.Area ORDER BY count(*) DESC LIMIT 1","SELECT area, COUNT(*) AS num_wines FROM wines WHERE year < 2010 GROUP BY area ORDER BY num_wines DESC LIMIT 1;",[['North Coast']],[['Error']]
+179,"SELECT T1.Area FROM APPELLATIONS AS T1 JOIN WINE AS T2 ON T1.Appelation = T2.Appelation WHERE T2.year < 2010 GROUP BY T2.Appelation, T1.Area ORDER BY count(*) DESC LIMIT 1",SELECT area FROM wines WHERE year < 2010 GROUP BY appelation ORDER BY COUNT(*) DESC LIMIT 1;,[['North Coast']],[['Error']]
+180,"SELECT T1.Color FROM GRAPES AS T1 JOIN WINE AS T2 ON T1.Grape = T2.Grape GROUP BY T2.Grape, T1.Color ORDER BY AVG(Price) DESC LIMIT 1","SELECT color FROM grape WHERE grape_id IN (     SELECT grape_id     FROM wine     GROUP BY grape_id     HAVING AVG(price) = (         SELECT MAX(avg_price)         FROM (             SELECT grape_id, AVG(price) AS avg_price             FROM wine             GROUP BY grape_id         ) AS subquery     ) );",[['White']],[['Error']]
+181,"SELECT T1.Color FROM GRAPES AS T1 JOIN WINE AS T2 ON T1.Grape = T2.Grape GROUP BY T2.Grape, T1.Color ORDER BY AVG(Price) DESC LIMIT 1",SELECT grape.color FROM grape JOIN wine ON grape.id = wine.grape_id GROUP BY grape.color ORDER BY AVG(wine.price) DESC LIMIT 1;,[['White']],[['Error']]
+182,"select DISTINCT T1.County FROM APPELLATIONS AS T1 JOIN WINE AS T2 ON T1.Appelation = T2.Appelation GROUP BY T1.County, T2.Appelation HAVING count(*) <= 3",SELECT country FROM appellations GROUP BY country HAVING COUNT(wine) <= 3;,"[['Napa']
+ ['Sonoma']
+ ['Santa Barbara']]",[['Error']]
+183,"select DISTINCT T1.County FROM APPELLATIONS AS T1 JOIN WINE AS T2 ON T1.Appelation = T2.Appelation GROUP BY T1.County, T2.Appelation HAVING count(*) <= 3",SELECT country FROM appellations GROUP BY country HAVING COUNT(wine) <= 3;,"[['Napa']
+ ['Sonoma']
+ ['Santa Barbara']]",[['Error']]
+184,SELECT T2.Winery FROM GRAPES AS T1 JOIN WINE AS T2 ON T1.GRAPE  =  T2.GRAPE WHERE T1.Color  =  'White' GROUP BY T2.Winery ORDER BY count(*) DESC LIMIT 3,"SELECT winery_name, COUNT(*) AS num_wines FROM wines WHERE grape_color = 'white' GROUP BY winery_name ORDER BY num_wines DESC LIMIT 3;","[['Altamura']
+ ['Brander']
+ ['Capture']]",[['Error']]
+185,SELECT T2.Winery FROM GRAPES AS T1 JOIN WINE AS T2 ON T1.GRAPE  =  T2.GRAPE WHERE T1.Color  =  'White' GROUP BY T2.Winery ORDER BY count(*) DESC LIMIT 3,SELECT winery_name FROM wines WHERE grape_color = 'white' GROUP BY winery_name ORDER BY COUNT(*) DESC LIMIT 3;,"[['Altamura']
+ ['Brander']
+ ['Capture']]",[['Error']]
+186,SELECT T2.name FROM train_station AS T1 JOIN station AS T2 ON T1.station_id  =  T2.station_id JOIN train AS T3 ON T3.train_id  =  T1.train_id WHERE T3.Name  =  'Ananthapuri Express' INTERSECT SELECT T2.name FROM train_station AS T1 JOIN station AS T2 ON T1.station_id  =  T2.station_id JOIN train AS T3 ON T3.train_id  =  T1.train_id WHERE T3.Name  =  'Guruvayur Express',SELECT s.name FROM stations s JOIN train_stations ts1 ON s.id = ts1.station_id JOIN trains t1 ON ts1.train_id = t1.id JOIN train_stations ts2 ON s.id = ts2.station_id JOIN trains t2 ON ts2.train_id = t2.id WHERE t1.name = 'Ananthapuri Express' AND t2.name = 'Guruvayur Express',[['London Waterloo']],[['Error']]
+187,SELECT T2.city FROM Customers AS T1 JOIN Addresses AS T2 ON T1.customer_address_id = T2.address_id GROUP BY T2.city ORDER BY count(*) DESC LIMIT 1;,SELECT city FROM customers GROUP BY city ORDER BY COUNT(*) DESC LIMIT 1;,[['South Richieport']],[['Error']]
+188,"SELECT T1.fname ,  T1.lname FROM Faculty AS T1 JOIN Student AS T2 ON T1.FacID  =  T2.advisor GROUP BY T1.FacID ORDER BY count(*) DESC LIMIT 1","SELECT first_name, last_name FROM faculty WHERE faculty_id = (     SELECT faculty_id     FROM students     GROUP BY faculty_id     ORDER BY COUNT(*) DESC     LIMIT 1 )",[['David' 'Yarowsky']],[['Error']]
+189,SELECT T1.lname FROM Faculty AS T1 JOIN Faculty_participates_in AS T2 ON T1.facID  =  T2.facID JOIN activity AS T3 ON T2.actid  =  T2.actid WHERE T3.activity_name  =  'Canoeing' INTERSECT SELECT T1.lname FROM Faculty AS T1 JOIN Faculty_participates_in AS T2 ON T1.facID  =  T2.facID JOIN activity AS T3 ON T2.actid  =  T2.actid WHERE T3.activity_name  =  'Kayaking',"SELECT first_name FROM faculty WHERE faculty_id IN (     SELECT faculty_id     FROM faculty_activities     WHERE activity_name IN ('Canoeing', 'Kayaking') )","[['Taylor']
+ ['Salzberg']
+ ['Jones']
+ ['Giuliano']
+ ['Wolff']
+ ['Beach']
+ ['Houlahan']
+ ['Smith']
+ ['Burzio']
+ ['Goodrich']
+ ['Yarowsky']
+ ['Goldman']
+ ['Frank']
+ ['Naiman']
+ ['Amir']
+ ['Cheng']
+ ['Hall']
+ ['Angelopoulou']]",[['Error']]
+190,SELECT T1.lname FROM Faculty AS T1 JOIN Faculty_participates_in AS T2 ON T1.facID  =  T2.facID JOIN activity AS T3 ON T2.actid  =  T2.actid WHERE T3.activity_name  =  'Canoeing' INTERSECT SELECT T1.lname FROM Faculty AS T1 JOIN Faculty_participates_in AS T2 ON T1.facID  =  T2.facID JOIN activity AS T3 ON T2.actid  =  T2.actid WHERE T3.activity_name  =  'Kayaking',SELECT DISTINCT first_name FROM faculty WHERE faculty_id IN (     SELECT faculty_id     FROM faculty_activities     WHERE activity_name = 'Canoeing' ) AND faculty_id IN (     SELECT faculty_id     FROM faculty_activities     WHERE activity_name = 'Kayaking' );,"[['Taylor']
+ ['Salzberg']
+ ['Jones']
+ ['Giuliano']
+ ['Wolff']
+ ['Beach']
+ ['Houlahan']
+ ['Smith']
+ ['Burzio']
+ ['Goodrich']
+ ['Yarowsky']
+ ['Goldman']
+ ['Frank']
+ ['Naiman']
+ ['Amir']
+ ['Cheng']
+ ['Hall']
+ ['Angelopoulou']]",[['Error']]
+191,SELECT city FROM airports GROUP BY city HAVING count(*)  >  2 ORDER BY count(*),SELECT city FROM airports GROUP BY city HAVING COUNT(*) > 2 ORDER BY COUNT(*) DESC;,[],[]
+192,SELECT T1.customer_id FROM customers AS T1 JOIN orders AS T2 ON T1.customer_id  =  T2.customer_id GROUP BY T1.customer_id ORDER BY count(*) DESC LIMIT 1,SELECT customer_id FROM orders GROUP BY customer_id ORDER BY COUNT(*) DESC LIMIT 1;,[[2]],[[15]]
+193,"SELECT count(*) , T3.product_id FROM orders AS T1 JOIN order_items AS T2 ON T1.order_id = T2.order_id JOIN products AS T3 ON T2.product_id = T3.product_id GROUP BY T3.product_id","SELECT product_id, COUNT(*) AS count FROM orders GROUP BY product_id;","[[ 2  4]
+ [ 2 14]
+ [ 2 11]
+ [ 1  7]
+ [ 3 15]
+ [ 1 12]
+ [ 2  3]
+ [ 1  1]
+ [ 1  8]]",[['Error']]
+194,"SELECT count(*) , T3.product_id FROM orders AS T1 JOIN order_items AS T2 ON T1.order_id = T2.order_id JOIN products AS T3 ON T2.product_id = T3.product_id GROUP BY T3.product_id","SELECT product_id, COUNT(*) AS order_count FROM orders GROUP BY product_id;","[[ 2  4]
+ [ 2 14]
+ [ 2 11]
+ [ 1  7]
+ [ 3 15]
+ [ 1 12]
+ [ 2  3]
+ [ 1  1]
+ [ 1  8]]",[['Error']]
+195,"SELECT T3.product_name , count(*) FROM orders AS T1 JOIN order_items AS T2 ON T1.order_id = T2.order_id JOIN products AS T3 ON T2.product_id = T3.product_id GROUP BY T3.product_id","SELECT product.name, COUNT(*) AS count FROM product JOIN order_item ON product.id = order_item.product_id GROUP BY product.name;","[['food' 2]
+ ['music' 2]
+ ['phone' 2]
+ ['clothes' 1]
+ ['music' 3]
+ ['phone' 1]
+ ['food' 2]
+ ['food' 1]
+ ['book' 1]]",[['Error']]
+196,"SELECT T3.product_name , count(*) FROM orders AS T1 JOIN order_items AS T2 ON T1.order_id = T2.order_id JOIN products AS T3 ON T2.product_id = T3.product_id GROUP BY T3.product_id","SELECT product.name, COUNT(order_product.product_id) AS order_count FROM product JOIN order_product ON product.id = order_product.product_id GROUP BY product.name;","[['food' 2]
+ ['music' 2]
+ ['phone' 2]
+ ['clothes' 1]
+ ['music' 3]
+ ['phone' 1]
+ ['food' 2]
+ ['food' 1]
+ ['book' 1]]",[['Error']]
+197,SELECT T1.order_id FROM orders AS T1 JOIN order_items AS T2 ON T1.order_id = T2.order_id GROUP BY T1.order_id ORDER BY count(*) DESC LIMIT 1,SELECT id FROM orders ORDER BY item_count DESC LIMIT 1;,[[15]],[['Error']]
+198,SELECT T1.order_id FROM orders AS T1 JOIN order_items AS T2 ON T1.order_id = T2.order_id GROUP BY T1.order_id ORDER BY count(*) DESC LIMIT 1,SELECT order_id FROM orders GROUP BY order_id ORDER BY COUNT(*) DESC LIMIT 1;,[[15]],[[11]]
+199,SELECT T1.customer_name FROM customers AS T1 JOIN orders AS T2 ON T1.customer_id = T2.customer_id JOIN order_items AS T3 ON T2.order_id = T3.order_id JOIN products AS T4 ON T3.product_id = T4.product_id WHERE T4.product_name = 'food' GROUP BY T1.customer_id HAVING count(*) >= 1,SELECT c.name FROM customers c JOIN orders o ON c.customer_id = o.customer_id JOIN order_items oi ON o.order_id = oi.order_id JOIN products p ON oi.product_id = p.product_id WHERE p.name = 'food';,"[['George']
+ ['Alberto']
+ ['Hadley']
+ ['Violet']
+ ['Devan']]",[['Error']]
+200,SELECT T1.customer_name FROM customers AS T1 JOIN orders AS T2 ON T1.customer_id = T2.customer_id JOIN order_items AS T3 ON T2.order_id = T3.order_id JOIN products AS T4 ON T3.product_id = T4.product_id WHERE T4.product_name = 'food' GROUP BY T1.customer_id HAVING count(*) >= 1,SELECT customer_name FROM customers WHERE customer_id IN (     SELECT customer_id     FROM orders     WHERE product_name = 'food' ),"[['George']
+ ['Alberto']
+ ['Hadley']
+ ['Violet']
+ ['Devan']]",[['Error']]
+201,SELECT T1.customer_name FROM customers AS T1 JOIN orders AS T2 ON T1.customer_id = T2.customer_id JOIN order_items AS T3 ON T2.order_id = T3.order_id JOIN products AS T4 ON T3.product_id = T4.product_id WHERE T3.order_item_status = 'Cancel' AND T4.product_name = 'food' GROUP BY T1.customer_id HAVING count(*) >= 1,SELECT customer_name FROM purchases WHERE product_name = 'food' AND item_status = 'Cancel';,"[['George']
+ ['Devan']]",[['Error']]
+202,SELECT T1.customer_name FROM customers AS T1 JOIN orders AS T2 ON T1.customer_id = T2.customer_id JOIN order_items AS T3 ON T2.order_id = T3.order_id JOIN products AS T4 ON T3.product_id = T4.product_id WHERE T3.order_item_status = 'Cancel' AND T4.product_name = 'food' GROUP BY T1.customer_id HAVING count(*) >= 1,SELECT customer_name FROM purchases WHERE product_name = 'food' AND item_status = 'Cancel';,"[['George']
+ ['Devan']]",[['Error']]
+203,"SELECT T1.id ,  T1.name ,  T1.gender FROM architect AS T1 JOIN bridge AS T2 ON T1.id  =  T2.architect_id GROUP BY T1.id HAVING count(*)  =  2 UNION SELECT T1.id ,  T1.name ,  T1.gender FROM architect AS T1 JOIN mill AS T2 ON T1.id  =  T2.architect_id GROUP BY T1.id HAVING count(*)  =  1","SELECT id, name, gender FROM architects WHERE (SELECT COUNT(*) FROM structures WHERE architect_id = architects.id AND (type = 'bridge' OR type = 'mill')) >= 2;","[['2' 'Frank Gehry' 'male']
+ ['4' 'Mies Van Der Rohe' 'male']
+ ['3' 'Zaha Hadid' 'female']]",[['Error']]
+204,select t1.fname from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'cat' intersect select t1.fname from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid join pets as t3 on t3.petid  =  t2.petid where t3.pettype  =  'dog',SELECT first_name FROM students WHERE student_id IN (     SELECT student_id     FROM pets     WHERE pet_type = 'cat' ) AND student_id IN (     SELECT student_id     FROM pets     WHERE pet_type = 'dog' );,[],[['Error']]
+205,SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' INTERSECT SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog',SELECT first_name FROM students WHERE student_id IN (     SELECT student_id     FROM pets     WHERE pet_type = 'cat' ) AND student_id IN (     SELECT student_id     FROM pets     WHERE pet_type = 'dog' );,[],[['Error']]
+206,"SELECT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')","SELECT first_name, age FROM students WHERE pet = 'dog' AND first_name NOT IN (     SELECT first_name     FROM students     WHERE pet = 'cat' )","[['Tracy' 19]
+ ['Tracy' 19]]",[['Error']]
+207,"SELECT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')",SELECT first_name FROM students WHERE has_dog = true AND has_cat = false;,"[['Tracy' 19]
+ ['Tracy' 19]]",[['Error']]
+208,SELECT T1.CountryName FROM COUNTRIES AS T1 JOIN CONTINENTS AS T2 ON T1.Continent  =  T2.ContId JOIN CAR_MAKERS AS T3 ON T1.CountryId  =  T3.Country WHERE T2.Continent  =  'europe' GROUP BY T1.CountryName HAVING count(*)  >=  3;,SELECT country FROM manufacturers WHERE continent = 'Europe' GROUP BY country HAVING COUNT(DISTINCT car_manufacturer) >= 3;,"[['france']
+ ['germany']]",[['Error']]
+209,SELECT T1.CountryName FROM COUNTRIES AS T1 JOIN CONTINENTS AS T2 ON T1.Continent  =  T2.ContId JOIN CAR_MAKERS AS T3 ON T1.CountryId  =  T3.Country WHERE T2.Continent  =  'europe' GROUP BY T1.CountryName HAVING count(*)  >=  3;,SELECT country_name FROM countries WHERE continent = 'Europe' AND country_id IN (     SELECT country_id     FROM manufacturers     GROUP BY country_id     HAVING COUNT(*) >= 3 );,"[['france']
+ ['germany']]",[['Error']]
+210,SELECT DISTINCT T1.model FROM MODEL_LIST AS T1 JOIN CAR_NAMES AS T2 ON T1.Model  =  T2.Model JOIN CARS_DATA AS T3 ON T2.MakeId  =  T3.Id JOIN CAR_MAKERS AS T4 ON T1.Maker  =  T4.Id WHERE T3.weight  <  3500 AND T4.FullName != 'Ford Motor Company';,SELECT model FROM cars WHERE weight < 3500 AND manufacturer != 'Ford Motor Company',"[['amc']
+ ['plymouth']]",[['Error']]
+211,"select t1.id ,  t1.maker from car_makers as t1 join model_list as t2 on t1.id  =  t2.maker group by t1.id having count(*)  >=  2 intersect select t1.id ,  t1.maker from car_makers as t1 join model_list as t2 on t1.id  =  t2.maker join car_names as t3 on t2.model  =  t3.model group by t1.id having count(*)  >  3;","SELECT id, maker FROM car_makers GROUP BY id, maker HAVING COUNT(model) >= 2 AND COUNT(DISTINCT maker) > 3;",[[4 'gm']],[['Error']]
+212,"SELECT T1.Id ,  T1.Maker FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id HAVING count(*)  >=  2 INTERSECT SELECT T1.Id ,  T1.Maker FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker JOIN CAR_NAMES AS T3 ON T2.model  =  T3.model GROUP BY T1.Id HAVING count(*)  >  3;","SELECT id, maker FROM car_makers WHERE id IN (     SELECT maker_id     FROM car_models     GROUP BY maker_id     HAVING COUNT(*) >= 2 ) AND id IN (     SELECT maker_id     FROM cars     GROUP BY maker_id     HAVING COUNT(*) > 3 );",[[4 'gm']],[['Error']]
+213,"SELECT T1.countryId ,  T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country GROUP BY T1.countryId HAVING count(*)  >  3 UNION SELECT T1.countryId ,  T1.CountryName FROM Countries AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country JOIN MODEL_LIST AS T3 ON T2.Id  =  T3.Maker WHERE T3.Model  =  'fiat';","SELECT id, name FROM countries WHERE id IN (     SELECT country_id     FROM car_makers     GROUP BY country_id     HAVING COUNT(*) > 3 ) OR id IN (     SELECT country_id     FROM car_models     WHERE model = 'fiat' )","[[1 'usa']
+ [4 'japan']
+ [2 'germany']
+ [5 'italy']]",[['Error']]
+214,"select t1.countryid ,  t1.countryname from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  3 union select t1.countryid ,  t1.countryname from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country join model_list as t3 on t2.id  =  t3.maker where t3.model  =  'fiat';","SELECT id, name FROM countries WHERE id IN (     SELECT country_id     FROM car_makers     GROUP BY country_id     HAVING COUNT(*) > 3 ) OR id IN (     SELECT country_id     FROM car_models     WHERE model = 'fiat' )","[[1 'usa']
+ [4 'japan']
+ [2 'germany']
+ [5 'italy']]",[['Error']]
+215,"SELECT t2.""Museum_ID"", t1.""Name"" FROM ""museum"" AS t1 JOIN ""visit"" AS t2 ON t1.""Museum_ID"" = t2.""Museum_ID"" GROUP BY t2.""Museum_ID"", t1.""Name"" ORDER BY count(*) DESC LIMIT 1","SELECT id, name FROM museum WHERE id = (     SELECT museum_id     FROM visits     GROUP BY museum_id     ORDER BY COUNT(*) DESC     LIMIT 1 )",[[2 'Capital Plaza Museum']],[['Error']]
+216,"SELECT t1.""Name"" FROM ""visitor"" AS t1 JOIN ""visit"" AS t2 ON t1.""ID"" = t2.""visitor_ID"" JOIN ""museum"" AS t3 ON t3.""Museum_ID"" = t2.""Museum_ID"" WHERE t3.""Open_Year"" < '2009' INTERSECT SELECT t1.""Name"" FROM ""visitor"" AS t1 JOIN ""visit"" AS t2 ON t1.""ID"" = t2.""visitor_ID"" JOIN ""museum"" AS t3 ON t3.""Museum_ID"" = t2.""Museum_ID"" WHERE t3.""Open_Year"" > '2011';",SELECT visitor.name FROM visitor JOIN visit ON visitor.id = visit.visitor_id JOIN museum ON visit.museum_id = museum.id WHERE museum.opening_year < 2009 AND museum.opening_year > 2011 GROUP BY visitor.name HAVING COUNT(DISTINCT museum.opening_year) = 2;,[['Fernando Gago']],[['Error']]
+217,"SELECT T1.id ,  T1.name FROM battle AS T1 JOIN ship AS T2 ON T1.id  =  T2.lost_in_battle JOIN death AS T3 ON T2.id  =  T3.caused_by_ship_id GROUP BY T1.id HAVING sum(T3.killed)  >  10","SELECT id, name FROM battles WHERE total_killed > 10;","[[5 'Battle of Messinopolis']
+ [6 'Battle of Boruy']
+ [8 'Siege of Constantinople']]",[['Error']]
+218,"SELECT T1.owner_id ,  T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1","SELECT owner_id, last_name FROM owners WHERE owner_id IN (     SELECT owner_id     FROM dogs     WHERE dog_id IN (         SELECT dog_id         FROM treatments         GROUP BY dog_id         ORDER BY COUNT(*) DESC         LIMIT 1     ) );",[[14 'Funk']],[[6 'Rippin']]
+219,"SELECT T1.owner_id ,  T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1","SELECT owner_id, last_name FROM owners WHERE owner_id = (     SELECT owner_id     FROM dogs     WHERE dog_id IN (         SELECT dog_id         FROM treatments         GROUP BY dog_id         ORDER BY SUM(cost) DESC         LIMIT 1     ) )",[[14 'Funk']],[['Error']]
+220,"SELECT T1.owner_id ,  T1.zip_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY sum(T3.cost_of_treatment) DESC LIMIT 1","SELECT owner_id, zip_code FROM dogs GROUP BY owner_id, zip_code ORDER BY SUM(amount_paid) DESC LIMIT 1;",[[3 '02647']],[['Error']]
+221,"SELECT T1.owner_id ,  T1.zip_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY sum(T3.cost_of_treatment) DESC LIMIT 1","SELECT owner_id, zip_code FROM owners WHERE owner_id = (     SELECT owner_id     FROM dogs     GROUP BY owner_id     ORDER BY SUM(cost) DESC     LIMIT 1 )",[[3 '02647']],[['Error']]
+222,"SELECT T1.name ,  T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id WHERE T1.breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )","SELECT dogs.name, treatments.date FROM dogs JOIN breeds ON dogs.breed_id = breeds.id JOIN treatments ON dogs.id = treatments.dog_id WHERE breeds.rarity = (SELECT MIN(rarity) FROM breeds)","[['Holden' Timestamp('2018-03-23 13:52:10')]
+ ['Troy' Timestamp('2018-03-11 04:23:15')]
+ ['Troy' Timestamp('2018-02-28 17:09:43')]
+ ['Jesus' Timestamp('2018-03-16 10:27:36')]
+ ['Troy' Timestamp('2018-03-04 20:33:43')]]",[['Error']]
+223,"SELECT T1.name ,  T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id WHERE T1.breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )","SELECT dogs.name, treatments.date FROM dogs JOIN breeds ON dogs.breed_id = breeds.id JOIN treatments ON dogs.id = treatments.dog_id WHERE breeds.rarity = 'rarest';","[['Holden' Timestamp('2018-03-23 13:52:10')]
+ ['Troy' Timestamp('2018-03-11 04:23:15')]
+ ['Troy' Timestamp('2018-02-28 17:09:43')]
+ ['Jesus' Timestamp('2018-03-16 10:27:36')]
+ ['Troy' Timestamp('2018-03-04 20:33:43')]]",[['Error']]

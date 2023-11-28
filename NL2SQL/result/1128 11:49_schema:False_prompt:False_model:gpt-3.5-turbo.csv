@@ -1,0 +1,8 @@
+,true_SQL,qSQL,true_SQL_result,qSQL_result
+0,"SELECT T3.service_id ,  T4.Service_Type_Code 
+FROM participants AS T1 
+JOIN Participants_in_Events AS T2 ON T1.Participant_ID  =  T2.Participant_ID 
+JOIN EVENTS AS T3 ON T2.Event_ID   =  T3.Event_ID 
+JOIN services AS T4 ON T3.service_id  =  T4.service_id 
+GROUP BY T3.service_id, T4.Service_Type_Code  
+ORDER BY count(*) ASC LIMIT 1","SELECT service_id, type FROM table_name GROUP BY service_id, type ORDER BY COUNT(*) ASC LIMIT 1;",[[6 'Birth Proof    ']],[['Error']]

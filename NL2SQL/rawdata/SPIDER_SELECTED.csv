@@ -762,12 +762,6 @@ ORDER BY count(*) ASC LIMIT 1",Which service id and type has the least number of
  'degrees' 'desc' 'limit' 'value']","['How' 'many' 'faculty' 'lines' 'are' 'there' 'in' 'the' 'university'
  'that' 'conferred' 'the' 'most' 'number' 'of' 'degrees' 'in' 'year'
  '2002' '?']",0,1,0,2,1
-2416,candidate_poll,"SELECT t1.name ,  t1.sex ,  min(oppose_rate) FROM people AS t1 JOIN candidate AS t2 ON t1.people_id  =  t2.people_id GROUP BY t1.sex",Find the name of the candidates whose oppose percentage is the lowest for each sex.,"['SELECT' 't1.name' ',' 't1.sex' ',' 'min' '(' 'oppose_rate' ')' 'FROM'
- 'people' 'AS' 't1' 'JOIN' 'candidate' 'AS' 't2' 'ON' 't1.people_id' '='
- 't2.people_id' 'GROUP' 'BY' 't1.sex']","['select' 't1' '.' 'name' ',' 't1' '.' 'sex' ',' 'min' '(' 'oppose_rate'
- ')' 'from' 'people' 'as' 't1' 'join' 'candidate' 'as' 't2' 'on' 't1' '.'
- 'people_id' '=' 't2' '.' 'people_id' 'group' 'by' 't1' '.' 'sex']","['Find' 'the' 'name' 'of' 'the' 'candidates' 'whose' 'oppose' 'percentage'
- 'is' 'the' 'lowest' 'for' 'each' 'sex' '.']",0,0,1,1,1
 2470,movie_1,"SELECT T2.title ,  T2.director FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID  =  T2.mID WHERE T1.stars  >  (SELECT avg(T1.stars) FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID  =  T2.mID WHERE T2.director  =  'James Cameron')",What are the titles and directors of the movies whose star is greater than the average stars of the movies directed by James Cameron?,"['SELECT' 'T2.title' ',' 'T2.director' 'FROM' 'Rating' 'AS' 'T1' 'JOIN'
  'Movie' 'AS' 'T2' 'ON' 'T1.mID' '=' 'T2.mID' 'WHERE' 'T1.stars' '>' '('
  'SELECT' 'avg' '(' 'T1.stars' ')' 'FROM' 'Rating' 'AS' 'T1' 'JOIN'
@@ -1336,7 +1330,13 @@ WHERE T3.""Sales_in_Billion""  >  200",Show the names of employees that work for
  'join' 'personfriend' 'as' 't4' 'on' 't3' '.' 'friend' '=' 't4' '.'
  'name' 'where' 't2' '.' 'name' '=' 'value' 'and' 't4' '.' 'name' '!' '='
  'value']","['Find' 'Alice' ""'s"" 'friends' 'of' 'friends' '.']",0,0,0,3,1
-4514,document_management,SELECT document_name FROM documents GROUP BY document_type_code ORDER BY count(*) DESC LIMIT 3 INTERSECT SELECT document_name FROM documents GROUP BY document_structure_code ORDER BY count(*) DESC LIMIT 3,What are the names of documents that have both one of the three most common types and one of three most common structures?,"['SELECT' 'document_name' 'FROM' 'documents' 'GROUP' 'BY'
+4514,document_management,"(SELECT document_name FROM documents 
+GROUP BY document_type_code, document_name 
+ORDER BY count(*) DESC LIMIT 3) 
+INTERSECT 
+(SELECT document_name FROM documents 
+GROUP BY document_structure_code, document_name 
+ORDER BY count(*) DESC LIMIT 3)",What are the names of documents that have both one of the three most common types and one of three most common structures?,"['SELECT' 'document_name' 'FROM' 'documents' 'GROUP' 'BY'
  'document_type_code' 'ORDER' 'BY' 'count' '(' '*' ')' 'DESC' 'LIMIT' '3'
  'INTERSECT' 'SELECT' 'document_name' 'FROM' 'documents' 'GROUP' 'BY'
  'document_structure_code' 'ORDER' 'BY' 'count' '(' '*' ')' 'DESC' 'LIMIT'

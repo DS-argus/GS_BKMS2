@@ -1,0 +1,2 @@
+,true_SQL,qSQL,true_SQL_result,qSQL_result
+0,SELECT T1.name FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid  =  T2.f1 GROUP BY T1.name  HAVING count(*)  >  (SELECT count(*) FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid  =  T2.f1 WHERE T1.name  =  'Tyler Swift'),SELECT up.name FROM user_profiles up WHERE up.followers > (     SELECT up2.followers     FROM user_profiles up2     WHERE up2.name = 'Tyler Swift' ),[['Iron Man']],[]

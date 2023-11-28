@@ -1,0 +1,8 @@
+,true_SQL,qSQL,true_SQL_result,qSQL_result
+0,"SELECT T3.service_id ,  T4.Service_Type_Code 
+FROM participants AS T1 
+JOIN Participants_in_Events AS T2 ON T1.Participant_ID  =  T2.Participant_ID 
+JOIN EVENTS AS T3 ON T2.Event_ID   =  T3.Event_ID 
+JOIN services AS T4 ON T3.service_id  =  T4.service_id 
+GROUP BY T3.service_id, T4.Service_Type_Code  
+ORDER BY count(*) ASC LIMIT 1","SELECT Service_ID, Service_Type_Code FROM Services WHERE Service_ID IN (     SELECT Service_ID     FROM Events     GROUP BY Service_ID     HAVING COUNT(DISTINCT Event_ID) = (         SELECT MIN(participant_count)         FROM (             SELECT COUNT(DISTINCT Participant_ID) AS participant_count             FROM Participants_in_Events             GROUP BY Event_ID         ) AS counts     ) );",[[6 'Birth Proof    ']],[]
