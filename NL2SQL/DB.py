@@ -94,7 +94,10 @@ class MyPostgreSQL:
             c.execute(qry)
             self.conn.commit()
             r = c.fetchall()
-            return pd.DataFrame(r)
+            if len(r) == 0:
+                return pd.DataFrame(["None"])
+            else:
+                return pd.DataFrame(r)
 
         except Exception as e:
             print(f"Error: {str(e)}")

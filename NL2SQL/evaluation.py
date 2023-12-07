@@ -50,9 +50,8 @@ class NO2SQL():
 
         # 'system': gpt-4에게 어떤 task를 수행할 지 지시합니다.
         # 'user': qNL, schema 등 입력할 내용을 넣어줍니다.
-        system_message = """
-                            Translate the following natural language question into a SQL query compatible with PostgreSQL.
-                         """
+        print("\n[Instruction]")
+        system_message = "Translate the following natural language question into a SQL query compatible with PostgreSQL. Answer without explanation.\n"
         
         if schema:
             schema_info = ""
@@ -61,13 +60,14 @@ class NO2SQL():
             for row in current_schema.iterrows():
                 schema_info += f"{row[1]['CREATE']}\n"
             
-            system_message += f" The schema of database is as following: \n{schema_info}\n"
-            print(system_message)
+            system_message += f"The schema of database is as following: \n{schema_info}\n"
 
         ## prompt 어떤식으로 반영할지 고민해야 함 -> SPIDER_SELECTED.csv에 한 column 만들어서 추가하는 방식으로 구현
         if prompt:
             pass
+
         print(system_message)
+
         response = self.llm.chat.completions.create(
                         model= model,
                         messages= [
@@ -149,8 +149,17 @@ class NO2SQL():
         qSQL_result = self.db.select_query(qSQL)
         print(f"qSQL_result : \n{qSQL_result}\n")
 
+        true_SQL_result = true_SQL_result.values.tolist()
+        qSQL_result = qSQL_result.values.tolist()
+
+        # 출력 결과 같은지 확인
+        if qSQL_result[0][0] == "Error" or qSQL_result[0][0] == "None":
+            equality = False
+        else:
+            equality = (true_SQL_result == qSQL_result)
+        
         # 쿼리 결과 dataframe은 array로 바꿔서 저장
-        result = (true_SQL, qSQL, true_SQL_result.values, qSQL_result.values)
+        result = (qNL, true_SQL, qSQL, true_SQL_result, qSQL_result, equality)
 
         return result
     
@@ -167,8 +176,8 @@ class NO2SQL():
             result = self.execute_NL2SQL(model, db_id, qNL, schema, prompt, token)
             total_result.append(result)
 
-        total_result = pd.DataFrame(total_result, columns=['true_SQL', 'qSQL', 'true_SQL_result', 'qSQL_result'])
-        total_result.to_csv(f"result/{datetime.now().strftime('%m%d %H:%M')}_schema:{schema}_prompt:{prompt}_model:{model}.csv")
+        total_result = pd.DataFrame(total_result, columns=['qNL', 'true_SQL', 'qSQL', 'true_SQL_result', 'qSQL_result', 'equality'])
+        total_result.to_csv(f"result/{datetime.now().strftime('%y%m%d %H:%M')}_schema={schema}_prompt={prompt}_model={model}.csv")
 
         return total_result
 
@@ -192,26 +201,20 @@ class NO2SQL():
         """
         for row in self.spider.iterrows():
             db_id, qNL = row[1]['db_id'], row[1]['question']
-            print(f"db_id : {db_id},  \nqNL : {qNL}")
+            print(f"db_id : {db_id}  \nqNL : {qNL}")
             self.working_test(db_id, qNL)
-
 
 if __name__ == "__main__":
 
     # 전체 실행
-    spider = pd.read_csv("rawdata/SPIDER_SELECTED.csv", encoding='cp949').iloc[15:16,:]
+    spider = pd.read_csv("rawdata/SPIDER_SELECTED.csv", encoding='cp949').iloc[54:55,:]
     ddl = pd.read_csv("rawdata/DDL_SELECTED.csv")
 
     task = NO2SQL(spider, ddl)
     
     start = time.time()
-    result = task.run_NO2SQLs(model='gpt-3.5-turbo', schema=True, token=False) # gpt-3.5-turbo, gpt-4
+    result = task.run_NO2SQLs(model='gpt-4', schema=True, token=False) # gpt-3.5-turbo, gpt-4
     end = time.time()
 
     print(result)
     print(f"execution time : {end - start:.5f} sec")
-
-    ## push 확인용
-
-        
-

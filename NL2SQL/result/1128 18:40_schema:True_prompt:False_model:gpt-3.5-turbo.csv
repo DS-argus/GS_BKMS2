@@ -1,0 +1,2 @@
+,true_SQL,qSQL,true_SQL_result,qSQL_result,equality
+0,SELECT count(*) FROM department WHERE department_id NOT IN (SELECT department_id FROM management);,SELECT COUNT(DISTINCT Department_ID)  FROM department  WHERE Department_ID NOT IN (SELECT Department_ID FROM management),[[11]],[[11]],True
