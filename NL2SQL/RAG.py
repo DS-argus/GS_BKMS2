@@ -21,7 +21,7 @@ class RAG_NO2SQL():
         self.db = MyPostgreSQL()
         self.db.login()
 
-        self.rag_sample = pd.read_csv("./presentation/rag_sample.csv")
+        self.rag_sample = pd.read_csv("./presentation/rag_sample_init.csv")
         self.llm = None
         self.embeddings = None
 
@@ -45,11 +45,11 @@ class RAG_NO2SQL():
                         )
 
     def make_issue_table(self):
-
-        create = """create table if not exists issue_tbl (id int,clause text,prompt text,primary key (id));"""
+        
+        create = """drop table if exists issue_tbl; create table if not exists issue_tbl (id int,clause text,prompt text,primary key (id));"""
         insert = """insert into issue_tbl values (1, 'order by, limit', 'Rather than using the LIMIT clause, you can use the WHERE clause to find all rows that match the highest (lowest) value.');
                     insert into issue_tbl values (2, 'group by', 'Consider scenarios where objects share the same name. After group by clause, it would be better to use discinct id column');
-                    insert into issue_tbl values (3, 'where, in', 'When utilizing where clause and in clause, it would be better to use INTERSECT or UNION clause');"""
+                    insert into issue_tbl values (3, 'where, in', 'When using the where and in clauses to match conditions, do not use in; use the INTERSECT or UNION clause instead.');"""
 
         self.db.execute_query(create)
         self.db.execute_query(insert)
@@ -57,11 +57,16 @@ class RAG_NO2SQL():
         return
 
     def make_VectorDB(self):
-        self.rag_sample.columns = ['question', 'schema_info', 'embeddings']
+
+        ## rag_sample_init.csv에서 embedding 추가
+        self.connect_GPT_API()
+
+        self.rag_sample['embeddings'] = self.embeddings.embed_documents(texts=self.rag_sample.iloc[:,0])
 
         question = self.rag_sample['question']
         embeddings = self.rag_sample['embeddings']
         schema_info = self.rag_sample['schema_info']
+        db_ids = self.rag_sample['db_id']
 
         # 처음 pgVector를 사용하기 위해 필요
         self.db.execute_query("CREATE EXTENSION IF NOT EXISTS vector")
@@ -72,22 +77,23 @@ class RAG_NO2SQL():
                                                 id serial, 
                                                 question varchar,
                                                 embeddings vector(1536),
-                                                schema_info varchar
+                                                schema_info varchar,
+                                                db_id varchar
                                                 );
                              '''            
+        
         self.db.execute_query(table_create_command)
 
         cursor = self.db.conn.cursor()
-        for q, emb, schema in zip(question, embeddings, schema_info):
+        for q, emb, schema, db_id in zip(question, embeddings, schema_info, db_ids):
             query = '''
-                        INSERT INTO promptbase (question, embeddings, schema_info) 
-                        VALUES (%s, %s::vector, %s);
+                        INSERT INTO promptbase (question, embeddings, schema_info, db_id) 
+                        VALUES (%s, %s::vector, %s, %s);
                     '''
-            cursor.execute(query, (q, emb, schema))
+            cursor.execute(query, (q, emb, schema, db_id))
         
         self.db.conn.commit()
         cursor.close()
-        self.db.conn.close()
 
         print("Created promptbase database!")
 
@@ -109,18 +115,21 @@ class RAG_NO2SQL():
         """
 
         search_qry = f""" 
-                      SELECT schema_info, question, 1-(embeddings <=> '{qNL_emb}')FROM promptbase
+                      SELECT db_id, schema_info, question, 1-(embeddings <=> '{qNL_emb}')FROM promptbase
                       ORDER BY embeddings <=> '{qNL_emb}'
                       LIMIT {k};
                     """
         result = self.db.select_query(search_qry)
 
         # Count the occurrences of each value in the 'schema_info' column
-        schema_info_counts = result.iloc[:,0].value_counts()
+        db_id_counts = result.iloc[:,0].value_counts()
+        schema_info_counts = result.iloc[:,1].value_counts()
 
         # Find the value with the maximum count in the 'schema_info' column
+        most_common_db_id = db_id_counts.idxmax()
         most_common_schema_info = schema_info_counts.idxmax()
 
+        print(f"\n[Vector searching result]\nSelected db_id using top {k} vector search : {most_common_db_id}\n")
         return most_common_schema_info
 
 
@@ -134,8 +143,25 @@ class RAG_NO2SQL():
         
         return prompt.iloc[0,0]
 
+    
+    @staticmethod
+    def print_table_info(schema):
+        output = ""
+        for idx, (table_name, table_data) in enumerate(schema.items()):
+            output += f"\n{idx+1}. Table: {table_name}\n"
+            output += "   - Description: " + table_data['description'][0] + "\n"
+            output += "   - Create SQL: " + table_data['create'][0] + "\n"
+            output += "   - Sample rows:\n"
+            for row in table_data['insert']:
+                output += "     - " + row + "\n"
+            output += "   - Relationships with other tables: " + table_data['relationship'][0] + "\n"
+            output += "   - Column information:\n"
+            for col, desc in table_data['columns'].items():
+                output += f"      - {col}: {desc[0]}\n"
+        return output
 
-    def qNL_to_qSQL(self, model: str, qNL: str, token: bool = False) -> str:
+
+    def qNL_to_qSQL(self, model: str, qNL: str, issue_tbl: bool = True, token: bool = False) -> str:
         """
         model : 사용할 model - gpt-3.5-turbo, gpt-4
         qNL : gpt한테 보낼 자연어 질문
@@ -146,40 +172,45 @@ class RAG_NO2SQL():
         searched_schema = self.vector_search(self.embedding(qNL))
 
         cautions = (
-                        "1. Care about the upper and lower case of column names\n"
-                        "2. You should match string column regardless of upper or lower case\n"
-                        "3. Only output the elements mentioned in the question\n"
-                        "4. Avoid outputting duplicate value\n"
+                        "1. Care about the upper and lower case of column names.\n"
+                        "2. If you can't tell from the sample row provided, you should match string columns regardless of case.\n"
+                        "3. Only output the elements mentioned in the question.\n"
+                        "4. Avoid outputting duplicate value.\n"
+                        "5. When joining, first check the 'column information' of each table provided to see which columns should be joined together.\n"
                     )
          
         # 'system': gpt-4에게 어떤 task를 수행할 지 지시합니다.
         # 'user': qNL, schema 등 입력할 내용을 넣어줍니다.
         system_message = (
                             "[Instruction]\n"                 
-                            "Translate the following natural language question into a SQL query compatible with PostgreSQL.\n"
+                            "Translate the following natural language question into a SQL query compatible with PostgreSQL\n"
                             "You will get additional information, such as DB schema, meaning of each column, relatioship between tables, common mistakes and so on.\n"
-                            "The schema is organized in the form of a JSON file, so check it out to see what information it contains before answering.\n"
                          )
-
-        system_message += f"\n[The schema of database]\n{searched_schema}\n"
-
-        system_message += f"\n[Common mistakes]\n{cautions}\n"
 
         system_message +=f"\n[Question]\n{qNL}\n"
 
-        system_message += "\nPlease analyze the information carefully and give me an answer without explanation.\n"
+        system_message += f"\n[The schema of database]\n{self.print_table_info(json.loads(searched_schema))}\n"
+
+        system_message += f"\n[Common mistakes]\n{cautions}"
+
+
+        system_message += f"\nThe schema is organized in the form of a JSON file, so check it out to see what information it contains before answering.\nPlease analyze the information carefully and give me an answer without explanation.\n"
+        # system_message += f"\nJOIN PersonFriend PF ON P.name = PF.name, Not JOIN PersonFriend PF ON P.name = PF.friend\n"
 
         response = self.llm.chat.completions.create(
                         model= model,
                         messages= [
-                                    {"role": "system", "content": system_message},
-                                    {"role": "user", "content": ""},
+                                    {"role": "system", "content": "You are the expert who carefully considers the schema information, caveats, etc. provided, and based on that, when asked a natural language question, tells you which Postresql query will get that information."},
+                                    {"role": "user", "content": system_message},
                                   ],
-                        temperature= 0
+                        temperature= 0.7
                     )
         
         # 반환 받은 response에서 쿼리만 따로 추출합니다.
-        qSQL = response.choices[0].message.content.replace('\n', ' ')        
+        qSQL = response.choices[0].message.content.replace('\n', ' ')
+        
+        # 초기 답변 저장
+        qSQL1 = qSQL        
         
         # 만약 qSQL 안에 "Order by" and "Limit", "Group by", "Where" and "In"이 있으면 각각 1, 2, 3 Case로 issue_tbl에서 찾아서 prompt 전달
         # Check for the presence of keywords
@@ -192,36 +223,39 @@ class RAG_NO2SQL():
         has_where = re.search(r'\bwhere\b', lower_qSQL)
         has_in = re.search(r'\bin\b', lower_qSQL)
         
-        # Branch into 1, 2, or 3 cases based on the presence of keywords
-        if (has_order_by and has_limit) or has_group_by or (has_where and has_in):
-            system_message += "\n[Highlighting]\n"
-    
-            # Case 1 
-            if (has_order_by and has_limit):
-                system_message += f"{self.get_prompt_by_issue(1)}\n"
-            # Case 2
-            elif has_group_by:
-                system_message += f"{self.get_prompt_by_issue(2)}\n"
-            # Case 3
-            elif (has_where and has_in):
-                system_message += f"{self.get_prompt_by_issue(3)}\n"
+        if (issue_tbl):
 
-            # 프롬프트를 추가해서 다시 LLM에 요청
-            response = self.llm.chat.completions.create(
-                    model= model,
-                    messages= [
-                                {"role": "system", "content": system_message},
-                                {"role": "user", "content": ""},
-                                ],
-                    temperature= 0
-                )
+            # Branch into 1, 2, or 3 cases based on the presence of keywords
+            if (has_order_by and has_limit) or has_group_by or (has_where and has_in):
+                system_message += "\n[Highlighting]\n"
 
-            # 반환 받은 response에서 쿼리만 따로 추출합니다.
-            qSQL = response.choices[0].message.content.replace('\n', ' ')        
+                # Case 1 
+                if (has_order_by and has_limit):
+                    system_message += f"{self.get_prompt_by_issue(1)}\n"
+                # Case 2
+                elif has_group_by:
+                    system_message += f"{self.get_prompt_by_issue(2)}\n"
+                # Case 3
+                elif (has_where and has_in):
+                    system_message += f"{self.get_prompt_by_issue(3)}\n"
+
+                # 프롬프트를 추가해서 다시 LLM에 요청
+                response = self.llm.chat.completions.create(
+                        model= model,
+                        messages= [
+                                    {"role": "system", "content": "You are the expert who carefully considers the schema information, caveats, etc. provided, and based on that, when asked a natural language question, tells you which Postresql query will get that information."},
+                                    {"role": "user", "content": system_message},
+                                    ],
+                        temperature= 0
+                    )
+
+                # 반환 받은 response에서 쿼리만 따로 추출합니다.
+                qSQL = response.choices[0].message.content.replace('\n', ' ')        
 
         print(system_message)
+        
 
-        print(f"qNL: {qNL}\nqSQL: {qSQL}\n")
+        print(f"\n[Answer]\nqNL: {qNL}\nqSQL: {qSQL}\n")
         if token:
             print(response.usage)
 
@@ -236,11 +270,12 @@ if __name__ == "__main__":
     rag = RAG_NO2SQL()
 
     # pgVector table, issue table 만들기
-    # rag.make_VectorDB()
-    # rag.make_issue_table()
+    rag.make_issue_table()
+    rag.make_VectorDB()
 
     for row in questions.iterrows():
         # 자연어 임베딩 해주는 함수
-        rag.qNL_to_qSQL(model= 'gpt-4', qNL=row[1].iloc[0])
+        rag.qNL_to_qSQL(model= 'gpt-4', qNL=row[1].iloc[0], issue_tbl=True)
+        # break
 
         

@@ -1,0 +1,1477 @@
+﻿question,schema_info,db_id
+How many friends does Dan have?,"{
+  ""Person"": {
+    ""create"": [
+      ""CREATE TABLE Person (name varchar(20) PRIMARY KEY, age INTEGER, city TEXT, gender TEXT, job TEXT);""
+    ],
+    ""insert"": [
+      ""INSERT INTO Person VALUES ('Alice', 25, 'new york city', 'female', 'student');"",
+      ""INSERT INTO Person VALUES ('Bob', 35, 'salt lake city', 'male', 'engineer');"",
+      ""INSERT INTO Person VALUES ('Zach', 45, 'austin', 'male', 'doctor');"",
+      ""INSERT INTO Person VALUES ('Dan', 26, 'chicago', 'female', 'student');""
+    ],
+    ""description"": [
+      ""A table with a person's name, age, city, gender, and job.""
+    ],
+    ""relationship"": [
+      ""Relationships among 'name' in 'Person' table are defined in 'PersonFriend' table.""
+    ],
+    ""columns"": {
+      ""name"": [
+        ""name of a person""
+      ],
+      ""age"": [
+        ""age of a person""
+      ],
+      ""city"": [
+        ""city where a person lives in""
+      ],
+      ""gender"": [
+        ""gender of a person""
+      ],
+      ""job"": [
+        ""job of a person""
+      ]
+    }
+  },
+  ""PersonFriend"": {
+    ""create"": [
+      ""CREATE TABLE PersonFriend (name varchar(20), friend varchar(20), year INTEGER, FOREIGN KEY (name) REFERENCES Person(name), FOREIGN KEY (friend) REFERENCES Person(name));""
+    ],
+    ""insert"": [
+      ""INSERT INTO PersonFriend VALUES ('Alice', 'Bob', 10);"",
+      ""INSERT INTO PersonFriend VALUES ('Zach', 'Dan', 12);"",
+      ""INSERT INTO PersonFriend VALUES ('Bob', 'Zach', 5);"",
+      ""INSERT INTO PersonFriend VALUES ('Zach', 'Alice', 6);""
+    ],
+    ""description"": [
+      ""A table with friends relationship""
+    ],
+    ""relationship"": [
+      ""information about 'name' and 'friend' columns is stored in 'Person' table""
+    ],
+    ""columns"": {
+      ""name"": [
+        ""name of a person""
+      ],
+      ""friend"": [
+        ""name of a person who is a friend with the person in the 'name' column""
+      ],
+      ""year"": [
+        ""Number of days since becoming friends""
+      ]
+    }
+  }
+}",network_2
+Find Alice's friends of friends.,"{
+  ""Person"": {
+    ""create"": [
+      ""CREATE TABLE Person (name varchar(20) PRIMARY KEY, age INTEGER, city TEXT, gender TEXT, job TEXT);""
+    ],
+    ""insert"": [
+      ""INSERT INTO Person VALUES ('Alice', 25, 'new york city', 'female', 'student');"",
+      ""INSERT INTO Person VALUES ('Bob', 35, 'salt lake city', 'male', 'engineer');"",
+      ""INSERT INTO Person VALUES ('Zach', 45, 'austin', 'male', 'doctor');"",
+      ""INSERT INTO Person VALUES ('Dan', 26, 'chicago', 'female', 'student');""
+    ],
+    ""description"": [
+      ""A table with a person's name, age, city, gender, and job.""
+    ],
+    ""relationship"": [
+      ""Relationships among 'name' in 'Person' table are defined in 'PersonFriend' table.""
+    ],
+    ""columns"": {
+      ""name"": [
+        ""name of a person""
+      ],
+      ""age"": [
+        ""age of a person""
+      ],
+      ""city"": [
+        ""city where a person lives in""
+      ],
+      ""gender"": [
+        ""gender of a person""
+      ],
+      ""job"": [
+        ""job of a person""
+      ]
+    }
+  },
+  ""PersonFriend"": {
+    ""create"": [
+      ""CREATE TABLE PersonFriend (name varchar(20), friend varchar(20), year INTEGER, FOREIGN KEY (name) REFERENCES Person(name), FOREIGN KEY (friend) REFERENCES Person(name));""
+    ],
+    ""insert"": [
+      ""INSERT INTO PersonFriend VALUES ('Alice', 'Bob', 10);"",
+      ""INSERT INTO PersonFriend VALUES ('Zach', 'Dan', 12);"",
+      ""INSERT INTO PersonFriend VALUES ('Bob', 'Zach', 5);"",
+      ""INSERT INTO PersonFriend VALUES ('Zach', 'Alice', 6);""
+    ],
+    ""description"": [
+      ""A table with friends relationship""
+    ],
+    ""relationship"": [
+      ""information about 'name' and 'friend' columns is stored in 'Person' table""
+    ],
+    ""columns"": {
+      ""name"": [
+        ""name of a person""
+      ],
+      ""friend"": [
+        ""name of a person who is a friend with the person in the 'name' column""
+      ],
+      ""year"": [
+        ""Number of days since becoming friends""
+      ]
+    }
+  }
+}",network_2
+Find the name and age of the person who is a friend of both Dan and Alice.,"{
+  ""Person"": {
+    ""create"": [
+      ""CREATE TABLE Person (name varchar(20) PRIMARY KEY, age INTEGER, city TEXT, gender TEXT, job TEXT);""
+    ],
+    ""insert"": [
+      ""INSERT INTO Person VALUES ('Alice', 25, 'new york city', 'female', 'student');"",
+      ""INSERT INTO Person VALUES ('Bob', 35, 'salt lake city', 'male', 'engineer');"",
+      ""INSERT INTO Person VALUES ('Zach', 45, 'austin', 'male', 'doctor');"",
+      ""INSERT INTO Person VALUES ('Dan', 26, 'chicago', 'female', 'student');""
+    ],
+    ""description"": [
+      ""A table with a person's name, age, city, gender, and job.""
+    ],
+    ""relationship"": [
+      ""Relationships among 'name' in 'Person' table are defined in 'PersonFriend' table.""
+    ],
+    ""columns"": {
+      ""name"": [
+        ""name of a person""
+      ],
+      ""age"": [
+        ""age of a person""
+      ],
+      ""city"": [
+        ""city where a person lives in""
+      ],
+      ""gender"": [
+        ""gender of a person""
+      ],
+      ""job"": [
+        ""job of a person""
+      ]
+    }
+  },
+  ""PersonFriend"": {
+    ""create"": [
+      ""CREATE TABLE PersonFriend (name varchar(20), friend varchar(20), year INTEGER, FOREIGN KEY (name) REFERENCES Person(name), FOREIGN KEY (friend) REFERENCES Person(name));""
+    ],
+    ""insert"": [
+      ""INSERT INTO PersonFriend VALUES ('Alice', 'Bob', 10);"",
+      ""INSERT INTO PersonFriend VALUES ('Zach', 'Dan', 12);"",
+      ""INSERT INTO PersonFriend VALUES ('Bob', 'Zach', 5);"",
+      ""INSERT INTO PersonFriend VALUES ('Zach', 'Alice', 6);""
+    ],
+    ""description"": [
+      ""A table with friends relationship""
+    ],
+    ""relationship"": [
+      ""information about 'name' and 'friend' columns is stored in 'Person' table""
+    ],
+    ""columns"": {
+      ""name"": [
+        ""name of a person""
+      ],
+      ""friend"": [
+        ""name of a person who is a friend with the person in the 'name' column""
+      ],
+      ""year"": [
+        ""Number of days since becoming friends""
+      ]
+    }
+  }
+}",network_2
+Find the id and name of the museum that has the most staff members?,"{
+  ""museum"": {
+    ""create"": [
+      ""CREATE TABLE museum (Museum_ID int, Name text, Num_of_Staff int, Open_Year text, PRIMARY KEY (Museum_ID));""
+    ],
+    ""insert"": [
+      ""INSERT INTO museum VALUES (1, 'Plaza Museum', 62, '2000');"",
+      ""INSERT INTO museum VALUES (2, 'Capital Plaza Museum', 25, '2012');"",
+      ""INSERT INTO museum VALUES (3, 'Jefferson Development Museum', 18, '2010');"",
+      ""INSERT INTO museum VALUES (4, 'Willow Grande Museum', 17, '2011');"",
+      ""INSERT INTO museum VALUES (5, 'RiverPark Museum', 16, '2008');""
+    ],
+    ""description"": [
+      ""A table with museum info""
+    ],
+    ""relationship"": [
+      ""Visitors in the 'visitors' table visited the museum in the 'museum' table""
+    ],
+    ""columns"": {
+      ""Museum_ID"": [
+        ""ID of a museum""
+      ],
+      ""Name"": [
+        ""Name of a museum""
+      ],
+      ""Num_of_Staff"": [
+        ""Number of staff working in the museum""
+      ],
+      ""Open_Year"": [
+        ""Year when the museum was opened""
+      ]
+    }
+  },
+  ""visitor"": {
+    ""create"": [
+      ""CREATE TABLE visitor (ID int, Name text, Level_of_membership int, Age int, PRIMARY KEY (ID));""
+    ],
+    ""insert"": [
+      ""INSERT INTO visitor VALUES (1, 'Gonzalo Higuaín', 8, 35);"",
+      ""INSERT INTO visitor VALUES (2, 'Guti Midfielder', 5, 28);"",
+      ""INSERT INTO visitor VALUES (3, 'Arjen Robben', 1, 27);"",
+      ""INSERT INTO visitor VALUES (4, 'Raúl Brown', 2, 56);"",
+      ""INSERT INTO visitor VALUES (5, 'Fernando Gago', 6, 36);""
+    ],
+    ""description"": [
+      ""A table with visitors info.""
+    ],
+    ""relationship"": [
+      ""Visitors in the 'visitors' table visited the museum in the 'museum' table""
+    ],
+    ""columns"": {
+      ""ID"": [
+        ""ID of a visitor""
+      ],
+      ""Name"": [
+        ""Name of a visitor""
+      ],
+      ""Level_of_membership"": [
+        ""Level of visitor membership""
+      ],
+      ""Age"": [
+        ""Age of a visitor""
+      ]
+    }
+  },
+  ""visit"": {
+    ""create"": [
+      ""CREATE TABLE visit (Museum_ID int, visitor_ID int, Num_of_Ticket int, Total_spent real, PRIMARY KEY (Museum_ID, visitor_ID), FOREIGN KEY (Museum_ID) REFERENCES museum(Museum_ID), FOREIGN KEY (visitor_ID) REFERENCES visitor(ID));""
+    ],
+    ""insert"": [
+      ""INSERT INTO visit VALUES (1, 5, 20, 320.14);"",
+      ""INSERT INTO visit VALUES (2, 5, 4, 89.98);"",
+      ""INSERT INTO visit VALUES (4, 3, 10, 320.44);"",
+      ""INSERT INTO visit VALUES (2, 3, 24, 209.98);"",
+      ""INSERT INTO visit VALUES (4, 6, 3, 20.44);""
+    ],
+    ""description"": [
+      ""A table with the log of visit of visitors in museum, including number of tickets and total amount the visitor spent""
+    ],
+    ""relationship"": [
+      ""The 'visit' table stores the record of the visitors in the 'visitors' table who visited the museum in the 'museum' table""
+    ],
+    ""columns"": {
+      ""Museum_ID"": [
+        ""ID of a museum""
+      ],
+      ""visitor_ID"": [
+        ""ID of a museum visitor""
+      ],
+      ""Num_of_Ticket"": [
+        ""Number of ticket sold in the museum""
+      ],
+      ""Total_Spent"": [
+        ""Total spent in the museum of each visitor""
+      ]
+    }
+  }
+}",museum_visit
+What is the name of the visitor who visited both a museum opened before 2009 and a museum opened after 2011?,"{
+  ""museum"": {
+    ""create"": [
+      ""CREATE TABLE museum (Museum_ID int, Name text, Num_of_Staff int, Open_Year text, PRIMARY KEY (Museum_ID));""
+    ],
+    ""insert"": [
+      ""INSERT INTO museum VALUES (1, 'Plaza Museum', 62, '2000');"",
+      ""INSERT INTO museum VALUES (2, 'Capital Plaza Museum', 25, '2012');"",
+      ""INSERT INTO museum VALUES (3, 'Jefferson Development Museum', 18, '2010');"",
+      ""INSERT INTO museum VALUES (4, 'Willow Grande Museum', 17, '2011');"",
+      ""INSERT INTO museum VALUES (5, 'RiverPark Museum', 16, '2008');""
+    ],
+    ""description"": [
+      ""A table with museum info""
+    ],
+    ""relationship"": [
+      ""Visitors in the 'visitors' table visited the museum in the 'museum' table""
+    ],
+    ""columns"": {
+      ""Museum_ID"": [
+        ""ID of a museum""
+      ],
+      ""Name"": [
+        ""Name of a museum""
+      ],
+      ""Num_of_Staff"": [
+        ""Number of staff working in the museum""
+      ],
+      ""Open_Year"": [
+        ""Year when the museum was opened""
+      ]
+    }
+  },
+  ""visitor"": {
+    ""create"": [
+      ""CREATE TABLE visitor (ID int, Name text, Level_of_membership int, Age int, PRIMARY KEY (ID));""
+    ],
+    ""insert"": [
+      ""INSERT INTO visitor VALUES (1, 'Gonzalo Higuaín', 8, 35);"",
+      ""INSERT INTO visitor VALUES (2, 'Guti Midfielder', 5, 28);"",
+      ""INSERT INTO visitor VALUES (3, 'Arjen Robben', 1, 27);"",
+      ""INSERT INTO visitor VALUES (4, 'Raúl Brown', 2, 56);"",
+      ""INSERT INTO visitor VALUES (5, 'Fernando Gago', 6, 36);""
+    ],
+    ""description"": [
+      ""A table with visitors info.""
+    ],
+    ""relationship"": [
+      ""Visitors in the 'visitors' table visited the museum in the 'museum' table""
+    ],
+    ""columns"": {
+      ""ID"": [
+        ""ID of a visitor""
+      ],
+      ""Name"": [
+        ""Name of a visitor""
+      ],
+      ""Level_of_membership"": [
+        ""Level of visitor membership""
+      ],
+      ""Age"": [
+        ""Age of a visitor""
+      ]
+    }
+  },
+  ""visit"": {
+    ""create"": [
+      ""CREATE TABLE visit (Museum_ID int, visitor_ID int, Num_of_Ticket int, Total_spent real, PRIMARY KEY (Museum_ID, visitor_ID), FOREIGN KEY (Museum_ID) REFERENCES museum(Museum_ID), FOREIGN KEY (visitor_ID) REFERENCES visitor(ID));""
+    ],
+    ""insert"": [
+      ""INSERT INTO visit VALUES (1, 5, 20, 320.14);"",
+      ""INSERT INTO visit VALUES (2, 5, 4, 89.98);"",
+      ""INSERT INTO visit VALUES (4, 3, 10, 320.44);"",
+      ""INSERT INTO visit VALUES (2, 3, 24, 209.98);"",
+      ""INSERT INTO visit VALUES (4, 6, 3, 20.44);""
+    ],
+    ""description"": [
+      ""A table with the log of visit of visitors in museum, including number of tickets and total amount the visitor spent""
+    ],
+    ""relationship"": [
+      ""The 'visit' table stores the record of the visitors in the 'visitors' table who visited the museum in the 'museum' table""
+    ],
+    ""columns"": {
+      ""Museum_ID"": [
+        ""ID of a museum""
+      ],
+      ""visitor_ID"": [
+        ""ID of a museum visitor""
+      ],
+      ""Num_of_Ticket"": [
+        ""Number of ticket sold in the museum""
+      ],
+      ""Total_Spent"": [
+        ""Total spent in the museum of each visitor""
+      ]
+    }
+  }
+}",museum_visit
+What is the average age of the visitors whose membership level is not higher than 4?,"{
+  ""museum"": {
+    ""create"": [
+      ""CREATE TABLE museum (Museum_ID int, Name text, Num_of_Staff int, Open_Year text, PRIMARY KEY (Museum_ID));""
+    ],
+    ""insert"": [
+      ""INSERT INTO museum VALUES (1, 'Plaza Museum', 62, '2000');"",
+      ""INSERT INTO museum VALUES (2, 'Capital Plaza Museum', 25, '2012');"",
+      ""INSERT INTO museum VALUES (3, 'Jefferson Development Museum', 18, '2010');"",
+      ""INSERT INTO museum VALUES (4, 'Willow Grande Museum', 17, '2011');"",
+      ""INSERT INTO museum VALUES (5, 'RiverPark Museum', 16, '2008');""
+    ],
+    ""description"": [
+      ""A table with museum info""
+    ],
+    ""relationship"": [
+      ""Visitors in the 'visitors' table visited the museum in the 'museum' table""
+    ],
+    ""columns"": {
+      ""Museum_ID"": [
+        ""ID of a museum""
+      ],
+      ""Name"": [
+        ""Name of a museum""
+      ],
+      ""Num_of_Staff"": [
+        ""Number of staff working in the museum""
+      ],
+      ""Open_Year"": [
+        ""Year when the museum was opened""
+      ]
+    }
+  },
+  ""visitor"": {
+    ""create"": [
+      ""CREATE TABLE visitor (ID int, Name text, Level_of_membership int, Age int, PRIMARY KEY (ID));""
+    ],
+    ""insert"": [
+      ""INSERT INTO visitor VALUES (1, 'Gonzalo Higuaín', 8, 35);"",
+      ""INSERT INTO visitor VALUES (2, 'Guti Midfielder', 5, 28);"",
+      ""INSERT INTO visitor VALUES (3, 'Arjen Robben', 1, 27);"",
+      ""INSERT INTO visitor VALUES (4, 'Raúl Brown', 2, 56);"",
+      ""INSERT INTO visitor VALUES (5, 'Fernando Gago', 6, 36);""
+    ],
+    ""description"": [
+      ""A table with visitors info.""
+    ],
+    ""relationship"": [
+      ""Visitors in the 'visitors' table visited the museum in the 'museum' table""
+    ],
+    ""columns"": {
+      ""ID"": [
+        ""ID of a visitor""
+      ],
+      ""Name"": [
+        ""Name of a visitor""
+      ],
+      ""Level_of_membership"": [
+        ""Level of visitor membership""
+      ],
+      ""Age"": [
+        ""Age of a visitor""
+      ]
+    }
+  },
+  ""visit"": {
+    ""create"": [
+      ""CREATE TABLE visit (Museum_ID int, visitor_ID int, Num_of_Ticket int, Total_spent real, PRIMARY KEY (Museum_ID, visitor_ID), FOREIGN KEY (Museum_ID) REFERENCES museum(Museum_ID), FOREIGN KEY (visitor_ID) REFERENCES visitor(ID));""
+    ],
+    ""insert"": [
+      ""INSERT INTO visit VALUES (1, 5, 20, 320.14);"",
+      ""INSERT INTO visit VALUES (2, 5, 4, 89.98);"",
+      ""INSERT INTO visit VALUES (4, 3, 10, 320.44);"",
+      ""INSERT INTO visit VALUES (2, 3, 24, 209.98);"",
+      ""INSERT INTO visit VALUES (4, 6, 3, 20.44);""
+    ],
+    ""description"": [
+      ""A table with the log of visit of visitors in museum, including number of tickets and total amount the visitor spent""
+    ],
+    ""relationship"": [
+      ""The 'visit' table stores the record of the visitors in the 'visitors' table who visited the museum in the 'museum' table""
+    ],
+    ""columns"": {
+      ""Museum_ID"": [
+        ""ID of a museum""
+      ],
+      ""visitor_ID"": [
+        ""ID of a museum visitor""
+      ],
+      ""Num_of_Ticket"": [
+        ""Number of ticket sold in the museum""
+      ],
+      ""Total_Spent"": [
+        ""Total spent in the museum of each visitor""
+      ]
+    }
+  }
+}",museum_visit
+Which model has the least amount of RAM? List the model name and the amount of RAM.?,"{
+  ""chip_model"": {
+    ""create"": [
+      ""CREATE TABLE IF NOT EXISTS chip_model (Model_name text, Launch_year real, RAM_MiB real, ROM_MiB real, Slots text, WiFi text, Bluetooth text, PRIMARY KEY (Model_name));""
+    ],
+    ""insert"": [
+      ""INSERT INTO chip_model VALUES('X5', 2002.0, 32.0, 32.0, '1CFII,1SD', 'No', 'No');"",
+      ""INSERT INTO chip_model VALUES('X5 high end', 2002.0, 64.0, 48.0, '1CFII,1SD', 'No', 'No');"",
+      ""INSERT INTO chip_model VALUES('X3 Basic', 2003.0, 32.0, 32.0, '1SD', 'No', 'No');"",
+      ""INSERT INTO chip_model VALUES('X3 Advanced', 2003.0, 64.0, 64.0, '1SD', 'No', 'No');""
+    ],
+    ""description"": [
+      ""A table of chip information within a mobile phone""
+    ],
+    ""relationship"": [
+      ""Phone in the 'phone' table have a chip in the 'chip_model' table""
+    ],
+    ""columns"": {
+      ""Model_name"": [
+        ""Model name of the chip""
+      ],
+      ""Launch_year"": [
+        ""Chip release year""
+      ],
+      ""RAM_MiB"": [
+        ""RAM capacity of the chip""
+      ],
+      ""ROM_MiB"": [
+        ""ROM capacity of the chip""
+      ],
+      ""Slots"": [
+        ""Slot info of the chip""
+      ],
+      ""WiFi"": [
+        ""WiFi capability of the chip""
+      ],
+      ""Bluetooth"": [
+        ""Bluetooth capability of the chip""
+      ]
+    }
+  },
+  ""screen_mode"": {
+    ""create"": [
+      ""CREATE TABLE IF NOT EXISTS screen_mode (Graphics_mode real, Char_cells text, Pixels text, Hardware_colours real, used_kb real, map text, Type text, PRIMARY KEY (Graphics_mode));""
+    ],
+    ""insert"": [
+      ""INSERT INTO screen_mode VALUES(0.0, '80 × 32', '640 × 256', 2.0, 20.0, '3000–7FFF', 'Graphics');"",
+      ""INSERT INTO screen_mode VALUES(1.0, '40 × 32', '320 × 256', 4.0, 20.0, '3000–7FFF', 'Graphics');"",
+      ""INSERT INTO screen_mode VALUES(2.0, '20 × 32', '160 × 256', 8.0, 20.0, '3000–7FFF', 'Graphics');"",
+      ""INSERT INTO screen_mode VALUES(3.0, '80 × 25', '640 × 200', 2.0, 16.0, '4000–7FFF', 'Text');""
+    ],
+    ""description"": [
+      ""A table of screen mode installed in a mobile phone""
+    ],
+    ""relationship"": [
+      ""Phone in the 'phone' table have a screen mode in the 'screen_mode' table""
+    ],
+    ""columns"": {
+      ""Graphics_name"": [
+        ""Graphic mode of the screen mode""
+      ],
+      ""Char_cells"": [
+        ""Character pixel grid size""
+      ],
+      ""Pixels"": [
+        ""Pixel grid size""
+      ],
+      ""Hardware_colours"": [
+        ""Colours of hardware""
+      ],
+      ""used_kb"": [
+        ""Used capacity of memory""
+      ],
+      ""map"": [
+        ""Mapping memory address""
+      ],
+      ""Type"": [
+        ""Type of screen mode""
+      ]
+    }
+  },
+  ""phone"": {
+    ""create"": [
+      ""CREATE TABLE IF NOT EXISTS phone (Company_name text, Hardware_Model_name text, Accreditation_type text, Accreditation_level text, Date text, chip_model text, screen_mode real, PRIMARY KEY(Hardware_Model_name), FOREIGN KEY (screen_mode) REFERENCES screen_mode(Graphics_mode), FOREIGN KEY (chip_model) REFERENCES chip_model(Model_name));""
+    ],
+    ""insert"": [
+      ""INSERT INTO phone VALUES('Sony Mobile Communications', 'XPERIA T, XPERIA J', 'Full', 'joyn Hot Fixes', 'Approved (awarded 15.11.12)', 'X5', 1);"",
+      ""INSERT INTO phone VALUES('LG Electronics', 'LG-P760', 'Full', 'joyn Hot Fixes', 'Approved (awarded 19.11.12)', 'X51v', 3);"",
+      ""INSERT INTO phone VALUES('Nokia Corporation', 'Lumia 920, Lumia 820, Lumia 620', 'Full', 'joyn Hot Fixes', 'Approved (awarded 05.12.12)', 'X5', 4);"",
+      ""INSERT INTO phone VALUES('Samsung Electronics Co Ltd', 'GT-I9300', 'Full', 'joyn', 'Approved (awarded 23.10.12)', 'X30 low-end', 5);""
+    ],
+    ""description"": [
+      ""A table of mobile phone information""
+    ],
+    ""relationship"": [
+      ""Phone in the 'phone' table have a chip in the 'chip_model' table and have screen mode in 'screen_mode' table""
+    ],
+    ""columns"": {
+      ""Company_name"": [
+        ""Company name of the phone""
+      ],
+      ""Hardware_Model_name"": [
+        ""Hardware model name of the phone""
+      ],
+      ""Accreditation_type"": [
+        ""Type of accreditation""
+      ],
+      ""Accreditation_level"": [
+        ""Level of accreditation""
+      ],
+      ""Date"": [
+        ""Approved date""
+      ],
+      ""chip_model"": [
+        ""Chip model of the phone""
+      ],
+      ""screen_mode"": [
+        ""Screen mode of the phone""
+      ]
+    }
+  }
+}",phone_1
+"What are the chip model and screen mode of the phone with hardware model name ""LG-P760”?","{
+  ""chip_model"": {
+    ""create"": [
+      ""CREATE TABLE IF NOT EXISTS chip_model (Model_name text, Launch_year real, RAM_MiB real, ROM_MiB real, Slots text, WiFi text, Bluetooth text, PRIMARY KEY (Model_name));""
+    ],
+    ""insert"": [
+      ""INSERT INTO chip_model VALUES('X5', 2002.0, 32.0, 32.0, '1CFII,1SD', 'No', 'No');"",
+      ""INSERT INTO chip_model VALUES('X5 high end', 2002.0, 64.0, 48.0, '1CFII,1SD', 'No', 'No');"",
+      ""INSERT INTO chip_model VALUES('X3 Basic', 2003.0, 32.0, 32.0, '1SD', 'No', 'No');"",
+      ""INSERT INTO chip_model VALUES('X3 Advanced', 2003.0, 64.0, 64.0, '1SD', 'No', 'No');""
+    ],
+    ""description"": [
+      ""A table of chip information within a mobile phone""
+    ],
+    ""relationship"": [
+      ""Phone in the 'phone' table have a chip in the 'chip_model' table""
+    ],
+    ""columns"": {
+      ""Model_name"": [
+        ""Model name of the chip""
+      ],
+      ""Launch_year"": [
+        ""Chip release year""
+      ],
+      ""RAM_MiB"": [
+        ""RAM capacity of the chip""
+      ],
+      ""ROM_MiB"": [
+        ""ROM capacity of the chip""
+      ],
+      ""Slots"": [
+        ""Slot info of the chip""
+      ],
+      ""WiFi"": [
+        ""WiFi capability of the chip""
+      ],
+      ""Bluetooth"": [
+        ""Bluetooth capability of the chip""
+      ]
+    }
+  },
+  ""screen_mode"": {
+    ""create"": [
+      ""CREATE TABLE IF NOT EXISTS screen_mode (Graphics_mode real, Char_cells text, Pixels text, Hardware_colours real, used_kb real, map text, Type text, PRIMARY KEY (Graphics_mode));""
+    ],
+    ""insert"": [
+      ""INSERT INTO screen_mode VALUES(0.0, '80 × 32', '640 × 256', 2.0, 20.0, '3000–7FFF', 'Graphics');"",
+      ""INSERT INTO screen_mode VALUES(1.0, '40 × 32', '320 × 256', 4.0, 20.0, '3000–7FFF', 'Graphics');"",
+      ""INSERT INTO screen_mode VALUES(2.0, '20 × 32', '160 × 256', 8.0, 20.0, '3000–7FFF', 'Graphics');"",
+      ""INSERT INTO screen_mode VALUES(3.0, '80 × 25', '640 × 200', 2.0, 16.0, '4000–7FFF', 'Text');""
+    ],
+    ""description"": [
+      ""A table of screen mode installed in a mobile phone""
+    ],
+    ""relationship"": [
+      ""Phone in the 'phone' table have a screen mode in the 'screen_mode' table""
+    ],
+    ""columns"": {
+      ""Graphics_name"": [
+        ""Graphic mode of the screen mode""
+      ],
+      ""Char_cells"": [
+        ""Character pixel grid size""
+      ],
+      ""Pixels"": [
+        ""Pixel grid size""
+      ],
+      ""Hardware_colours"": [
+        ""Colours of hardware""
+      ],
+      ""used_kb"": [
+        ""Used capacity of memory""
+      ],
+      ""map"": [
+        ""Mapping memory address""
+      ],
+      ""Type"": [
+        ""Type of screen mode""
+      ]
+    }
+  },
+  ""phone"": {
+    ""create"": [
+      ""CREATE TABLE IF NOT EXISTS phone (Company_name text, Hardware_Model_name text, Accreditation_type text, Accreditation_level text, Date text, chip_model text, screen_mode real, PRIMARY KEY(Hardware_Model_name), FOREIGN KEY (screen_mode) REFERENCES screen_mode(Graphics_mode), FOREIGN KEY (chip_model) REFERENCES chip_model(Model_name));""
+    ],
+    ""insert"": [
+      ""INSERT INTO phone VALUES('Sony Mobile Communications', 'XPERIA T, XPERIA J', 'Full', 'joyn Hot Fixes', 'Approved (awarded 15.11.12)', 'X5', 1);"",
+      ""INSERT INTO phone VALUES('LG Electronics', 'LG-P760', 'Full', 'joyn Hot Fixes', 'Approved (awarded 19.11.12)', 'X51v', 3);"",
+      ""INSERT INTO phone VALUES('Nokia Corporation', 'Lumia 920, Lumia 820, Lumia 620', 'Full', 'joyn Hot Fixes', 'Approved (awarded 05.12.12)', 'X5', 4);"",
+      ""INSERT INTO phone VALUES('Samsung Electronics Co Ltd', 'GT-I9300', 'Full', 'joyn', 'Approved (awarded 23.10.12)', 'X30 low-end', 5);""
+    ],
+    ""description"": [
+      ""A table of mobile phone information""
+    ],
+    ""relationship"": [
+      ""Phone in the 'phone' table have a chip in the 'chip_model' table and have screen mode in 'screen_mode' table""
+    ],
+    ""columns"": {
+      ""Company_name"": [
+        ""Company name of the phone""
+      ],
+      ""Hardware_Model_name"": [
+        ""Hardware model name of the phone""
+      ],
+      ""Accreditation_type"": [
+        ""Type of accreditation""
+      ],
+      ""Accreditation_level"": [
+        ""Level of accreditation""
+      ],
+      ""Date"": [
+        ""Approved date""
+      ],
+      ""chip_model"": [
+        ""Chip model of the phone""
+      ],
+      ""screen_mode"": [
+        ""Screen mode of the phone""
+      ]
+    }
+  }
+}",phone_1
+List the hardware model name and company name for all the phones that were launched in year 2002 or have RAM size greater than 32.,"{
+  ""chip_model"": {
+    ""create"": [
+      ""CREATE TABLE IF NOT EXISTS chip_model (Model_name text, Launch_year real, RAM_MiB real, ROM_MiB real, Slots text, WiFi text, Bluetooth text, PRIMARY KEY (Model_name));""
+    ],
+    ""insert"": [
+      ""INSERT INTO chip_model VALUES('X5', 2002.0, 32.0, 32.0, '1CFII,1SD', 'No', 'No');"",
+      ""INSERT INTO chip_model VALUES('X5 high end', 2002.0, 64.0, 48.0, '1CFII,1SD', 'No', 'No');"",
+      ""INSERT INTO chip_model VALUES('X3 Basic', 2003.0, 32.0, 32.0, '1SD', 'No', 'No');"",
+      ""INSERT INTO chip_model VALUES('X3 Advanced', 2003.0, 64.0, 64.0, '1SD', 'No', 'No');""
+    ],
+    ""description"": [
+      ""A table of chip information within a mobile phone""
+    ],
+    ""relationship"": [
+      ""Phone in the 'phone' table have a chip in the 'chip_model' table""
+    ],
+    ""columns"": {
+      ""Model_name"": [
+        ""Model name of the chip""
+      ],
+      ""Launch_year"": [
+        ""Chip release year""
+      ],
+      ""RAM_MiB"": [
+        ""RAM capacity of the chip""
+      ],
+      ""ROM_MiB"": [
+        ""ROM capacity of the chip""
+      ],
+      ""Slots"": [
+        ""Slot info of the chip""
+      ],
+      ""WiFi"": [
+        ""WiFi capability of the chip""
+      ],
+      ""Bluetooth"": [
+        ""Bluetooth capability of the chip""
+      ]
+    }
+  },
+  ""screen_mode"": {
+    ""create"": [
+      ""CREATE TABLE IF NOT EXISTS screen_mode (Graphics_mode real, Char_cells text, Pixels text, Hardware_colours real, used_kb real, map text, Type text, PRIMARY KEY (Graphics_mode));""
+    ],
+    ""insert"": [
+      ""INSERT INTO screen_mode VALUES(0.0, '80 × 32', '640 × 256', 2.0, 20.0, '3000–7FFF', 'Graphics');"",
+      ""INSERT INTO screen_mode VALUES(1.0, '40 × 32', '320 × 256', 4.0, 20.0, '3000–7FFF', 'Graphics');"",
+      ""INSERT INTO screen_mode VALUES(2.0, '20 × 32', '160 × 256', 8.0, 20.0, '3000–7FFF', 'Graphics');"",
+      ""INSERT INTO screen_mode VALUES(3.0, '80 × 25', '640 × 200', 2.0, 16.0, '4000–7FFF', 'Text');""
+    ],
+    ""description"": [
+      ""A table of screen mode installed in a mobile phone""
+    ],
+    ""relationship"": [
+      ""Phone in the 'phone' table have a screen mode in the 'screen_mode' table""
+    ],
+    ""columns"": {
+      ""Graphics_name"": [
+        ""Graphic mode of the screen mode""
+      ],
+      ""Char_cells"": [
+        ""Character pixel grid size""
+      ],
+      ""Pixels"": [
+        ""Pixel grid size""
+      ],
+      ""Hardware_colours"": [
+        ""Colours of hardware""
+      ],
+      ""used_kb"": [
+        ""Used capacity of memory""
+      ],
+      ""map"": [
+        ""Mapping memory address""
+      ],
+      ""Type"": [
+        ""Type of screen mode""
+      ]
+    }
+  },
+  ""phone"": {
+    ""create"": [
+      ""CREATE TABLE IF NOT EXISTS phone (Company_name text, Hardware_Model_name text, Accreditation_type text, Accreditation_level text, Date text, chip_model text, screen_mode real, PRIMARY KEY(Hardware_Model_name), FOREIGN KEY (screen_mode) REFERENCES screen_mode(Graphics_mode), FOREIGN KEY (chip_model) REFERENCES chip_model(Model_name));""
+    ],
+    ""insert"": [
+      ""INSERT INTO phone VALUES('Sony Mobile Communications', 'XPERIA T, XPERIA J', 'Full', 'joyn Hot Fixes', 'Approved (awarded 15.11.12)', 'X5', 1);"",
+      ""INSERT INTO phone VALUES('LG Electronics', 'LG-P760', 'Full', 'joyn Hot Fixes', 'Approved (awarded 19.11.12)', 'X51v', 3);"",
+      ""INSERT INTO phone VALUES('Nokia Corporation', 'Lumia 920, Lumia 820, Lumia 620', 'Full', 'joyn Hot Fixes', 'Approved (awarded 05.12.12)', 'X5', 4);"",
+      ""INSERT INTO phone VALUES('Samsung Electronics Co Ltd', 'GT-I9300', 'Full', 'joyn', 'Approved (awarded 23.10.12)', 'X30 low-end', 5);""
+    ],
+    ""description"": [
+      ""A table of mobile phone information""
+    ],
+    ""relationship"": [
+      ""Phone in the 'phone' table have a chip in the 'chip_model' table and have screen mode in 'screen_mode' table""
+    ],
+    ""columns"": {
+      ""Company_name"": [
+        ""Company name of the phone""
+      ],
+      ""Hardware_Model_name"": [
+        ""Hardware model name of the phone""
+      ],
+      ""Accreditation_type"": [
+        ""Type of accreditation""
+      ],
+      ""Accreditation_level"": [
+        ""Level of accreditation""
+      ],
+      ""Date"": [
+        ""Approved date""
+      ],
+      ""chip_model"": [
+        ""Chip model of the phone""
+      ],
+      ""screen_mode"": [
+        ""Screen mode of the phone""
+      ]
+    }
+  }
+}",phone_1
+Find the average age of the students who have allergies with food and animal types.,"{
+  ""Allergy_Type"": {
+    ""create"": [
+      ""CREATE TABLE Allergy_Type (Allergy VARCHAR(20) PRIMARY KEY, AllergyType VARCHAR(20));""
+    ],
+    ""insert"": [
+      ""INSERT INTO Allergy_Type VALUES ('Eggs', 'food');"",
+      ""INSERT INTO Allergy_Type VALUES ('Dog', 'animal');"",
+      ""INSERT INTO Allergy_Type VALUES ('Milk', 'food');"",
+      ""INSERT INTO Allergy_Type VALUES ('Ragweed', 'environmental');"",
+      ""INSERT INTO Allergy_Type VALUES ('Tree Pollen', 'environmental');""
+    ],
+    ""description"": [
+      ""Table with allergens and their categories""
+    ],
+    ""relationship"": [
+      ""'Allergy' column is used in 'Has_Allergy' table""
+    ],
+    ""columns"": {
+      ""Allergy"": [
+        ""Allergens""
+      ],
+      ""AllergyType"": [
+        ""Categories of allergens""
+      ]
+    }
+  },
+  ""Student"": {
+    ""create"": [
+      ""CREATE TABLE Student (StuID INTEGER PRIMARY KEY, LName VARCHAR(12), Fname VARCHAR(12), Age INTEGER, Sex VARCHAR(1), Major INTEGER, Advisor INTEGER, city_code VARCHAR(3));""
+    ],
+    ""insert"": [
+      ""INSERT INTO Student VALUES (1001, 'Smith', 'Linda', 18, 'F', 600, 1121, 'BAL');"",
+      ""INSERT INTO Student VALUES (1002, 'Kim', 'Tracy', 19, 'F', 600, 7712, 'HKG');"",
+      ""INSERT INTO Student VALUES (1003, 'Jones', 'Shiela', 21, 'F', 600, 7792, 'WAS');"",
+      ""INSERT INTO Student VALUES (1004, 'Kumar', 'Dinesh', 20, 'M', 600, 8423, 'CHI');"",
+      ""INSERT INTO Student VALUES (1005, 'Gompers', 'Paul', 26, 'M', 600, 1121, 'YYZ');""
+    ],
+    ""description"": [
+      ""Table with student number, lastname, firstname, age, gender, major, advisor, and city code.""
+    ],
+    ""relationship"": [
+      ""'StuID' column is used in 'Has_Allergy' table""
+    ],
+    ""columns"": {
+      ""StuID"": [
+        ""ID of a student""
+      ],
+      ""LName"": [
+        ""Lastname of a student""
+      ],
+      ""Fname"": [
+        ""Firstname of a student""
+      ],
+      ""Age"": [
+        ""Age of a student""
+      ],
+      ""Sex"": [
+        ""Sex of a student""
+      ],
+      ""Major"": [
+        ""Major of a student""
+      ],
+      ""Advisor"": [
+        ""Advisor of a student""
+      ],
+      ""city_code"": [
+        ""city code of a city where a student lives in""
+      ]
+    }
+  },
+  ""Has_Allergy"": {
+    ""create"": [
+      ""CREATE TABLE Has_Allergy (StuID INTEGER, Allergy VARCHAR(20), FOREIGN KEY(StuID) REFERENCES Student(StuID), FOREIGN KEY(Allergy) REFERENCES Allergy_Type(Allergy));""
+    ],
+    ""insert"": [
+      ""INSERT INTO Has_Allergy VALUES (1001, 'Cat');"",
+      ""INSERT INTO Has_Allergy VALUES (1002, 'Shellfish');"",
+      ""INSERT INTO Has_Allergy VALUES (1002, 'Tree Pollen');"",
+      ""INSERT INTO Has_Allergy VALUES (1003, 'Dog');"",
+      ""INSERT INTO Has_Allergy VALUES (1004, 'Nuts');""
+    ],
+    ""description"": [
+      ""Table containing the IDs of students with allergies and the things that trigger them.""
+    ],
+    ""relationship"": [
+      ""Information of 'StuID' is stored in 'Student' table. Information of 'Allergy' is stored in 'Allergy_Type' table.""
+    ],
+    ""columns"": {
+      ""StuID"": [
+        ""ID of a student who has an allergy""
+      ],
+      ""Allergy"": [
+        ""Substances that a student is allergic to""
+      ]
+    }
+  }
+}",allergy
+What are the first name and gender of the students who have allergy to milk but can put up with cats?,"{
+  ""Allergy_Type"": {
+    ""create"": [
+      ""CREATE TABLE Allergy_Type (Allergy VARCHAR(20) PRIMARY KEY, AllergyType VARCHAR(20));""
+    ],
+    ""insert"": [
+      ""INSERT INTO Allergy_Type VALUES ('Eggs', 'food');"",
+      ""INSERT INTO Allergy_Type VALUES ('Dog', 'animal');"",
+      ""INSERT INTO Allergy_Type VALUES ('Milk', 'food');"",
+      ""INSERT INTO Allergy_Type VALUES ('Ragweed', 'environmental');"",
+      ""INSERT INTO Allergy_Type VALUES ('Tree Pollen', 'environmental');""
+    ],
+    ""description"": [
+      ""Table with allergens and their categories""
+    ],
+    ""relationship"": [
+      ""'Allergy' column is used in 'Has_Allergy' table""
+    ],
+    ""columns"": {
+      ""Allergy"": [
+        ""Allergens""
+      ],
+      ""AllergyType"": [
+        ""Categories of allergens""
+      ]
+    }
+  },
+  ""Student"": {
+    ""create"": [
+      ""CREATE TABLE Student (StuID INTEGER PRIMARY KEY, LName VARCHAR(12), Fname VARCHAR(12), Age INTEGER, Sex VARCHAR(1), Major INTEGER, Advisor INTEGER, city_code VARCHAR(3));""
+    ],
+    ""insert"": [
+      ""INSERT INTO Student VALUES (1001, 'Smith', 'Linda', 18, 'F', 600, 1121, 'BAL');"",
+      ""INSERT INTO Student VALUES (1002, 'Kim', 'Tracy', 19, 'F', 600, 7712, 'HKG');"",
+      ""INSERT INTO Student VALUES (1003, 'Jones', 'Shiela', 21, 'F', 600, 7792, 'WAS');"",
+      ""INSERT INTO Student VALUES (1004, 'Kumar', 'Dinesh', 20, 'M', 600, 8423, 'CHI');"",
+      ""INSERT INTO Student VALUES (1005, 'Gompers', 'Paul', 26, 'M', 600, 1121, 'YYZ');""
+    ],
+    ""description"": [
+      ""Table with student number, lastname, firstname, age, gender, major, advisor, and city code.""
+    ],
+    ""relationship"": [
+      ""'StuID' column is used in 'Has_Allergy' table""
+    ],
+    ""columns"": {
+      ""StuID"": [
+        ""ID of a student""
+      ],
+      ""LName"": [
+        ""Lastname of a student""
+      ],
+      ""Fname"": [
+        ""Firstname of a student""
+      ],
+      ""Age"": [
+        ""Age of a student""
+      ],
+      ""Sex"": [
+        ""Sex of a student""
+      ],
+      ""Major"": [
+        ""Major of a student""
+      ],
+      ""Advisor"": [
+        ""Advisor of a student""
+      ],
+      ""city_code"": [
+        ""city code of a city where a student lives in""
+      ]
+    }
+  },
+  ""Has_Allergy"": {
+    ""create"": [
+      ""CREATE TABLE Has_Allergy (StuID INTEGER, Allergy VARCHAR(20), FOREIGN KEY(StuID) REFERENCES Student(StuID), FOREIGN KEY(Allergy) REFERENCES Allergy_Type(Allergy));""
+    ],
+    ""insert"": [
+      ""INSERT INTO Has_Allergy VALUES (1001, 'Cat');"",
+      ""INSERT INTO Has_Allergy VALUES (1002, 'Shellfish');"",
+      ""INSERT INTO Has_Allergy VALUES (1002, 'Tree Pollen');"",
+      ""INSERT INTO Has_Allergy VALUES (1003, 'Dog');"",
+      ""INSERT INTO Has_Allergy VALUES (1004, 'Nuts');""
+    ],
+    ""description"": [
+      ""Table containing the IDs of students with allergies and the things that trigger them.""
+    ],
+    ""relationship"": [
+      ""Information of 'StuID' is stored in 'Student' table. Information of 'Allergy' is stored in 'Allergy_Type' table.""
+    ],
+    ""columns"": {
+      ""StuID"": [
+        ""ID of a student who has an allergy""
+      ],
+      ""Allergy"": [
+        ""Substances that a student is allergic to""
+      ]
+    }
+  }
+}",allergy
+Find the last name and age of the student who has allergy to both milk and cat.,"{
+  ""Allergy_Type"": {
+    ""create"": [
+      ""CREATE TABLE Allergy_Type (Allergy VARCHAR(20) PRIMARY KEY, AllergyType VARCHAR(20));""
+    ],
+    ""insert"": [
+      ""INSERT INTO Allergy_Type VALUES ('Eggs', 'food');"",
+      ""INSERT INTO Allergy_Type VALUES ('Dog', 'animal');"",
+      ""INSERT INTO Allergy_Type VALUES ('Milk', 'food');"",
+      ""INSERT INTO Allergy_Type VALUES ('Ragweed', 'environmental');"",
+      ""INSERT INTO Allergy_Type VALUES ('Tree Pollen', 'environmental');""
+    ],
+    ""description"": [
+      ""Table with allergens and their categories""
+    ],
+    ""relationship"": [
+      ""'Allergy' column is used in 'Has_Allergy' table""
+    ],
+    ""columns"": {
+      ""Allergy"": [
+        ""Allergens""
+      ],
+      ""AllergyType"": [
+        ""Categories of allergens""
+      ]
+    }
+  },
+  ""Student"": {
+    ""create"": [
+      ""CREATE TABLE Student (StuID INTEGER PRIMARY KEY, LName VARCHAR(12), Fname VARCHAR(12), Age INTEGER, Sex VARCHAR(1), Major INTEGER, Advisor INTEGER, city_code VARCHAR(3));""
+    ],
+    ""insert"": [
+      ""INSERT INTO Student VALUES (1001, 'Smith', 'Linda', 18, 'F', 600, 1121, 'BAL');"",
+      ""INSERT INTO Student VALUES (1002, 'Kim', 'Tracy', 19, 'F', 600, 7712, 'HKG');"",
+      ""INSERT INTO Student VALUES (1003, 'Jones', 'Shiela', 21, 'F', 600, 7792, 'WAS');"",
+      ""INSERT INTO Student VALUES (1004, 'Kumar', 'Dinesh', 20, 'M', 600, 8423, 'CHI');"",
+      ""INSERT INTO Student VALUES (1005, 'Gompers', 'Paul', 26, 'M', 600, 1121, 'YYZ');""
+    ],
+    ""description"": [
+      ""Table with student number, lastname, firstname, age, gender, major, advisor, and city code.""
+    ],
+    ""relationship"": [
+      ""'StuID' column is used in 'Has_Allergy' table""
+    ],
+    ""columns"": {
+      ""StuID"": [
+        ""ID of a student""
+      ],
+      ""LName"": [
+        ""Lastname of a student""
+      ],
+      ""Fname"": [
+        ""Firstname of a student""
+      ],
+      ""Age"": [
+        ""Age of a student""
+      ],
+      ""Sex"": [
+        ""Sex of a student""
+      ],
+      ""Major"": [
+        ""Major of a student""
+      ],
+      ""Advisor"": [
+        ""Advisor of a student""
+      ],
+      ""city_code"": [
+        ""city code of a city where a student lives in""
+      ]
+    }
+  },
+  ""Has_Allergy"": {
+    ""create"": [
+      ""CREATE TABLE Has_Allergy (StuID INTEGER, Allergy VARCHAR(20), FOREIGN KEY(StuID) REFERENCES Student(StuID), FOREIGN KEY(Allergy) REFERENCES Allergy_Type(Allergy));""
+    ],
+    ""insert"": [
+      ""INSERT INTO Has_Allergy VALUES (1001, 'Cat');"",
+      ""INSERT INTO Has_Allergy VALUES (1002, 'Shellfish');"",
+      ""INSERT INTO Has_Allergy VALUES (1002, 'Tree Pollen');"",
+      ""INSERT INTO Has_Allergy VALUES (1003, 'Dog');"",
+      ""INSERT INTO Has_Allergy VALUES (1004, 'Nuts');""
+    ],
+    ""description"": [
+      ""Table containing the IDs of students with allergies and the things that trigger them.""
+    ],
+    ""relationship"": [
+      ""Information of 'StuID' is stored in 'Student' table. Information of 'Allergy' is stored in 'Allergy_Type' table.""
+    ],
+    ""columns"": {
+      ""StuID"": [
+        ""ID of a student who has an allergy""
+      ],
+      ""Allergy"": [
+        ""Substances that a student is allergic to""
+      ]
+    }
+  }
+}",allergy
+What are the id and name of the stadium where the most injury accidents happened?,"{
+  ""stadium"": {
+    ""create"": [
+      ""CREATE TABLE stadium (id serial PRIMARY KEY, name text, Home_Games int, Average_Attendance real, Total_Attendance real, Capacity_Percentage real);""
+    ],
+    ""insert"": [
+      ""INSERT INTO stadium (name, Home_Games, Average_Attendance, Total_Attendance, Capacity_Percentage) VALUES ('Cowboys Stadium', 8, 87047.0, 696377.0, 108.8), ('FedExField', 8, 83172.0, 665380.0, 90.7), ('New Meadowlands Stadium', 8, 79019.0, 632156.0, 95.8), ('New Meadowlands Stadium', 8, 78596.0, 628768.0, 95.3), ('Invesco Field at Mile High', 8, 74908.0, 599264.0, 98.4);""
+    ],
+    ""description"": [
+      ""A table with stadium info.""
+    ],
+    ""relationship"": [
+      ""The games in the 'game' table are held in the stadiums in the 'stadium' table""
+    ],
+    ""columns"": {
+      ""id"": [
+        ""ID of a stadium""
+      ],
+      ""name"": [
+        ""Name of a stadium""
+      ],
+      ""Home_Games"": [
+        ""Home Games""
+      ],
+      ""Average_Attendance"": [
+        ""Average number of attendance of the stadium""
+      ],
+      ""Total_Attendance"": [
+        ""Total number of attendance of the stadium""
+      ],
+      ""Capacity_Percentage"": [
+        ""Percentage of capacity of the stadium""
+      ]
+    }
+  },
+  ""game"": {
+    ""create"": [
+      ""CREATE TABLE game (stadium_id int, id serial PRIMARY KEY, Season int, Date text, Home_team text, Away_team text, Score text, Competition text, FOREIGN KEY (stadium_id) REFERENCES stadium(id));""
+    ],
+    ""insert"": [
+      ""INSERT INTO game (id, stadium_id, Season, Date, Home_team, Away_team, Score, Competition) VALUES (1, 1, 2007, '18 May 2007', 'Quruvchi', 'Pakhtakor', '1–1', 'League'), (2, 2, 2007, '22 September 2007', 'Pakhtakor', 'Quruvchi', '0–0', 'League'), (3, 3, 2007, '9 December 2007', 'Pakhtakor', 'Quruvchi', '0–0 (7:6)', 'Cup');""
+    ],
+    ""description"": [
+      ""A table with game info.""
+    ],
+    ""relationship"": [
+      ""The games in the 'game' table are held in the stadiums in the 'stadium' table and the injuries from the table 'injury accident' occurs in the games in the 'game' table""
+    ],
+    ""columns"": {
+      ""stadium_id"": [
+        ""ID of a stadium where the game is held""
+      ],
+      ""id"": [
+        ""unique ID of a game""
+      ],
+      ""Season"": [
+        ""Season number which is year""
+      ],
+      ""Date"": [
+        ""Date when the game is held""
+      ],
+      ""Home_Team"": [
+        ""Name of a home team""
+      ],
+      ""Away_Team"": [
+        ""Name of an away team""
+      ],
+      ""Score"": [
+        ""Final score of a game""
+      ],
+      ""Competition"": [
+        ""Type of competition: League, Cup, ...""
+      ]
+    }
+  },
+  ""injury_accident"": {
+    ""create"": [
+      ""CREATE TABLE injury_accident (game_id int, id int, Player text, Injury text, Number_of_matches text, Source text, PRIMARY KEY (id), FOREIGN KEY (game_id) REFERENCES game (id));""
+    ],
+    ""insert"": [
+      ""INSERT INTO injury_accident (id, game_id, Player, Injury, Number_of_matches, Source) VALUES (1, 1, 'Davide Santon', 'Clean-up surgery on his right knee', '12', 'inter.it'), (2, 2, 'Maicon', 'Knee problem', '2', 'inter.it'), (3, 3, 'Dejan Stanković', 'Hamstring muscle strain in his left thigh', '2', 'inter.it');""
+    ],
+    ""description"": [
+      ""A table with injury info of the player in the game""
+    ],
+    ""relationship"": [
+      ""The injuries from the table 'injury accident' occurred in games in the table 'game'.""
+    ],
+    ""columns"": {
+      ""game_id"": [
+        ""ID of a game""
+      ],
+      ""id"": [
+        ""Unique ID of an injury""
+      ],
+      ""Player"": [
+        ""The name of the player who got injured in the game""
+      ],
+      ""Injury"": [
+        ""specific explanation of injury""
+      ],
+      ""Number_of_matches"": [
+        ""number of matches""
+      ],
+      ""Source"": [
+        ""source""
+      ]
+    }
+  }
+}",game_injury
+Find the id and name of the stadium where the largest number of injury accidents occurred.,"{
+  ""stadium"": {
+    ""create"": [
+      ""CREATE TABLE stadium (id serial PRIMARY KEY, name text, Home_Games int, Average_Attendance real, Total_Attendance real, Capacity_Percentage real);""
+    ],
+    ""insert"": [
+      ""INSERT INTO stadium (name, Home_Games, Average_Attendance, Total_Attendance, Capacity_Percentage) VALUES ('Cowboys Stadium', 8, 87047.0, 696377.0, 108.8), ('FedExField', 8, 83172.0, 665380.0, 90.7), ('New Meadowlands Stadium', 8, 79019.0, 632156.0, 95.8), ('New Meadowlands Stadium', 8, 78596.0, 628768.0, 95.3), ('Invesco Field at Mile High', 8, 74908.0, 599264.0, 98.4);""
+    ],
+    ""description"": [
+      ""A table with stadium info.""
+    ],
+    ""relationship"": [
+      ""The games in the 'game' table are held in the stadiums in the 'stadium' table""
+    ],
+    ""columns"": {
+      ""id"": [
+        ""ID of a stadium""
+      ],
+      ""name"": [
+        ""Name of a stadium""
+      ],
+      ""Home_Games"": [
+        ""Home Games""
+      ],
+      ""Average_Attendance"": [
+        ""Average number of attendance of the stadium""
+      ],
+      ""Total_Attendance"": [
+        ""Total number of attendance of the stadium""
+      ],
+      ""Capacity_Percentage"": [
+        ""Percentage of capacity of the stadium""
+      ]
+    }
+  },
+  ""game"": {
+    ""create"": [
+      ""CREATE TABLE game (stadium_id int, id serial PRIMARY KEY, Season int, Date text, Home_team text, Away_team text, Score text, Competition text, FOREIGN KEY (stadium_id) REFERENCES stadium(id));""
+    ],
+    ""insert"": [
+      ""INSERT INTO game (id, stadium_id, Season, Date, Home_team, Away_team, Score, Competition) VALUES (1, 1, 2007, '18 May 2007', 'Quruvchi', 'Pakhtakor', '1–1', 'League'), (2, 2, 2007, '22 September 2007', 'Pakhtakor', 'Quruvchi', '0–0', 'League'), (3, 3, 2007, '9 December 2007', 'Pakhtakor', 'Quruvchi', '0–0 (7:6)', 'Cup');""
+    ],
+    ""description"": [
+      ""A table with game info.""
+    ],
+    ""relationship"": [
+      ""The games in the 'game' table are held in the stadiums in the 'stadium' table and the injuries from the table 'injury accident' occurs in the games in the 'game' table""
+    ],
+    ""columns"": {
+      ""stadium_id"": [
+        ""ID of a stadium where the game is held""
+      ],
+      ""id"": [
+        ""unique ID of a game""
+      ],
+      ""Season"": [
+        ""Season number which is year""
+      ],
+      ""Date"": [
+        ""Date when the game is held""
+      ],
+      ""Home_Team"": [
+        ""Name of a home team""
+      ],
+      ""Away_Team"": [
+        ""Name of an away team""
+      ],
+      ""Score"": [
+        ""Final score of a game""
+      ],
+      ""Competition"": [
+        ""Type of competition: League, Cup, ...""
+      ]
+    }
+  },
+  ""injury_accident"": {
+    ""create"": [
+      ""CREATE TABLE injury_accident (game_id int, id int, Player text, Injury text, Number_of_matches text, Source text, PRIMARY KEY (id), FOREIGN KEY (game_id) REFERENCES game (id));""
+    ],
+    ""insert"": [
+      ""INSERT INTO injury_accident (id, game_id, Player, Injury, Number_of_matches, Source) VALUES (1, 1, 'Davide Santon', 'Clean-up surgery on his right knee', '12', 'inter.it'), (2, 2, 'Maicon', 'Knee problem', '2', 'inter.it'), (3, 3, 'Dejan Stanković', 'Hamstring muscle strain in his left thigh', '2', 'inter.it');""
+    ],
+    ""description"": [
+      ""A table with injury info of the player in the game""
+    ],
+    ""relationship"": [
+      ""The injuries from the table 'injury accident' occurred in games in the table 'game'.""
+    ],
+    ""columns"": {
+      ""game_id"": [
+        ""ID of a game""
+      ],
+      ""id"": [
+        ""Unique ID of an injury""
+      ],
+      ""Player"": [
+        ""The name of the player who got injured in the game""
+      ],
+      ""Injury"": [
+        ""specific explanation of injury""
+      ],
+      ""Number_of_matches"": [
+        ""number of matches""
+      ],
+      ""Source"": [
+        ""source""
+      ]
+    }
+  }
+}",game_injury
+List the name of the stadium where both the player 'Walter Samuel' and the player 'Thiago Motta' got injured.,"{
+  ""stadium"": {
+    ""create"": [
+      ""CREATE TABLE stadium (id serial PRIMARY KEY, name text, Home_Games int, Average_Attendance real, Total_Attendance real, Capacity_Percentage real);""
+    ],
+    ""insert"": [
+      ""INSERT INTO stadium (name, Home_Games, Average_Attendance, Total_Attendance, Capacity_Percentage) VALUES ('Cowboys Stadium', 8, 87047.0, 696377.0, 108.8), ('FedExField', 8, 83172.0, 665380.0, 90.7), ('New Meadowlands Stadium', 8, 79019.0, 632156.0, 95.8), ('New Meadowlands Stadium', 8, 78596.0, 628768.0, 95.3), ('Invesco Field at Mile High', 8, 74908.0, 599264.0, 98.4);""
+    ],
+    ""description"": [
+      ""A table with stadium info.""
+    ],
+    ""relationship"": [
+      ""The games in the 'game' table are held in the stadiums in the 'stadium' table""
+    ],
+    ""columns"": {
+      ""id"": [
+        ""ID of a stadium""
+      ],
+      ""name"": [
+        ""Name of a stadium""
+      ],
+      ""Home_Games"": [
+        ""Home Games""
+      ],
+      ""Average_Attendance"": [
+        ""Average number of attendance of the stadium""
+      ],
+      ""Total_Attendance"": [
+        ""Total number of attendance of the stadium""
+      ],
+      ""Capacity_Percentage"": [
+        ""Percentage of capacity of the stadium""
+      ]
+    }
+  },
+  ""game"": {
+    ""create"": [
+      ""CREATE TABLE game (stadium_id int, id serial PRIMARY KEY, Season int, Date text, Home_team text, Away_team text, Score text, Competition text, FOREIGN KEY (stadium_id) REFERENCES stadium(id));""
+    ],
+    ""insert"": [
+      ""INSERT INTO game (id, stadium_id, Season, Date, Home_team, Away_team, Score, Competition) VALUES (1, 1, 2007, '18 May 2007', 'Quruvchi', 'Pakhtakor', '1–1', 'League'), (2, 2, 2007, '22 September 2007', 'Pakhtakor', 'Quruvchi', '0–0', 'League'), (3, 3, 2007, '9 December 2007', 'Pakhtakor', 'Quruvchi', '0–0 (7:6)', 'Cup');""
+    ],
+    ""description"": [
+      ""A table with game info.""
+    ],
+    ""relationship"": [
+      ""The games in the 'game' table are held in the stadiums in the 'stadium' table and the injuries from the table 'injury accident' occurs in the games in the 'game' table""
+    ],
+    ""columns"": {
+      ""stadium_id"": [
+        ""ID of a stadium where the game is held""
+      ],
+      ""id"": [
+        ""unique ID of a game""
+      ],
+      ""Season"": [
+        ""Season number which is year""
+      ],
+      ""Date"": [
+        ""Date when the game is held""
+      ],
+      ""Home_Team"": [
+        ""Name of a home team""
+      ],
+      ""Away_Team"": [
+        ""Name of an away team""
+      ],
+      ""Score"": [
+        ""Final score of a game""
+      ],
+      ""Competition"": [
+        ""Type of competition: League, Cup, ...""
+      ]
+    }
+  },
+  ""injury_accident"": {
+    ""create"": [
+      ""CREATE TABLE injury_accident (game_id int, id int, Player text, Injury text, Number_of_matches text, Source text, PRIMARY KEY (id), FOREIGN KEY (game_id) REFERENCES game (id));""
+    ],
+    ""insert"": [
+      ""INSERT INTO injury_accident (id, game_id, Player, Injury, Number_of_matches, Source) VALUES (1, 1, 'Davide Santon', 'Clean-up surgery on his right knee', '12', 'inter.it'), (2, 2, 'Maicon', 'Knee problem', '2', 'inter.it'), (3, 3, 'Dejan Stanković', 'Hamstring muscle strain in his left thigh', '2', 'inter.it');""
+    ],
+    ""description"": [
+      ""A table with injury info of the player in the game""
+    ],
+    ""relationship"": [
+      ""The injuries from the table 'injury accident' occurred in games in the table 'game'.""
+    ],
+    ""columns"": {
+      ""game_id"": [
+        ""ID of a game""
+      ],
+      ""id"": [
+        ""Unique ID of an injury""
+      ],
+      ""Player"": [
+        ""The name of the player who got injured in the game""
+      ],
+      ""Injury"": [
+        ""specific explanation of injury""
+      ],
+      ""Number_of_matches"": [
+        ""number of matches""
+      ],
+      ""Source"": [
+        ""source""
+      ]
+    }
+  }
+}",game_injury
