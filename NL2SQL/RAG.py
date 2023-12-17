@@ -47,9 +47,9 @@ class RAG_NO2SQL():
     def make_issue_table(self):
         
         create = """drop table if exists issue_tbl; create table if not exists issue_tbl (id int,clause text,prompt text,primary key (id));"""
-        insert = """insert into issue_tbl values (1, 'order by, limit', 'Rather than using the LIMIT clause, you can use the WHERE clause to find all rows that match the highest (lowest) value.');
-                    insert into issue_tbl values (2, 'group by', 'Consider scenarios where objects share the same name. After group by clause, it would be better to use discinct id column');
-                    insert into issue_tbl values (3, 'where, in', 'When using the where and in clauses to match conditions, do not use in; use the INTERSECT or UNION clause instead.');"""
+        insert = """insert into issue_tbl values (1, 'order by, limit', 'Rather than using the LIMIT clause, you SHOULD use the WHERE clause to find all rows that match the highest (lowest) value.');
+                    insert into issue_tbl values (2, 'group by', 'Consider scenarios where objects share the same name. After group by clause, it SHOULD use discinct id column');
+                    insert into issue_tbl values (3, 'where, in', 'NEVER use IN in SQL query; Use the INTERSECT or UNION clause instead.');"""
 
         self.db.execute_query(create)
         self.db.execute_query(insert)
@@ -128,8 +128,9 @@ class RAG_NO2SQL():
         # Find the value with the maximum count in the 'schema_info' column
         most_common_db_id = db_id_counts.idxmax()
         most_common_schema_info = schema_info_counts.idxmax()
-
+        print(result)
         print(f"\n[Vector searching result]\nSelected db_id using top {k} vector search : {most_common_db_id}\n")
+
         return most_common_schema_info
 
 
@@ -185,36 +186,30 @@ class RAG_NO2SQL():
                             "[Instruction]\n"                 
                             "Translate the following natural language question into a SQL query compatible with PostgreSQL\n"
                             "You will get additional information, such as DB schema, meaning of each column, relatioship between tables, common mistakes and so on.\n"
+                            "Please analyze the information carefully and give me an answer without explanation.\n"
                          )
-
-        system_message +=f"\n[Question]\n{qNL}\n"
 
         system_message += f"\n[The schema of database]\n{self.print_table_info(json.loads(searched_schema))}\n"
 
         system_message += f"\n[Common mistakes]\n{cautions}"
+        
+        system_message += f"\n[Question]\n{qNL}\n"
 
-
-        system_message += f"\nThe schema is organized in the form of a JSON file, so check it out to see what information it contains before answering.\nPlease analyze the information carefully and give me an answer without explanation.\n"
-        # system_message += f"\nJOIN PersonFriend PF ON P.name = PF.name, Not JOIN PersonFriend PF ON P.name = PF.friend\n"
+        temperature = 1
 
         response = self.llm.chat.completions.create(
                         model= model,
                         messages= [
-                                    {"role": "system", "content": "You are the expert who carefully considers the schema information, caveats, etc. provided, and based on that, when asked a natural language question, tells you which Postresql query will get that information."},
+                                    {"role": "system", "content": "Translate the following natural language question into a SQL query compatible with PostgreSQL."},
                                     {"role": "user", "content": system_message},
                                   ],
-                        temperature= 0.7
+                        temperature= temperature
                     )
         
-        # 반환 받은 response에서 쿼리만 따로 추출합니다.
         qSQL = response.choices[0].message.content.replace('\n', ' ')
-        
-        # 초기 답변 저장
-        qSQL1 = qSQL        
         
         # 만약 qSQL 안에 "Order by" and "Limit", "Group by", "Where" and "In"이 있으면 각각 1, 2, 3 Case로 issue_tbl에서 찾아서 prompt 전달
         # Check for the presence of keywords
-        
         lower_qSQL =  qSQL.lower()
 
         has_order_by = re.search(r'\border\s+by\b', lower_qSQL)
@@ -243,13 +238,12 @@ class RAG_NO2SQL():
                 response = self.llm.chat.completions.create(
                         model= model,
                         messages= [
-                                    {"role": "system", "content": "You are the expert who carefully considers the schema information, caveats, etc. provided, and based on that, when asked a natural language question, tells you which Postresql query will get that information."},
+                                    {"role": "system", "content": "Translate the following natural language question into a SQL query compatible with PostgreSQL."},
                                     {"role": "user", "content": system_message},
                                     ],
-                        temperature= 0
+                        temperature= temperature
                     )
 
-                # 반환 받은 response에서 쿼리만 따로 추출합니다.
                 qSQL = response.choices[0].message.content.replace('\n', ' ')        
 
         print(system_message)
