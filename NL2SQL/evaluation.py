@@ -17,7 +17,6 @@ class NO2SQL():
         """
         self.spider = data
         self.ddl = ddl
-        
         self.db = MyPostgreSQL()
         self.db.login()
 
@@ -150,7 +149,9 @@ class NO2SQL():
         print(f"qSQL_result : \n{qSQL_result}\n")
 
         true_SQL_result = true_SQL_result.values.tolist()
+        true_SQL_result.sort()
         qSQL_result = qSQL_result.values.tolist()
+        qSQL_result.sort()
 
         # 출력 결과 같은지 확인
         if qSQL_result[0][0] == "Error" or qSQL_result[0][0] == "None":
@@ -212,9 +213,9 @@ if __name__ == "__main__":
 
     task = NO2SQL(spider, ddl)
     
-    start = time.time()
-    result = task.run_NO2SQLs(model='gpt-4', schema=True, token=False) # gpt-3.5-turbo, gpt-4
-    end = time.time()
+    # start = time.time()
+    # result = task.run_NO2SQLs(model='gpt-4', schema=True, token=False) # gpt-3.5-turbo, gpt-4
+    # end = time.time()
 
-    print(result)
-    print(f"execution time : {end - start:.5f} sec")
+    # print(result)
+    # print(f"execution time : {end - start:.5f} sec")

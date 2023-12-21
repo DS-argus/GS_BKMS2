@@ -48,7 +48,7 @@ class RAG_NO2SQL():
         
         create = """drop table if exists issue_tbl; create table if not exists issue_tbl (id int,clause text,prompt text,primary key (id));"""
         insert = """insert into issue_tbl values (1, 'order by, limit', 'Rather than using the LIMIT clause, you SHOULD use the WHERE clause to find all rows that match the highest (lowest) value.');
-                    insert into issue_tbl values (2, 'group by', 'Consider scenarios where objects share the same name. After group by clause, it SHOULD use discinct id column');
+                    insert into issue_tbl values (2, 'group by', 'Consider scenarios where objects share the same name. After group by clause, it SHOULD use distinct id column');
                     insert into issue_tbl values (3, 'where, in', 'NEVER use IN in SQL query; Use the INTERSECT or UNION clause instead.');"""
 
         self.db.execute_query(create)
@@ -177,7 +177,7 @@ class RAG_NO2SQL():
                         "2. If you can't tell from the sample row provided, you should match string columns regardless of case.\n"
                         "3. Only output the elements mentioned in the question.\n"
                         "4. Avoid outputting duplicate value.\n"
-                        "5. When joining, first check the 'column information' of each table provided to see which columns should be joined together.\n"
+                        # "5. When joining, first check the 'column information' of each table provided to see which columns should be joined together.\n"
                     )
          
         # 'system': gpt-4에게 어떤 task를 수행할 지 지시합니다.
@@ -272,4 +272,4 @@ if __name__ == "__main__":
         rag.qNL_to_qSQL(model= 'gpt-4', qNL=row[1].iloc[0], issue_tbl=True)
         # break
 
-        
+    
